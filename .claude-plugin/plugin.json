@@ -1,0 +1,10 @@
+{
+  "name": "plugin-mh",
+  "version": "1.0.0",
+  "description": "MH의 커스텀 Claude Code 스킬 모음",
+  "author": {
+    "name": "MH"
+  },
+  "license": "MIT",
+  "keywords": ["claude-code", "plugin", "skills"]
+}

@@ -1,0 +1,5 @@
+# OMC state
+.omc/
+
+# Claude Code local config
+.claude/
