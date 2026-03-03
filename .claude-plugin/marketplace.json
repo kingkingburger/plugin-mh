@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "plugin-mh",
+  "name": "mh",
   "description": "MH의 커스텀 Claude Code 스킬 모음 - 13개 생산성 스킬",
   "owner": {
     "name": "MH",
