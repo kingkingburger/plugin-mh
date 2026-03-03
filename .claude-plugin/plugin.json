@@ -5,6 +5,8 @@
   "author": {
     "name": "MH"
   },
+  "repository": "https://github.com/kingkingburger/plugin-mh",
   "license": "MIT",
-  "keywords": ["claude-code", "plugin", "skills"]
+  "keywords": ["claude-code", "plugin", "skills"],
+  "skills": "./skills/"
 }
