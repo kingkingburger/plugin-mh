@@ -1,22 +1,6 @@
 ---
 name: linkedin-insight
-description: "LinkedIn 인사이트를 브라우저 자동화로 수집/분석하는 스킬. Trigger on: 'linkedin', 'linkedin 인사이트', 'linkedin 분석', 'linkedin analytics', '링크드인 분석', '링크드인 인사이트', '포스트 분석', 'linkedin post', 'linkedin trend', '링크드인 트렌드', 'linkedin profile', 'linkedin network'"
-version: 1.0.0
-user-invocable: true
-allowed-tools:
-  - mcp__claude-in-chrome__tabs_context_mcp
-  - mcp__claude-in-chrome__tabs_create_mcp
-  - mcp__claude-in-chrome__navigate
-  - mcp__claude-in-chrome__computer
-  - mcp__claude-in-chrome__read_page
-  - mcp__claude-in-chrome__find
-  - mcp__claude-in-chrome__get_page_text
-  - mcp__claude-in-chrome__javascript_tool
-  - mcp__claude-in-chrome__form_input
-  - AskUserQuestion
-  - Agent
-  - Read
-  - Write
+description: This skill should be used when the user wants to collect and analyze LinkedIn insights using browser automation. Trigger on "linkedin", "linkedin 인사이트", "linkedin 분석", "linkedin analytics", "링크드인 분석", "링크드인 인사이트", "포스트 분석", "linkedin post", "linkedin trend", "링크드인 트렌드", "linkedin profile", "linkedin network". Supports post analytics, profile insights, trend/content analysis, and network analysis via Claude in Chrome.
 ---
 
 # LinkedIn Insight
