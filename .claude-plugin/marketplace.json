@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "mh",
-  "description": "MH의 커스텀 Claude Code 스킬 모음 - 13개 생산성 스킬",
+  "description": "MH의 커스텀 Claude Code 스킬 모음 - 14개 생산성 스킬",
   "owner": {
     "name": "MH",
     "email": "dnjsalsgh123@gmail.com"
@@ -10,7 +10,7 @@
     {
       "name": "plugin-mh",
       "description": "커스텀 Claude Code 스킬 모음: auto-commit, dev-scan, tech-decision, session-closing 등 13개 생산성 스킬",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "MH"
       },
@@ -25,5 +25,5 @@
       ]
     }
   ],
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
