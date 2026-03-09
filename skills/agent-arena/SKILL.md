@@ -1,6 +1,6 @@
 ---
 name: agent-arena
-description: This skill should be used when the user wants multiple AI agents to debate a topic from different perspectives. Trigger on "agent-arena", "에이전트 토론", "에이전트 싸워", "debate this", "여러 관점에서 분석", "찬반 토론", "agent debate", "arena", "팀 토론", "관점별 분석". Spawns role-assigned agents that argue in multiple rounds, then synthesizes options with a recommendation.
+description: This skill should be used when the user wants multiple AI agents to debate a topic from different perspectives. Trigger on "agent-arena", "에이전트 토론", "에이전트 싸워", "debate this", "여러 관점에서 분석", "찬반 토론", "agent debate", "arena", "팀 토론", "관점별 분석". Spawns role-assigned agents that argue in multiple rounds, then synthesizes options with a recommendation. 간단한 비교는 3인, 기능/방향성 검토는 5인, 전략적 심층 분석은 8인(--preset 8) 권장.
 version: 0.1.0
 ---
 
@@ -42,19 +42,23 @@ version: 0.1.0
 
 ## 실행 워크플로우
 
-### Step 0: 프리셋 선택 (--preset 미지정 시)
+### Step 0: 실행 직전 확인
 
-`--preset`이 명시되지 않은 경우, AskUserQuestion으로 사용자에게 선택을 요청한다:
+`--preset`이 명시되지 않은 경우, 토론 시작 직전에 AskUserQuestion으로 인원 확인을 요청한다:
 
 ```
-에이전트 수를 선택하세요:
+토론을 시작합니다. 인원을 확인하세요:
 
-1. **3인** - 빠른 토론 (옹호자, 비판자, 종합자)
-2. **5인** - 균형 토론 (+ UX 대변인, 설계자)
-3. **8인** - 심층 토론 (+ 비전가, 품질 악마, 현실주의자)
+- **3인** (기본) - 빠른 토론 (옹호자, 비판자, 종합자)
+- **5인** - 균형 토론 (+ UX 대변인, 설계자)
+- **8인** - 심층 토론 (+ 비전가, 품질 악마, 현실주의자)
+
+💡 간단한 비교는 3인, 기능/방향성 검토는 5인, 전략적 의사결정은 8인을 추천합니다.
+
+인원을 선택하세요 (엔터 시 3인):
 ```
 
-선택값을 `--preset`으로 설정한 뒤 Step 1로 진행한다.
+선택값을 `--preset`으로 설정한 뒤 Step 1로 진행한다. 엔터(빈 입력) 시 기본값 3인을 적용한다.
 
 ### Step 1: 설정 파싱
 

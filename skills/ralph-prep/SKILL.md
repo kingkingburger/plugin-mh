@@ -9,6 +9,8 @@ allowed-tools:
   - Grep
   - Write
   - Agent
+  - mcp__plugin_playwright_playwright__browser_navigate
+  - mcp__plugin_playwright_playwright__browser_snapshot
 ---
 
 # Ralph Prep: 랄프 전 철저한 준비
@@ -107,19 +109,28 @@ Phase 1에서 잡은 굵은 유저 시나리오를 **스텝 바이 스텝으로 
 
 2. **시각화** (사용자 선택에 따라)
    - 기본: 구술로 스텝 바이 스텝 설명
-   - 옵션: ASCII 아트로 화면 흐름을 그림
+   - 옵션: **HTML 데모 화면을 직접 생성하여 브라우저에서 확인**
 
-   ```
-   사용자가 원하면 ASCII로 시각화:
+   시각화 요청 시 행동:
+   1. 유저 시나리오의 각 화면을 HTML/CSS로 구성한다 (단일 HTML 파일)
+   2. 실제 UI와 유사한 레이아웃, 버튼, 입력 필드를 포함한다
+   3. 화면 간 전환 흐름을 탭/섹션으로 나누어 한 파일에서 확인 가능하게 한다
+   4. `docs/prd/demos/{날짜}-{주제슬러그}-demo.html`에 저장한다
+   5. Playwright의 `browser_navigate`로 파일을 열어 사용자에게 보여준다
 
-   ┌─────────────────┐    클릭     ┌─────────────────┐
-   │  메인 화면       │ ────────→ │  상세 화면       │
-   │                 │           │                 │
-   │  [항목 리스트]   │           │  [제목]         │
-   │  [+ 추가]       │           │  [내용]         │
-   │                 │           │  [수정] [삭제]   │
-   └─────────────────┘           └─────────────────┘
+   ```html
+   <!-- 데모 화면 구성 예시 -->
+   <div class="screen" id="screen-main">
+     <h2>메인 화면</h2>
+     <ul class="item-list">
+       <li>항목 1</li>
+       <li>항목 2</li>
+     </ul>
+     <button onclick="showScreen('detail')">+ 추가</button>
+   </div>
    ```
+
+   > **주의**: ASCII 코드로 화면을 설명하지 않는다. 반드시 HTML 데모 화면을 생성하여 실제 UI를 보여준다.
 
 3. **모호한 부분을 모두 질문한다** — 질문 수 제한 없음
    - 예외 상황: "이 상태에서 뒤로가기를 누르면?"
@@ -157,13 +168,13 @@ questions:
         description: "모든 시나리오가 명확하고, 추가 질문이 없다"
       - label: "아직 모호한 부분이 있다"
         description: "추가 질문이 필요한 부분이 남아있다"
-      - label: "ASCII로 전체 흐름을 한번 정리해줘"
-        description: "시각화를 통해 최종 확인하고 싶다"
+      - label: "데모 화면으로 전체 흐름을 보여줘"
+        description: "HTML 데모 화면을 생성하여 브라우저에서 확인하고 싶다"
     multiSelect: false
 ```
 
 "아직 모호한 부분이 있다" → 추가 질문 계속
-"ASCII로 정리해줘" → 전체 흐름을 ASCII로 그린 후 다시 확인
+"데모 화면으로 보여줘" → HTML 데모 화면을 생성하고 브라우저에서 열어 확인한 후 다시 질문
 
 ### Phase 2 완료 시 행동
 
