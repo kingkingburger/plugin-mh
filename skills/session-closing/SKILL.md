@@ -61,7 +61,7 @@ Session Summary:
 Task(
     subagent_type="doc-updater",
     description="Document update analysis",
-    prompt="[Session Summary]\n\nAnalyze if CLAUDE.md, context.md need updates."
+    prompt="[Session Summary]\n\nAnalyze if CLAUDE.md, README.md, context.md need updates."
 )
 
 Task(
@@ -87,7 +87,7 @@ Task(
 
 | Agent | Role | Output |
 |-------|------|--------|
-| **doc-updater** | Analyze CLAUDE.md/context.md updates | Specific content to add |
+| **doc-updater** | Analyze CLAUDE.md/README.md/context.md updates | Specific content to add |
 | **automation-scout** | Detect automation patterns | skill/command/agent suggestions |
 | **learning-extractor** | Extract learning points | TIL format summary |
 | **followup-suggester** | Suggest follow-up tasks | Prioritized task list |
@@ -148,6 +148,7 @@ AskUserQuestion(
         "options": [
             {"label": "Create commit (Recommended)", "description": "Commit changes"},
             {"label": "Update CLAUDE.md", "description": "Document new knowledge/workflows"},
+            {"label": "Update README.md", "description": "Sync README with current skills/features"},
             {"label": "Create automation", "description": "Generate skill/command/agent"},
             {"label": "Skip", "description": "End without action"}
         ]

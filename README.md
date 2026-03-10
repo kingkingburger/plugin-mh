@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 18 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 19 custom skills for thinking, deciding, and building smarter.
 
 ## Install
 
@@ -36,6 +36,7 @@ claude plugin add kingkingburger/plugin-mh
 | **auto-commit** | `자동 커밋`, `auto commit` | Execute instructions, then auto commit & push |
 | **ralph-prep** | `PRD 작성`, `ralph-prep` | Deep interview to turn ideas into crystal-clear PRDs |
 | **review** | `검토해줘`, `review this` | Interactive markdown review with web UI |
+| **live-verify** | `라이브 검증`, `live-verify` | 2-Phase E2E verification — Plan scenarios, then Execute with Playwright/Bash/curl |
 | **google-calendar** | `오늘 일정`, `미팅 추가해줘` | Google Calendar CRUD with multi-account support |
 
 ### Session & History
