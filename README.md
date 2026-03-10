@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 19 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 18 custom skills for thinking, deciding, and building smarter.
 
 ## Install
 
@@ -52,7 +52,6 @@ claude plugin add kingkingburger/plugin-mh
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | **youtube-digest** | `유튜브 정리`, `영상 요약` | Transcript extraction, summary, translation, and quiz generation |
-| **linkedin-insight** | `linkedin 분석` | LinkedIn post analytics and trend analysis via browser automation |
 
 ## Writing Your Own Skill
 
