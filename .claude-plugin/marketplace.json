@@ -1,29 +1,15 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "mh",
-  "description": "MH의 커스텀 Claude Code 스킬 모음 - 14개 생산성 스킬",
+  "name": "plugin-mh",
   "owner": {
     "name": "MH",
-    "email": "dnjsalsgh123@gmail.com"
+    "url": "https://github.com/kingkingburger"
   },
+  "description": "Claude Code plugins for thinking, deciding, and building smarter by MH",
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "커스텀 Claude Code 스킬 모음: auto-commit, dev-scan, tech-decision, session-closing 등 13개 생산성 스킬",
-      "version": "1.1.0",
-      "author": {
-        "name": "MH"
-      },
-      "source": "./",
-      "category": "productivity",
-      "homepage": "https://github.com/kingkingburger/plugin-mh",
-      "tags": [
-        "skills",
-        "automation",
-        "productivity",
-        "developer-tools"
-      ]
+      "description": "18 custom skills: clarify, tech-decision, agent-arena, live-verify, auto-commit, ralph-prep, and more",
+      "source": "./"
     }
-  ],
-  "version": "1.1.0"
+  ]
 }

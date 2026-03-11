@@ -88,3 +88,46 @@ hooks.json 예시:
 mcp-server/
 └── server.py
 ```
+
+## Marketplace 등록
+
+플러그인을 마켓플레이스에 배포하려면 `.claude-plugin/marketplace.json`을 작성합니다.
+
+```json
+{
+  "name": "plugin-mh",
+  "owner": {
+    "name": "MH",
+    "url": "https://github.com/kingkingburger"
+  },
+  "description": "Claude Code plugins for thinking, deciding, and building smarter by MH",
+  "plugins": [
+    {
+      "name": "plugin-mh",
+      "description": "18 custom skills: clarify, tech-decision, agent-arena, live-verify, and more",
+      "source": "./"
+    }
+  ]
+}
+```
+
+### 필드 설명
+
+| Field | Description |
+|-------|-------------|
+| `name` | 마켓플레이스 패키지 이름 (`plugin.json`의 `name`과 일치해야 함) |
+| `owner.name` | 플러그인 작성자 이름 |
+| `owner.url` | GitHub 프로필 URL |
+| `description` | 마켓플레이스 리스팅 설명 |
+| `plugins[].name` | 플러그인 이름 |
+| `plugins[].description` | 플러그인 상세 설명 |
+| `plugins[].source` | 플러그인 디렉토리 (레포 루트면 `"./"`) |
+
+### 사용자 설치 명령
+
+```bash
+claude plugin marketplace add <owner>/<repo-name>
+claude plugin install <plugin-name>
+```
+
+> **참고**: `version` 필드는 `plugin.json`에서만 관리합니다. marketplace.json에는 불필요합니다.
