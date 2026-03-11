@@ -23,6 +23,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Playwright MCP
+.playwright-mcp/
+
 # Cache
 .cache/
 *.swp

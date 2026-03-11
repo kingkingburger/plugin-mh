@@ -131,3 +131,31 @@ claude plugin install <plugin-name>
 ```
 
 > **참고**: `version` 필드는 `plugin.json`에서만 관리합니다. marketplace.json에는 불필요합니다.
+
+## 버전 관리 규칙
+
+| 변경 유형 | Version Bump | 예시 |
+|-----------|:---:|------|
+| 스킬 코드 변경 (SKILL.md, agents/, scripts/) | O | 로직 수정, 새 에이전트 추가 |
+| 새 스킬 추가 | O | `skills/new-skill/` 생성 |
+| 스킬 삭제 | O | `skills/old-skill/` 제거 |
+| README/GUIDE 문서만 수정 | X | 오타 수정, 설명 보강 |
+| marketplace.json 메타데이터만 수정 | X | description 변경 |
+
+- Semver 규칙: `MAJOR.MINOR.PATCH`
+  - PATCH: 기존 스킬 버그 수정
+  - MINOR: 새 스킬 추가 또는 기존 스킬 기능 확장
+  - MAJOR: 호환성 깨지는 변경
+- 이유: 사용자 캐시가 plugin.json version 변경 시 갱신됨
+
+## 트러블슈팅
+
+### 스킬이 Claude에서 안 보일 때
+1. `plugin.json` 버전이 bump 되었는지 확인
+2. SKILL.md frontmatter (`---`)가 유효한 YAML인지 확인
+3. `claude plugin list`로 플러그인 설치 확인
+
+### SKILL.md 문법 오류
+- frontmatter는 반드시 `---`로 시작하고 끝나야 함
+- `name`, `description` 필드는 필수
+- `allowed-tools`는 배열 형식: `[Read, Grep, Glob]`
