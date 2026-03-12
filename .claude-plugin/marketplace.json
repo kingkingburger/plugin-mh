@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "18 custom skills: clarify, tech-decision, agent-arena, live-verify, auto-commit, ralph-prep, and more",
+      "description": "19 custom skills: clarify, tech-decision, agent-arena, expert-review, live-verify, auto-commit, ralph-prep, and more",
       "source": "./"
     }
   ]

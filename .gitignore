@@ -26,6 +26,9 @@ Thumbs.db
 # Playwright MCP
 .playwright-mcp/
 
+# Decisions (business-sensitive)
+decisions/
+
 # Cache
 .cache/
 *.swp

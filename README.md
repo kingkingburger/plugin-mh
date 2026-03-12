@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 18 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 19 custom skills for thinking, deciding, and building smarter.
 
 ## Table of Contents
 
@@ -15,6 +15,7 @@ Claude Code plugin with 18 custom skills for thinking, deciding, and building sm
   - [tech-decision](#tech-decision) - 기술 의사결정 심층 분석
   - [agent-arena](#agent-arena) - 다관점 에이전트 토론
   - [agent-council](#agent-council) - 멀티 AI 의견 종합
+  - [expert-review](#expert-review) - 전문가 페르소나 병렬 리뷰
   - [dev-scan](#dev-scan) - 개발 커뮤니티 여론 스캔
   - [auto-commit](#auto-commit) - 작업 후 자동 커밋 & 푸시
   - [ralph-prep](#ralph-prep) - PRD 작성 심층 인터뷰
@@ -70,6 +71,7 @@ If `plugin-mh` appears in the list, installation is complete.
 | [tech-decision](#tech-decision) | `A vs B`, `기술 선택` | Systematic multi-source analysis for technical decisions |
 | [agent-arena](#agent-arena) | `에이전트 토론`, `debate this` | Multiple AI agents debate a topic across rounds, then synthesize |
 | [agent-council](#agent-council) | `summon the council` | Collect and synthesize opinions from multiple AI agents |
+| [expert-review](#expert-review) | `전문가 리뷰`, `expert review` | Auto-recommend expert personas, parallel review, unified proposal |
 | [dev-scan](#dev-scan) | `개발자 반응`, `developer reactions` | Scan Reddit, HN, Dev.to for community opinions on tech topics |
 
 ### Productivity
@@ -256,6 +258,34 @@ User: "에이전트 토론 --preset 8 - MVP 스코프를 어디까지?"
 ```bash
 # 예시
 User: "summon the council - TypeScript strict mode 도입 어떻게 생각해?"
+```
+
+---
+
+### expert-review
+
+**파일을 입력하면 전문가 페르소나를 자동 추천하고 병렬 리뷰 후 통합 제안서를 출력.**
+
+```
+Step 1: 파일 읽기 → 문서 유형/도메인 분석
+Step 2: 최적 전문가 N명 자동 추천 → 사용자 확인/수정
+Step 3: N명 병렬 서브에이전트 리뷰 (등급 + 강점 + 개선 제안)
+Step 4: 통합 제안서 (공통 평가 + 충돌 해소 + 우선순위 액션 아이템)
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--count` | `3` | 리뷰어 수 (2~5) |
+| `--auto` | `false` | 페르소나 확인 단계 생략 |
+| `--save` | `true` | 결과 파일 저장 |
+
+**Trigger:** `전문가 리뷰`, `expert review`, `페르소나 리뷰`, `다관점 리뷰`
+
+```bash
+# 예시
+User: "/expert-review docs/plan.md"
+User: "/expert-review src/main.ts --count 5"
+User: "전문가 리뷰 부탁 - README.md"
 ```
 
 ---
