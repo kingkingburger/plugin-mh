@@ -1,6 +1,7 @@
 ---
 name: vague
 description: This skill should be used when the user's request or requirement is ambiguous and needs iterative questioning to become actionable. Trigger on "clarify requirements", "refine requirements", "요구사항 명확히", "요구사항 정리", "뭘 원하는 건지", "make this clearer", "spec this out", "scope this", "/clarify". Turns vague inputs into concrete specs. For strategy blind spots use unknown; for content-vs-form reframing use metamedium.
+version: 1.0.0
 ---
 
 # Vague: Requirement Clarification

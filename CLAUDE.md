@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 플러그인. 15개 생산성 스킬 모음.
+MH의 커스텀 Claude Code 스킬 플러그인. 19개 생산성 스킬 모음.
 
 ## 프로젝트 구조
 
@@ -9,27 +9,32 @@ MH의 커스텀 Claude Code 스킬 플러그인. 15개 생산성 스킬 모음.
 skills/             ← 스킬 디렉토리 (각 스킬 = 하위 폴더)
 research/           ← 개인 리서치 노트 (youtube-digest 출력 등)
 GUIDE.md            ← 새 스킬 작성 가이드
+README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
 
-## 스킬 목록 (15개)
+## 스킬 목록 (19개)
 
 | 스킬 | 용도 |
 |------|------|
-| agent-council | 다중 AI 에이전트 의견 수집 |
-| auto-commit | 작업 후 자동 커밋 & 푸시 |
-| dev-scan | 개발 커뮤니티 기술 의견 수집 |
-| google-calendar | Google 캘린더 일정 관리 |
-| history-insight | 세션 히스토리 접근/캡처 |
-| linkedin-insight | LinkedIn 브라우저 자동화 분석 |
-| metamedium | 콘텐츠 vs 형식 리프레이밍 |
+| clarify | 3-in-1 요구사항 명확화 (vague + unknown + metamedium 통합) |
+| vague | 모호한 요구사항을 스펙으로 |
+| unknown | 전략 사각지대 분석 (Known/Unknown 4분면) |
+| metamedium | Content vs Form 관점 전환 |
 | moonshot | 목표 상향 프레임워크 |
-| review | 마크다운 리뷰 웹 UI |
-| session-analyzer | 세션 로그 사후 분석 |
-| session-closing | 세션 종료 멀티에이전트 워크플로우 |
-| tech-decision | 기술 의사결정 멀티소스 분석 |
-| unknown | Known/Unknown 4분면 전략 분석 |
-| vague | 모호한 요구사항 명확화 |
-| youtube-digest | YouTube 영상 요약/퀴즈 |
+| tech-decision | 기술 의사결정 심층 분석 |
+| agent-arena | 다관점 에이전트 토론 |
+| agent-council | 멀티 AI 의견 종합 |
+| expert-review | 전문가 페르소나 병렬 리뷰 |
+| dev-scan | 개발 커뮤니티 여론 스캔 |
+| auto-commit | 작업 후 자동 커밋 & 푸시 |
+| ralph-prep | PRD 작성 심층 인터뷰 |
+| review | 웹 UI 인터랙티브 리뷰 |
+| live-verify | E2E 라이브 검증 |
+| google-calendar | 멀티 계정 캘린더 |
+| session-closing | 세션 마무리 분석 |
+| session-analyzer | 세션 행동 검증 |
+| history-insight | 세션 히스토리 분석 |
+| youtube-digest | 유튜브 요약 & 퀴즈 |
 
 ## 유지보수 규칙
 

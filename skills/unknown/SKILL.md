@@ -1,6 +1,7 @@
 ---
 name: unknown
 description: This skill should be used when the user provides a strategy, plan, or decision document and wants to surface hidden assumptions and blind spots using the Known/Unknown 4-quadrant framework. Trigger on "known unknown", "4분면 분석", "blind spots", "뭘 놓치고 있지", "뭘 모르는지 모르겠어", "전략 점검", "전략 분석", "assumption check", "가정 점검", "quadrant analysis", "what am I missing". Strategy-level blind spot analysis with hypothesis-driven questioning. For requirement clarification use vague; for content-vs-form reframing use metamedium.
+version: 1.0.0
 ---
 
 # Unknown: Surface Blind Spots with Known/Unknown Quadrants

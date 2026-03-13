@@ -1,6 +1,7 @@
 ---
 name: google-calendar
 description: Google 캘린더 일정 조회/생성/수정/삭제. "오늘 일정", "이번 주 일정", "미팅 추가해줘" 요청에 사용. 여러 계정(work, personal) 통합 조회 지원.
+version: 1.0.0
 ---
 
 # Google Calendar Sync

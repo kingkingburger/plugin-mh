@@ -1,6 +1,7 @@
 ---
 name: clarify
 description: Unified clarification skill with 3 modes. Use when user needs to clarify requirements (vague), surface strategy blind spots (unknown), or reframe content vs form (metamedium). Trigger on "/clarify", "clarify", "명확히", "요구사항 정리", "뭘 원하는 건지", "blind spots", "뭘 놓치고 있지", "4분면", "known unknown", "가정 점검", "content vs form", "metamedium", "관점 전환", "형식을 바꿔볼까", "다른 방법 없을까".
+version: 0.1.0
 allowed-tools:
   - AskUserQuestion
   - Read

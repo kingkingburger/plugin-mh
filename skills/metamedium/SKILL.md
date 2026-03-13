@@ -1,6 +1,7 @@
 ---
 name: metamedium
 description: This skill should be used when the user is building, planning, or strategizing and the key question is whether to optimize content (what) or change form (how/medium). Trigger on "내용 vs 형식", "content vs form", "metamedium", "형식을 바꿔볼까", "새로운 포맷", "관점 전환", "perspective shift", "다른 방법 없을까", "같은 방식이 안 먹혀", "diminishing returns". Applies Alan Kay's metamedium concept to surface form-level alternatives. For requirement clarification use vague; for strategy blind spots use unknown.
+version: 1.0.0
 ---
 
 # Metamedium: Content vs Form Lens

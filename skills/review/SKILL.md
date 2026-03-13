@@ -1,6 +1,7 @@
 ---
 name: review
 description: Interactive markdown review with web UI. Use when user says "review this", "check this plan", "피드백", "검토해줘" or specifies a file path to review.
+version: 1.0.0
 allowed-tools:
   - mcp__interactive_review__start_review
   - Read

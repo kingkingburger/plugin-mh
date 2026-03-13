@@ -1,6 +1,7 @@
 ---
 name: youtube-digest
 description: This skill should be used when the user asks to "유튜브 정리", "영상 요약", "transcript 번역", "YouTube digest", "영상 퀴즈", or provides a YouTube URL for analysis. Extracts transcript, generates summary/insights/Korean translation, and tests comprehension with 9 quiz questions across 3 difficulty levels. Optional Deep Research for web-based follow-up.
+version: 1.0.0
 ---
 
 # YouTube Digest
