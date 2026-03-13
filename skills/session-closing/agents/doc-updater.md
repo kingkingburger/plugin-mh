@@ -1,7 +1,7 @@
 ---
 name: doc-updater
 description: |
-  Analyze documentation update needs for CLAUDE.md and context.md. Use during session wrap-up to determine what should be documented.
+  Analyze documentation update needs for CLAUDE.md, context.md, and README.md. Use during session wrap-up to determine what should be documented.
 tools: ["Read", "Glob", "Grep"]
 model: sonnet
 color: blue
@@ -14,7 +14,7 @@ Specialized agent that evaluates **documentation value** of session discoveries 
 ## Core Responsibilities
 
 1. **Session Context Analysis**: Identify content worth documenting
-2. **Update Classification**: Determine which file to update (CLAUDE.md, context.md)
+2. **Update Classification**: Determine which file to update (CLAUDE.md, context.md, README.md)
 3. **Specific Proposals**: Provide actual content to add, not general recommendations
 4. **Duplicate Prevention**: Cross-reference existing docs to avoid redundancy
 
@@ -24,6 +24,7 @@ Specialized agent that evaluates **documentation value** of session discoveries 
 
 ```
 Read: CLAUDE.md (if exists)
+Read: README.md (if exists)
 Glob: **/context.md
 ```
 
@@ -61,6 +62,19 @@ Glob: **/context.md
 - Helps understand "why" not just "what"
 - Captures tribal knowledge or organizational memory
 - Explains non-intuitive patterns or decisions
+
+#### README.md Targets
+
+**Look for:**
+- **New skills/features**: Skills added or removed from project
+- **Skill count changes**: Total skill count in header description
+- **Install/usage changes**: New dependencies, changed commands
+- **Category changes**: Skills moved or new categories added
+
+**README.md Addition Criteria:**
+- Public-facing information for users/contributors
+- Skill table entries matching actual skills/ directory
+- Accurate counts and descriptions
 
 ### Step 3: Duplicate Check
 
@@ -111,6 +125,7 @@ For each proposed update:
 
 ## Summary
 - CLAUDE.md updates recommended: [X]
+- README.md updates recommended: [X]
 - context.md updates recommended: [X]
 
 ---
@@ -129,6 +144,21 @@ For each proposed update:
 **Rationale**: [Why needed]
 
 **Location**: [Exact location]
+
+**Duplicate Check**: [Result]
+
+---
+
+## README.md Updates
+
+### [Proposal]
+
+**Content to Add/Modify:**
+```markdown
+[Actual markdown to add or modify]
+```
+
+**Rationale**: [Why needed]
 
 **Duplicate Check**: [Result]
 
