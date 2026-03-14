@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 19 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 20 custom skills for thinking, deciding, and building smarter.
 
 ## Table of Contents
 
@@ -26,6 +26,7 @@ Claude Code plugin with 19 custom skills for thinking, deciding, and building sm
   - [session-analyzer](#session-analyzer) - 세션 행동 검증
   - [history-insight](#history-insight) - 세션 히스토리 분석
   - [youtube-digest](#youtube-digest) - 유튜브 요약 & 퀴즈
+  - [youtube-slides](#youtube-slides) - 유튜브 자막별 프레임 캡쳐
 - [Writing Your Own Skill](#writing-your-own-skill)
 - [License](#license)
 
@@ -97,6 +98,7 @@ If `plugin-mh` appears in the list, installation is complete.
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | [youtube-digest](#youtube-digest) | `유튜브 정리`, `영상 요약` | Transcript extraction, summary, translation, and quiz generation |
+| [youtube-slides](#youtube-slides) | `youtube-slides`, `자막 캡쳐` | Frame capture per subtitle segment from YouTube videos |
 
 ---
 
@@ -451,6 +453,29 @@ User: "세션 분석 - clarify 스킬이 제대로 실행됐는지 확인해줘"
 # 예시
 User: "이 영상 정리해줘 https://youtube.com/watch?v=..."
 User: "유튜브 정리 - [URL]"
+```
+
+---
+
+### youtube-slides
+
+**YouTube 영상의 자막 구간별로 프레임을 캡쳐하여 슬라이드형 문서를 생성.**
+
+yt-dlp로 영상을 다운받고, 자막 타임스탬프 기준으로 ffmpeg가 프레임을 캡쳐합니다.
+
+**What you get:**
+1. **Markdown 문서** - 각 자막과 캡쳐 이미지가 매핑된 슬라이드
+2. **HTML 문서** - 브라우저에서 바로 볼 수 있는 슬라이드 뷰
+3. **Images 폴더** - 자막 구간별 캡쳐 이미지
+
+**Dependencies:** `yt-dlp`, `ffmpeg`, `Python 3`
+
+**Trigger:** `youtube-slides`, `자막 캡쳐`, `영상 슬라이드`
+
+```bash
+# 예시
+User: "youtube-slides https://youtube.com/watch?v=..."
+User: "자막 캡쳐 - [URL]"
 ```
 
 ---

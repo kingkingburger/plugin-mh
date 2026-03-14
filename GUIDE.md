@@ -155,6 +155,13 @@ claude plugin install <plugin-name>
 2. SKILL.md frontmatter (`---`)가 유효한 YAML인지 확인
 3. `claude plugin list`로 플러그인 설치 확인
 
+### 마켓플레이스 캐시 갱신 순서
+새 스킬 추가 후 캐시가 갱신되지 않을 때는 아래 순서를 따른다:
+1. `marketplace.json` description 업데이트 (스킬 수 반영)
+2. `plugin.json` version bump (이 변경이 캐시 갱신을 트리거함)
+3. git commit & push
+4. `claude plugin marketplace add <owner>/<repo>` 재실행
+
 ### SKILL.md 문법 오류
 - frontmatter는 반드시 `---`로 시작하고 끝나야 함
 - `name`, `description` 필드는 필수

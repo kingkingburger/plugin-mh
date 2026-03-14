@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 플러그인. 19개 생산성 스킬 모음.
+MH의 커스텀 Claude Code 스킬 플러그인. 20개 생산성 스킬 모음.
 
 ## 프로젝트 구조
 
