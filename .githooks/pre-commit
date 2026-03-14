@@ -1,0 +1,80 @@
+#!/bin/bash
+# pre-commit hook: 스킬 변경 시 자동 version bump + 스킬 수 동기화
+# 설정: git config core.hooksPath .githooks
+
+PLUGIN_JSON=".claude-plugin/plugin.json"
+MARKETPLACE_JSON=".claude-plugin/marketplace.json"
+CLAUDE_MD="CLAUDE.md"
+
+# 스테이징된 파일 중 skills/ 변경 확인
+CHANGED_SKILLS=$(git diff --cached --name-only | grep "^skills/")
+
+if [ -z "$CHANGED_SKILLS" ]; then
+  exit 0
+fi
+
+echo "[pre-commit] skills/ 변경 감지 — 자동 동기화 시작"
+
+# 1. 실제 스킬 수 카운트
+SKILL_COUNT=$(ls -d skills/*/ 2>/dev/null | wc -l | tr -d ' ')
+echo "[pre-commit] 현재 스킬 수: ${SKILL_COUNT}개"
+
+# 2. plugin.json patch version bump
+if [ -f "$PLUGIN_JSON" ]; then
+  OLD_VERSION=$(grep '"version"' "$PLUGIN_JSON" | head -1 | sed 's/.*"\([0-9]*\.[0-9]*\.[0-9]*\)".*/\1/')
+  MAJOR=$(echo "$OLD_VERSION" | cut -d. -f1)
+  MINOR=$(echo "$OLD_VERSION" | cut -d. -f2)
+  PATCH=$(echo "$OLD_VERSION" | cut -d. -f3)
+  NEW_PATCH=$((PATCH + 1))
+  NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
+
+  sed -i "s/\"version\": \"${OLD_VERSION}\"/\"version\": \"${NEW_VERSION}\"/" "$PLUGIN_JSON"
+  git add "$PLUGIN_JSON"
+  echo "[pre-commit] plugin.json: ${OLD_VERSION} → ${NEW_VERSION}"
+fi
+
+# 3. marketplace.json 스킬 수 업데이트
+if [ -f "$MARKETPLACE_JSON" ]; then
+  sed -i "s/\"[0-9]* custom skills:/\"${SKILL_COUNT} custom skills:/" "$MARKETPLACE_JSON"
+  git add "$MARKETPLACE_JSON"
+  echo "[pre-commit] marketplace.json: 스킬 수 → ${SKILL_COUNT}"
+fi
+
+# 4. CLAUDE.md 스킬 수 업데이트 (헤더 + 제목)
+if [ -f "$CLAUDE_MD" ]; then
+  sed -i "s/[0-9]*개 생산성 스킬/${SKILL_COUNT}개 생산성 스킬/" "$CLAUDE_MD"
+  sed -i "s/스킬 목록 ([0-9]*개)/스킬 목록 (${SKILL_COUNT}개)/" "$CLAUDE_MD"
+  git add "$CLAUDE_MD"
+  echo "[pre-commit] CLAUDE.md: 스킬 수 → ${SKILL_COUNT}"
+fi
+
+# 5. SKILL.md frontmatter 검증
+ERRORS=0
+for dir in skills/*/; do
+  skill=$(basename "$dir")
+  if [ ! -f "$dir/SKILL.md" ]; then
+    echo "[pre-commit] ERROR: ${skill}/SKILL.md 누락"
+    ERRORS=$((ERRORS + 1))
+    continue
+  fi
+  if ! head -1 "$dir/SKILL.md" | grep -q "^---"; then
+    echo "[pre-commit] ERROR: ${skill}/SKILL.md frontmatter 시작 '---' 누락"
+    ERRORS=$((ERRORS + 1))
+  fi
+  if ! grep -q "^name:" "$dir/SKILL.md"; then
+    echo "[pre-commit] ERROR: ${skill}/SKILL.md 'name' 필드 누락"
+    ERRORS=$((ERRORS + 1))
+  fi
+  if ! grep -q "^description:" "$dir/SKILL.md"; then
+    echo "[pre-commit] ERROR: ${skill}/SKILL.md 'description' 필드 누락"
+    ERRORS=$((ERRORS + 1))
+  fi
+done
+
+if [ "$ERRORS" -gt 0 ]; then
+  echo "[pre-commit] ${ERRORS}개 오류 발견. 커밋을 중단합니다."
+  exit 1
+fi
+
+echo "[pre-commit] 동기화 완료"
+exit 0
