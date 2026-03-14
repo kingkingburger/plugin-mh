@@ -12,7 +12,7 @@ GUIDE.md            ← 새 스킬 작성 가이드
 README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
 
-## 스킬 목록 (19개)
+## 스킬 목록 (20개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -35,6 +35,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | session-analyzer | 세션 행동 검증 |
 | history-insight | 세션 히스토리 분석 |
 | youtube-digest | 유튜브 요약 & 퀴즈 |
+| youtube-slides | 유튜브 자막별 프레임 캡쳐 |
 
 ## 유지보수 규칙
 
