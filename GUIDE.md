@@ -104,7 +104,7 @@ mcp-server/
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "19 custom skills: clarify, tech-decision, agent-arena, live-verify, and more",
+      "description": "20 custom skills: clarify, tech-decision, agent-arena, expert-review, live-verify, auto-commit, youtube-slides, and more",
       "source": "./"
     }
   ]
