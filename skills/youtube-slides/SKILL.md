@@ -1,7 +1,7 @@
 ---
 name: youtube-slides
+description: This skill should be used when the user asks to "유튜브 슬라이드", "영상 캡쳐", "스크린샷 추출", "YouTube slides", "영상 프레임 추출", "영상 정리 with 캡쳐", or provides a YouTube URL with capture/screenshot intent. Downloads video, extracts transcript, captures frames at each subtitle segment, and generates markdown + HTML + image folder output.
 version: 1.0.0
-description: "This skill should be used when the user asks to \"유튜브 슬라이드\", \"영상 캡쳐\", \"스크린샷 추출\", \"YouTube slides\", \"영상 프레임 추출\", \"영상 정리 with 캡쳐\", or provides a YouTube URL with capture/screenshot intent. Downloads video, extracts transcript, captures frames at each subtitle segment, and generates markdown + HTML + image folder output."
 ---
 
 # YouTube Slides
