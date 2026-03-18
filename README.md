@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 20 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 22 custom skills for thinking, deciding, and building smarter.
 
 ## Table of Contents
 
@@ -27,6 +27,8 @@ Claude Code plugin with 20 custom skills for thinking, deciding, and building sm
   - [history-insight](#history-insight) - 세션 히스토리 분석
   - [youtube-digest](#youtube-digest) - 유튜브 요약 & 퀴즈
   - [youtube-slides](#youtube-slides) - 유튜브 자막별 프레임 캡쳐
+  - [arcana](#arcana) - 아르카나 팀 토론/조언
+  - [ouroboros](#ouroboros) - 3단계 심층 문서 생산
 - [Writing Your Own Skill](#writing-your-own-skill)
 - [License](#license)
 
@@ -64,6 +66,7 @@ If `plugin-mh` appears in the list, installation is complete.
 | [unknown](#unknown) | `blind spots`, `4분면 분석` | Surface hidden assumptions with Known/Unknown quadrant analysis |
 | [metamedium](#metamedium) | `content vs form`, `관점 전환` | Reframe problems by distinguishing what from how |
 | [moonshot](#moonshot) | `moonshot`, `10x`, `더 높은 목표` | Push goals higher with proven goal-setting frameworks |
+| [ouroboros](#ouroboros) | `ouroboros`, `심층 문서`, `deep spec` | 3-phase deep document production (Requirements→Design→Verification) with quality gates |
 
 ### Decision & Research
 
@@ -74,6 +77,7 @@ If `plugin-mh` appears in the list, installation is complete.
 | [agent-council](#agent-council) | `summon the council` | Collect and synthesize opinions from multiple AI agents |
 | [expert-review](#expert-review) | `전문가 리뷰`, `expert review` | Auto-recommend expert personas, parallel review, unified proposal |
 | [dev-scan](#dev-scan) | `개발자 반응`, `developer reactions` | Scan Reddit, HN, Dev.to for community opinions on tech topics |
+| [arcana](#arcana) | `아르카나`, `arcana`, `팀 토론` | 8 individual agents discuss and advise on any topic |
 
 ### Productivity
 
@@ -476,6 +480,59 @@ yt-dlp로 영상을 다운받고, 자막 타임스탬프 기준으로 ffmpeg가 
 # 예시
 User: "youtube-slides https://youtube.com/watch?v=..."
 User: "자막 캡쳐 - [URL]"
+```
+
+---
+
+### arcana
+
+**8명의 개인 에이전트가 주제에 대해 자연스러운 대화체로 토론하고 조언.**
+
+토니 스타크, 예원 제, 이상, 발루, 프랭크, 페이지, 파후, 초록문어 — 각자의 캐릭터와 전문성으로 주제를 다각도에서 분석합니다.
+
+- Phase 1: 7명 병렬 의견 수집 (프랭크 제외)
+- Phase 2: 리액션 라운드 (서로의 의견에 반응)
+- 프랭크가 마지막에 기록 노트로 정리
+
+**Trigger:** `아르카나`, `arcana`, `팀 토론`, `아르카나 소집`
+
+```bash
+# 예시
+User: "아르카나 모여 - 이 아키텍처 어떻게 생각해?"
+User: "arcana - Should we go with monorepo?"
+```
+
+---
+
+### ouroboros
+
+**모호한 아이디어를 3단계 파이프라인으로 심화하여 깊이 있는 문서 세트를 생산.**
+
+> 핵심 철학: 모호성을 수치로 추적하고, 문턱값(20%) 이하가 될 때까지 반복한다.
+
+```
+Phase 1: 요구사항 심화 → Phase 2: 설계 심화 → Phase 3: 검증 심화
+         (품질 게이트)          (품질 게이트)          (품질 게이트)
+```
+
+각 Phase에서:
+- 차원별 점수(0-1) × 가중치로 모호성 계산
+- 모호성 ≤ 20%이면 다음 Phase로 진행
+- 초과 시 가장 약한 차원에 타겟 질문 → 반복
+
+**Output:** 3개 문서 세트 (`docs/ouroboros/{date}-{slug}/`)
+1. `01-requirements.md` — 목표, 제약, 비목표, 수용기준
+2. `02-design.md` — ADR, 기술스펙, 다이어그램, 파일별 계획
+3. `03-verification.md` — E2E 시나리오, 엣지케이스, 성공/실패 기준
+
+**PRD만 필요하면 `/ralph-prep`, 설계+검증까지 메트릭 기반으로 필요하면 `/ouroboros`.**
+
+**Trigger:** `ouroboros`, `우로보로스`, `심층 문서`, `deep spec`, `요구사항부터 검증까지`
+
+```bash
+# 예시
+User: "ouroboros - 사내 피드백 수집 도구 기획부터 검증까지"
+User: "심층 문서 - 구독 결제 시스템 설계해줘"
 ```
 
 ---
