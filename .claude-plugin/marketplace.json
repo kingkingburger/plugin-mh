@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "24 custom skills: clarify, tech-decision, agent-arena, expert-review, live-verify, auto-commit, ouroboros, tdd, systematic-debugging, youtube-slides, and more",
+      "description": "25 custom skills: clarify, tech-decision, agent-arena, expert-review, live-verify, auto-commit, ouroboros, tdd, systematic-debugging, harness, youtube-slides, and more",
       "source": "./"
     }
   ]

@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 플러그인. 24개 생산성 스킬 모음.
+MH의 커스텀 Claude Code 스킬 플러그인. 25개 생산성 스킬 모음.
 
 ## 프로젝트 구조
 
@@ -12,7 +12,7 @@ GUIDE.md            ← 새 스킬 작성 가이드
 README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
 
-## 스킬 목록 (24개)
+## 스킬 목록 (25개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -40,6 +40,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | ouroboros | 3단계 심층 문서 생산 (요구사항→설계→검증) |
 | tdd | 테스트 주도 개발 (RED-GREEN-REFACTOR 강제) |
 | systematic-debugging | 체계적 디버깅 (4단계 근본 원인 분석) |
+| harness | 3-에이전트 하네스 빌드 (Planner-Generator-Evaluator) |
 
 ## 유지보수 규칙
 
