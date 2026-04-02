@@ -68,7 +68,7 @@ Agent(subagent_type="plugin-mh:code-reviewer")
 
 - APPROVE → 종료. 사용자에게 최종 보고.
 - REQUEST CHANGES → Step 4로 돌아감.
-- 최대 3라운드. 3라운드 후에도 APPROVE 안 되면 남은 이슈를 사용자에게 보고하고 판단 요청.
+- 최대 5라운드. 5라운드 후에도 APPROVE 안 되면 남은 이슈를 사용자에게 보고하고 판단 요청.
 
 ## Output Format
 
@@ -93,5 +93,5 @@ APPROVE — 모든 CRITICAL/HIGH 이슈 해결됨
 
 - 리뷰어와 수정자는 반드시 별도 에이전트 (자기 코드 자기 리뷰 금지)
 - 수정 후 반드시 lint/타입체크 통과 확인
-- 3라운드 초과 시 사용자 판단 요청
+- 5라운드 초과 시 사용자 판단 요청
 - 리뷰어의 지적을 무시하지 않음 — 수정하지 않을 경우 사유를 명시
