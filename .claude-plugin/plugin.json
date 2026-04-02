@@ -1,12 +1,13 @@
 {
   "name": "plugin-mh",
-  "version": "1.13.3",
-  "description": "MH의 커스텀 Claude Code 스킬 모음",
+  "version": "1.14.1",
+  "description": "MH의 커스텀 Claude Code 스킬 + 에이전트 모음",
   "author": {
     "name": "MH"
   },
   "repository": "https://github.com/kingkingburger/plugin-mh",
   "license": "MIT",
   "keywords": ["claude-code", "plugin", "skills"],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "agents": "./agents/"
 }

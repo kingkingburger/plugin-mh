@@ -1,18 +1,25 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 플러그인. 25개 생산성 스킬 모음.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 26개 스킬 + 1개 에이전트.
 
 ## 프로젝트 구조
 
 ```
 .claude-plugin/     ← 플러그인 메타데이터 (plugin.json, marketplace.json)
+agents/             ← 에이전트 디렉토리 (각 에이전트 = .md 파일)
 skills/             ← 스킬 디렉토리 (각 스킬 = 하위 폴더)
 research/           ← 개인 리서치 노트 (youtube-digest 출력 등)
 GUIDE.md            ← 새 스킬 작성 가이드
 README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
 
-## 스킬 목록 (25개)
+## 에이전트 목록 (1개)
+
+| 에이전트 | 용도 |
+|---------|------|
+| code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
+
+## 스킬 목록 (26개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -41,6 +48,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | tdd | 테스트 주도 개발 (RED-GREEN-REFACTOR 강제) |
 | systematic-debugging | 체계적 디버깅 (4단계 근본 원인 분석) |
 | harness | 3-에이전트 하네스 빌드 (Planner-Generator-Evaluator) |
+| review-loop | 코드 작성 후 자동 리뷰 루프 (code-reviewer → 수정 → 재리뷰 반복) |
 
 ## 유지보수 규칙
 
