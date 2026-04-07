@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 24 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 27 custom skills for thinking, deciding, and building smarter.
 
 ## Table of Contents
 
@@ -31,6 +31,9 @@ Claude Code plugin with 24 custom skills for thinking, deciding, and building sm
   - [ouroboros](#ouroboros) - 3단계 심층 문서 생산
   - [tdd](#tdd) - 테스트 주도 개발
   - [systematic-debugging](#systematic-debugging) - 체계적 디버깅
+  - [harness](#harness) - 3-에이전트 하네스 빌드
+  - [review-loop](#review-loop) - 코드 리뷰 루프
+  - [ouroboros-run](#ouroboros-run) - ouroboros 계획 실행
 - [Writing Your Own Skill](#writing-your-own-skill)
 - [License](#license)
 
@@ -97,6 +100,9 @@ If `plugin-mh` appears in the list, installation is complete.
 |-------|---------|-------------|
 | [tdd](#tdd) | `tdd`, `테스트 먼저`, `test first` | RED-GREEN-REFACTOR cycle enforcement — no production code without a failing test |
 | [systematic-debugging](#systematic-debugging) | `디버깅`, `root cause`, `왜 안 돼` | 4-phase root cause investigation before any fix attempt |
+| [harness](#harness) | `harness`, `하네스`, `3-agent` | Planner-Generator-Evaluator 3-agent build with feedback loops |
+| [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | 3-chain review: code-reviewer → architect → critic |
+| [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | Execute ouroboros plans with Generator-Evaluator loop |
 
 ### Session & History
 
