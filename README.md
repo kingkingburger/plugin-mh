@@ -601,6 +601,75 @@ User: "왜 안 돼 - 테스트가 로컬에서만 실패해"
 
 ---
 
+### harness
+
+**Planner-Generator-Evaluator 3-에이전트 아키텍처로 앱을 제작.**
+
+> 핵심 원리: 만드는 쪽과 평가하는 쪽을 분리하고, 평가자를 깐깐하게 튜닝하는 것이 품질의 핵심 레버.
+
+**Architecture:**
+1. **Planner (opus)** — 제품 스펙 설계. "무엇(WHAT)"만 정의, 기술 스택 지정 금지
+2. **Generator (sonnet)** — 스프린트 계약에 따라 코드 구현
+3. **Evaluator (opus)** — 까다로운 QA로 Playwright/Bash 테스트. PASS/CONDITIONAL/FAIL 판정
+
+스프린트당 최대 3회 피드백 루프. 모든 스프린트 완료 후 최종 보고서 생성.
+
+**Trigger:** `harness`, `하네스`, `하네스로 만들어`, `3-agent`, `harness build`
+
+```bash
+# 예시
+User: "하네스로 만들어 - 할일 관리 웹앱"
+User: "harness build - real-time chat application"
+```
+
+---
+
+### review-loop
+
+**3단계 체이닝 리뷰로 코드 품질을 검증.**
+
+```
+code-reviewer → architect → critic
+     ↓ 결과 전달     ↓ 결과 전달     ↓ 최종 판정
+  정확성/품질     설계/구조 검증   사각지대/과잉지적 감시
+```
+
+각 리뷰어가 이전 리뷰어의 결과를 받아 검증/반박/보완. CRITICAL/HIGH 이슈 시 수정 후 재체이닝. 최소 5회 체이닝 필수.
+
+**Trigger:** `review-loop`, `리뷰 루프`, `리뷰 돌려`, `코드 리뷰 루프`, `리뷰하고 고쳐`
+
+```bash
+# 예시
+User: "리뷰 루프 돌려"
+User: "review-loop - 방금 작성한 코드 검증해줘"
+```
+
+---
+
+### ouroboros-run
+
+**ouroboros 계획 문서를 Generator-Evaluator 루프로 실행.**
+
+ouroboros가 생산한 3개 문서(요구사항/설계/검증)를 입력으로 받아, 설계의 파일별 구현 계획을 story로 분해하고 순차 구현한다. harness의 3역할 분리 원칙을 차용.
+
+**Flow:**
+1. **Phase 0** — ouroboros 문서 자동 감지 + story 분해 → stories.json
+2. **Phase 1** — Story 루프: Generator(sonnet) 구현 → Evaluator(opus) 검증 → FAIL 시 재시도 (max 3회)
+3. **Phase 2** — 전체 완료 후 review-loop 체이닝
+4. **Phase 3** — 최종 보고
+
+ouroboros 문서가 없으면 범용 계획 문서도 입력 가능 (폴백).
+
+**Trigger:** `ouroboros-run`, `우로보로스 실행`, `계획 실행`, `문서 기반 구현`, `run the plan`
+
+```bash
+# 예시
+User: "ouroboros-run - docs/ouroboros/2026-04-07-auth/ 실행해줘"
+User: "계획 실행 - 아까 만든 설계 문서대로 구현해줘"
+```
+
+---
+
 ## Writing Your Own Skill
 
 ```
