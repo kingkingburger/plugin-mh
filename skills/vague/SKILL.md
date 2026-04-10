@@ -8,7 +8,7 @@ version: 1.0.0
 
 Transform vague or ambiguous requirements into precise, actionable specifications through hypothesis-driven questioning. **ALWAYS use the AskUserQuestion tool** — never ask clarifying questions in plain text.
 
-## When to Use
+## 사용 시나리오
 
 - Ambiguous feature requests ("add a login feature")
 - Incomplete bug reports ("the export is broken")

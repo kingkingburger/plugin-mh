@@ -67,7 +67,7 @@ git push
 - 변경된 파일 목록
 - 푸시 상태
 
-## Output Format
+## 출력 형식
 
 ```markdown
 ### 작업 완료

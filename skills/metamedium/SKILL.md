@@ -21,7 +21,7 @@ Most people only change **content** — what they say, write, or build. The real
 | Example | Giving a workshop | Inventing a format where attendees co-create artifacts |
 | Leverage | Linear — each piece is one output | Exponential — each new form enables infinite content |
 
-## When to Use
+## 사용 시나리오
 
 - Planning a project and unsure whether to optimize the output or the process
 - Stuck optimizing content with diminishing returns
@@ -129,6 +129,6 @@ To truly understand a form, try to change it. The constraints discovered ARE the
 4. **Code is metamedium**: The ability to code means the ability to change form
 5. **Touch to understand**: Change the form to discover why it was designed that way
 
-## Additional Resources
+## 추가 리소스
 
 For Alan Kay's original ideas and source quotes, see `references/alan-kay-quotes.md`.

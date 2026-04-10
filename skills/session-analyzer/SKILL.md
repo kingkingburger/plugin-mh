@@ -286,7 +286,7 @@ User: "Analyze session 3cc71c9f-d27a-4233-9dbc-c4f07ea6ec5b against .claude/skil
 
 ---
 
-## Additional Resources
+## 추가 리소스
 
 ### Reference Files
 - **`references/analysis-patterns.md`** - Detailed grep patterns for log analysis

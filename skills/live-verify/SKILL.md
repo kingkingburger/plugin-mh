@@ -1,6 +1,6 @@
 ---
 name: live-verify
-version: 0.1.0
+version: 1.0.0
 description: >
   This skill should be used when the user wants to verify that implemented features actually work by testing them like a real user.
   Trigger on "live-verify", "라이브 검증", "E2E 검증", "실제 검증", "검증 실행",

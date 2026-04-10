@@ -55,6 +55,12 @@ skills/my-new-skill/
 ### allowed-tools (선택사항)
 - 지정하면 해당 도구만 사용 가능
 - 미지정 시 모든 도구 사용 가능
+- 외부 도구(Playwright, MCP 등)를 사용하는 스킬은 반드시 명시할 것
+
+### user-invocable (선택사항)
+- `true`/`false` — 사용자가 직접 호출 가능한지 여부
+- 미지정 시 기본값은 `true` (대부분의 스킬은 직접 호출 가능)
+- 다른 스킬에서만 내부적으로 호출되는 스킬은 `false`로 설정
 
 ### Workflow 섹션
 - Claude가 따라야 할 단계를 명확히 기술

@@ -8,7 +8,7 @@ version: 1.0.0
 
 Surface hidden assumptions and blind spots in any strategy, plan, or decision using the Known/Unknown quadrant framework and hypothesis-driven questioning.
 
-## When to Use
+## 사용 시나리오
 
 - Strategy or planning documents that need scrutiny
 - Decisions with unclear direction or hidden assumptions
@@ -136,7 +136,7 @@ Generate a structured 4-quadrant playbook file. For the complete output template
 6. **Raw > Perfect**: Encourage minimum viable experiments, not perfect plans
 7. **Draft is disposable**: The initial quadrant is meant to be corrected
 
-## Additional Resources
+## 추가 리소스
 
 ### Reference Files
 

@@ -1,7 +1,7 @@
 ---
 name: agent-arena
 description: This skill should be used when the user wants multiple AI agents to debate a topic from different perspectives. Trigger on "agent-arena", "에이전트 토론", "에이전트 싸워", "debate this", "여러 관점에서 분석", "찬반 토론", "agent debate", "arena", "팀 토론", "관점별 분석". Spawns role-assigned agents that argue in multiple rounds, then synthesizes options with a recommendation. 간단한 비교는 3인, 기능/방향성 검토는 5인, 전략적 심층 분석은 8인(--preset 8) 권장.
-version: 0.1.0
+version: 1.0.0
 ---
 
 # Agent Arena - 역할별 에이전트 다라운드 토론

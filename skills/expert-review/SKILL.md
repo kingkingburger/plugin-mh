@@ -1,6 +1,6 @@
 ---
 name: expert-review
-version: 0.1.0
+version: 1.0.0
 description: This skill should be used when the user wants expert reviews on a document, plan, or deliverable. Trigger on "expert-review", "전문가 리뷰", "리뷰 부탁", "expert review", "페르소나 리뷰", "전문가 검토", "3인 리뷰", "리뷰어 추천", "다관점 리뷰", "multi-perspective review". Reads a file, auto-recommends expert personas, runs parallel sub-agent reviews, and synthesizes a unified proposal.
 allowed-tools:
   - Read

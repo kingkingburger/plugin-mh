@@ -1,7 +1,7 @@
 ---
 name: clarify
 description: Unified clarification skill with 3 modes. Use when user needs to clarify requirements (vague), surface strategy blind spots (unknown), or reframe content vs form (metamedium). Trigger on "/clarify", "clarify", "명확히", "요구사항 정리", "뭘 원하는 건지", "blind spots", "뭘 놓치고 있지", "4분면", "known unknown", "가정 점검", "content vs form", "metamedium", "관점 전환", "형식을 바꿔볼까", "다른 방법 없을까".
-version: 0.1.0
+version: 1.0.0
 allowed-tools:
   - AskUserQuestion
   - Read
@@ -263,7 +263,7 @@ questions:
 4. **Preserve intent**: 사용자 의도를 리디렉트하지 않고 정제
 5. **Before/After tracking**: 변화를 항상 보여줌
 
-## Additional Resources
+## 추가 리소스
 
 - `references/question-design.md` — Round별 질문 유형과 AskUserQuestion 포맷 가이드
 - `references/playbook-template.md` — Unknown 모드 4분면 플레이북 출력 템플릿

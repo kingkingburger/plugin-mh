@@ -46,6 +46,8 @@ git diff --stat HEAD~3 2>/dev/null || git diff --stat
 
 Execute 4 agents in parallel (single message with 4 Task calls).
 
+**에러 처리**: 에이전트가 타임아웃되거나 실패하면, 성공한 에이전트의 결과만으로 진행한다. 실패한 에이전트의 분석 항목은 Step 4에서 "분석 불가"로 표시한다.
+
 ### Session Summary (Provide to all agents)
 
 ```
@@ -164,23 +166,23 @@ Execute only the actions selected by user.
 
 ## Quick Reference
 
-### When to Use
+### 사용 시나리오
 
 - End of significant work session
 - Before switching to different project
 - After completing a feature or fixing a bug
 
-### When to Skip
+### 건너뛸 때
 
 - Very short session with trivial changes
 - Only reading/exploring code
 - Quick one-off question answered
 
-### Arguments
+### 인자
 
 - Empty: Proceed interactively (full workflow)
 - Message provided: Use as commit message and commit directly
 
-## Additional Resources
+## 추가 리소스
 
 See `references/multi-agent-patterns.md` for detailed orchestration patterns.
