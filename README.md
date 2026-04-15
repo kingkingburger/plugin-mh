@@ -25,7 +25,7 @@ Claude Code plugin with 21 custom skills for thinking, deciding, and building sm
   - [ouroboros](#ouroboros) - 3단계 심층 문서 생산
   - [tdd](#tdd) - 테스트 주도 개발
   - [systematic-debugging](#systematic-debugging) - 체계적 디버깅
-  - [harness](#harness) - 3-에이전트 하네스 빌드
+  - [harness](#harness) - 하네스 엔지니어링 문서 체계 구축
   - [review-loop](#review-loop) - 코드 리뷰 루프
   - [ouroboros-run](#ouroboros-run) - ouroboros 계획 실행
 - [Writing Your Own Skill](#writing-your-own-skill)
@@ -90,7 +90,7 @@ If `plugin-mh` appears in the list, installation is complete.
 |-------|---------|-------------|
 | [tdd](#tdd) | `tdd`, `테스트 먼저`, `test first` | RED-GREEN-REFACTOR cycle enforcement — no production code without a failing test |
 | [systematic-debugging](#systematic-debugging) | `디버깅`, `root cause`, `왜 안 돼` | 4-phase root cause investigation before any fix attempt |
-| [harness](#harness) | `harness`, `하네스`, `3-agent` | Planner-Generator-Evaluator 3-agent build with feedback loops |
+| [harness](#harness) | `harness`, `하네스`, `하네스 엔지니어링` | OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계 구축 |
 | [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | 3-chain review: code-reviewer → architect → critic |
 | [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | Execute ouroboros plans with Generator-Evaluator loop |
 
@@ -500,23 +500,24 @@ User: "왜 안 돼 - 테스트가 로컬에서만 실패해"
 
 ### harness
 
-**Planner-Generator-Evaluator 3-에이전트 아키텍처로 앱을 제작.**
+**OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계를 한번에 구축.**
 
-> 핵심 원리: 만드는 쪽과 평가하는 쪽을 분리하고, 평가자를 깐깐하게 튜닝하는 것이 품질의 핵심 레버.
+> 핵심 원리: 에이전트가 접근할 수 없는 것은 존재하지 않는 것.
+> 구조화된 문서 체계가 에이전트의 생산성을 결정한다. — OpenAI
 
-**Architecture:**
-1. **Planner (opus)** — 제품 스펙 설계. "무엇(WHAT)"만 정의, 기술 스택 지정 금지
-2. **Generator (sonnet)** — 스프린트 계약에 따라 코드 구현
-3. **Evaluator (opus)** — 까다로운 QA로 Playwright/Bash 테스트. PASS/CONDITIONAL/FAIL 판정
+**Three Pillars:**
+1. **Context Engineering** — AGENTS.md, design-docs/, product-specs/로 에이전트에게 프로젝트 맥락 제공
+2. **Architectural Constraints** — ARCHITECTURE.md, DESIGN.md, SECURITY.md로 의존성/설계 규칙 정의
+3. **Entropy Management** — exec-plans/, tech-debt-tracker.md, RELIABILITY.md로 코드베이스 건강성 유지
 
-스프린트당 최대 3회 피드백 루프. 모든 스프린트 완료 후 최종 보고서 생성.
+인터뷰 → 코드 분석 → 에이전트 병렬 생성(opus + sonnet 3그룹)으로 AGENTS.md, ARCHITECTURE.md, docs/ 전체 구조를 생성. 새 프로젝트 부트스트랩, 기존 코드 분석 기반 생성, 기존 문서 보완 모두 지원.
 
-**Trigger:** `harness`, `하네스`, `하네스로 만들어`, `3-agent`, `harness build`
+**Trigger:** `harness`, `하네스`, `하네스 엔지니어링`, `문서 체계`, `harness engineering`
 
 ```bash
 # 예시
-User: "하네스로 만들어 - 할일 관리 웹앱"
-User: "harness build - real-time chat application"
+User: "하네스 엔지니어링 세팅해줘"
+User: "harness - 이 프로젝트에 문서 체계 구축"
 ```
 
 ---
@@ -547,7 +548,7 @@ User: "review-loop - 방금 작성한 코드 검증해줘"
 
 **ouroboros 계획 문서를 Generator-Evaluator 루프로 실행.**
 
-ouroboros가 생산한 3개 문서(요구사항/설계/검증)를 입력으로 받아, 설계의 파일별 구현 계획을 story로 분해하고 순차 구현한다. harness의 3역할 분리 원칙을 차용.
+ouroboros가 생산한 3개 문서(요구사항/설계/검증)를 입력으로 받아, 설계의 파일별 구현 계획을 story로 분해하고 순차 구현한다. Planner-Generator-Evaluator 3역할 분리 원칙 적용.
 
 **Flow:**
 1. **Phase 0** — ouroboros 문서 자동 감지 + story 분해 → stories.json
