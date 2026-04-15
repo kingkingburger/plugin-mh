@@ -43,8 +43,8 @@ Transform raw research findings into:
 Gather findings from:
 - Codebase analysis (codebase-explorer)
 - Documentation research (docs-researcher)
-- Community opinions (dev-scan skill)
-- Expert perspectives (agent-council skill)
+- Community opinions (WebSearch)
+- Expert perspectives (agent-arena skill)
 
 ### 2. Identify Evaluation Criteria
 
