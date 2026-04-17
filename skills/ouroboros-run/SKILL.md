@@ -278,9 +278,50 @@ AskUserQuestion:
       description: "Generator에게 더 시도하게 합니다"
     - label: "건너뛰고 다음 story"
       description: "이 story를 SKIP 처리하고 다음으로"
+    - label: "지금까지 PASS한 것만 Ship"
+      description: "통과한 story들을 커밋하고 RELIABILITY.md에 미구현 항목을 기록한 뒤 종료"
     - label: "중단"
       description: "ouroboros-run을 중단합니다"
 ```
+
+**Ship 옵션 선택 시 동작:**
+
+1. **통과 story 커밋**
+   ```bash
+   git add {passed story의 변경 파일들}
+   git commit -m "구현: Stories {PASS한 story ID 목록} 통과
+
+   SKIP된 stories: {SKIP된 story ID 목록}
+   FAIL된 stories: {FAIL된 story ID}
+   "
+   ```
+
+2. **RELIABILITY.md 갱신** (없으면 생성)
+   ```markdown
+   ## {오늘 날짜} — Partial Ship
+
+   ### 미구현 / 불완전
+   - **{story-id} {story-title}**: FAIL ({실패 사유 요약})
+     - 실패 기준: {failing criteria}
+     - 재시도 횟수: 3
+     - 기록 위치: stories.json > {story-id}
+   - **{story-id} {story-title}**: SKIP (사용자 선택)
+
+   ### 통과
+   - {passed story ID들 나열}
+   ```
+
+3. **stories.json 갱신** — 각 story에 `skip_reason` 필드 추가:
+   ```json
+   {
+     "id": "S-003",
+     "status": "FAILED",
+     "skip_reason": "Partial ship: 3회 실패 후 사용자가 Ship 선택",
+     "last_failing_criteria": "..."
+   }
+   ```
+
+4. **Phase 2(review-loop) 스킵**하고 Phase 3 최종 보고로 직행.
 
 ### 1e. 진행 상태 보고
 
@@ -390,7 +431,5 @@ CRITICAL/HIGH 이슈 → 수정 후 재체이닝. APPROVE → Phase 3.
 | 상황 | 안내할 스킬 |
 |------|-----------|
 | 계획 문서가 없음 | `/ouroboros` — 먼저 계획을 세우세요 |
-| PRD만 필요 | `/ralph-prep` — 간단한 PRD 작성 |
 | 구현 중 기술 결정 필요 | `/tech-decision` — 기술 의사결정 분석 |
-| 구현 중 디버깅 필요 | `/systematic-debugging` — 체계적 근본 원인 분석 |
 | 리뷰 루프만 별도로 | `/review-loop` — 코드 리뷰 체이닝 |

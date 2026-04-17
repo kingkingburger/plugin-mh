@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 21개 스킬 + 1개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 18개 스킬 + 1개 에이전트.
 
 ## 프로젝트 구조
 
@@ -19,7 +19,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 |---------|------|
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
 
-## 스킬 목록 (21개)
+## 스킬 목록 (18개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -32,18 +32,15 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | agent-arena | 다관점 에이전트 토론 |
 | expert-review | 전문가 페르소나 병렬 리뷰 |
 | auto-commit | 작업 후 자동 커밋 & 푸시 |
-| ralph-prep | PRD 작성 심층 인터뷰 |
 | live-verify | E2E 라이브 검증 |
 | session-closing | 세션 마무리 분석 |
 | youtube-digest | 유튜브 요약 & 퀴즈 |
 | youtube-slides | 유튜브 자막별 프레임 캡쳐 |
-| arcana | 아르카나 팀 토론/조언 (8인 에이전트) |
 | ouroboros | 3단계 심층 문서 생산 (요구사항→설계→검증) |
 | tdd | 테스트 주도 개발 (RED-GREEN-REFACTOR 강제) |
-| systematic-debugging | 체계적 디버깅 (4단계 근본 원인 분석) |
 | harness | 하네스 엔지니어링 — 프로젝트 문서 체계 한번에 구축 (인터뷰→분석→병렬 생성) |
 | review-loop | 코드 작성 후 자동 리뷰 루프 (code-reviewer → 수정 → 재리뷰 반복) |
-| ouroboros-run | ouroboros 계획을 Generator-Evaluator 루프로 실행 |
+| ouroboros-run | ouroboros 계획을 Generator-Evaluator 루프로 실행 (부분 Ship 옵션 지원) |
 
 ## 유지보수 규칙
 
