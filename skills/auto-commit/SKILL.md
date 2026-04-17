@@ -105,6 +105,6 @@ User: "auto-commit 스킬 만들어줘"
 User: "GUIDE.md에 설치 방법 추가해줘"
 → GUIDE.md 수정
 → git add GUIDE.md
-→ git commit -m "문서: GUIDE.md에 설치 방법 추가"
+→ git commit -m "개선: GUIDE.md에 설치 방법 추가"
 → git push
 ```
