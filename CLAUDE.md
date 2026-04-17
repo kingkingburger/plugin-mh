@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 18개 스킬 + 1개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 19개 스킬 + 1개 에이전트.
 
 ## 프로젝트 구조
 
@@ -19,11 +19,12 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 |---------|------|
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
 
-## 스킬 목록 (18개)
+## 스킬 목록 (19개)
 
 | 스킬 | 용도 |
 |------|------|
-| clarify | 3-in-1 요구사항 명확화 (vague + unknown + metamedium 통합) |
+| clarify | 명확화 라우터 — vague/unknown/metamedium 중 적절한 스킬로 위임 |
+| skill-manage | 스킬 추가/삭제/이름변경 + 메타데이터 4파일 + 교차참조 원자적 동기화 |
 | vague | 모호한 요구사항을 스펙으로 |
 | unknown | 전략 사각지대 분석 (Known/Unknown 4분면) |
 | metamedium | Content vs Form 관점 전환 |
