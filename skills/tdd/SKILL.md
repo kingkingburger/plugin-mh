@@ -1,6 +1,6 @@
 ---
 name: tdd
-version: 0.1.0
+version: 1.0.0
 description: >
   This skill should be used when the user wants to implement features or fix bugs using Test-Driven Development.
   Trigger on "tdd", "TDD", "테스트 주도", "테스트 먼저", "test first", "test-driven",

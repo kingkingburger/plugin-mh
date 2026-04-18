@@ -1,6 +1,6 @@
 ---
 name: ouroboros-run
-version: 0.1.0
+version: 1.0.0
 description: >-
   ouroboros 문서(요구사항/설계/검증)를 입력으로 받아 Generator-Evaluator 루프로 구현하는 실행 스킬.
   Planner-Generator-Evaluator 3역할 분리 아키텍처. story별 순차 구현→검증, 전체 완료 후 review-loop 체이닝.
