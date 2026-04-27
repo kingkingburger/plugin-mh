@@ -1,20 +1,29 @@
 ---
 name: review-loop
-description: 코드 작성 후 3단계 체이닝 리뷰 (code-reviewer → architect → critic). 각 리뷰어가 이전 리뷰를 감시하며 보완. Trigger on "review-loop", "리뷰 루프", "리뷰 돌려", "코드 리뷰 루프", "리뷰하고 고쳐", "review and fix".
-version: 2.0.0
+description: Tiered 리뷰 루프. 1차는 code-reviewer 단독(Fast Path), MEDIUM 이상 발견 시에만 architect+critic 병렬 소환(Deep Path). 재체이닝은 변경 파일+영향 호출처만, 최대 3회. Trigger on "review-loop", "리뷰 루프", "리뷰 돌려", "코드 리뷰 루프", "리뷰하고 고쳐", "review and fix".
+version: 3.0.0
 ---
 
 # Review Loop
 
-코드 변경 후 3명의 리뷰어가 체이닝 방식으로 리뷰한다.
-각 리뷰어는 이전 리뷰어의 결과를 받아서 검증·반박·보완한다.
-CRITICAL/HIGH 이슈가 있으면 수정 후 다시 체이닝을 돌린다.
+코드 변경 후 **Tiered**(점층) 방식으로 리뷰한다. 작은 이슈면 1명만, 심각하면 3명 병렬.
+각 사이클에서 critic이 최종 판정을 내리고, REQUEST CHANGES면 수정 후 재체이닝.
 
 ```
-code-reviewer → architect → critic
-     ↓ 결과 전달     ↓ 결과 전달     ↓ 최종 판정
-  정확성/품질     설계/구조 검증   사각지대/과잉지적 감시
+[Fast Path]
+code-reviewer ──┐
+                ├─ APPROVE/LOW만 → 종료
+                └─ MEDIUM↑ 발견 → [Deep Path]
+                                      ├─ architect ─┐
+                                      └─ critic ────┴─ 최종 판정
+                                          (병렬)
 ```
+
+핵심 변경 (v3):
+- **Tiered**: 1차는 code-reviewer 단독. 가벼운 변경에서 architect/critic 호출 비용 제거.
+- **병렬**: Deep Path 진입 시 architect와 critic을 동시 소환 (체이닝 의존성 제거).
+- **부분 재리뷰**: 재체이닝 시 변경 파일 + 영향받는 호출처만 검토.
+- **캡 단축**: 5회 → 3회 (대부분 2회 안에 수렴).
 
 ## When to Use
 
@@ -31,10 +40,11 @@ git diff --name-only
 ```
 
 변경된 파일 목록과 변경 목적을 정리한다. 변경 파일이 없으면 사용자에게 확인.
+첫 사이클에서는 전체 변경 파일이 대상이다.
 
-### Step 2: 1차 리뷰 — code-reviewer (정확성)
+### Step 2: Fast Path — code-reviewer 단독 리뷰
 
-code-reviewer 에이전트를 소환한다.
+code-reviewer 에이전트만 소환한다.
 
 ```
 Agent(subagent_type="plugin-mh:code-reviewer")
@@ -42,67 +52,73 @@ Agent(subagent_type="plugin-mh:code-reviewer")
 
 프롬프트:
 - 변경 목적과 맥락
-- 변경된 파일 목록
+- 변경된 파일 목록 (1차) 또는 부분 재리뷰 대상 (재체이닝)
 - 리뷰 관점: **스펙 충족, 로직 결함, 엣지케이스, 코드 품질, 성능**
 
-code-reviewer의 결과를 `R1_RESULT`로 저장한다.
+결과를 `R1_RESULT`로 저장.
 
-### Step 3: 2차 리뷰 — architect (설계 검증)
+### Step 3: 분기 게이트
 
-architect 에이전트를 소환한다. **R1_RESULT를 함께 전달한다.**
+R1_RESULT를 분석하여 분기:
+
+- **APPROVE 또는 LOW 이슈만** → Step 6으로 (Fast Path 종료, 즉시 보고).
+- **MEDIUM/HIGH/CRITICAL 이슈 1개 이상** → Step 4로 (Deep Path 진입).
+
+이 게이트가 핵심 속도 개선 포인트다. 가벼운 변경에서 architect/critic 호출을 건너뛴다.
+
+### Step 4: Deep Path — architect + critic 병렬 소환
+
+**한 메시지에서 두 Agent 호출을 동시에 발사한다 (병렬).** 각자에게 R1_RESULT를 함께 전달.
 
 ```
-Agent(subagent_type="oh-my-claudecode:architect")
+Agent(subagent_type="oh-my-claudecode:architect")  ┐
+Agent(subagent_type="oh-my-claudecode:critic")     ┘  ← 동일 메시지에 병렬
 ```
 
-프롬프트:
-- 변경 목적과 맥락
-- 변경된 파일 목록
-- **code-reviewer의 리뷰 결과 (R1_RESULT)**
+architect 프롬프트:
+- 변경 목적과 맥락 + 변경 파일 목록
+- **code-reviewer 리뷰 결과 (R1_RESULT)**
 - 리뷰 관점: **아키텍처 적합성, 의존성 방향, 기존 패턴 일관성, 커플링**
 - 지시: "code-reviewer의 지적 중 동의하지 않는 부분이 있으면 반박하고, 놓친 설계 이슈를 추가하라"
 
-architect의 결과를 `R2_RESULT`로 저장한다.
-
-### Step 4: 3차 리뷰 — critic (최종 감시)
-
-critic 에이전트를 소환한다. **R1_RESULT + R2_RESULT를 함께 전달한다.**
-
-```
-Agent(subagent_type="oh-my-claudecode:critic")
-```
-
-프롬프트:
-- 변경 목적과 맥락
-- 변경된 파일 목록
+critic 프롬프트:
+- 변경 목적과 맥락 + 변경 파일 목록
 - **code-reviewer 리뷰 결과 (R1_RESULT)**
-- **architect 리뷰 결과 (R2_RESULT)**
-- 리뷰 관점: **이전 2명이 놓친 사각지대, 과잉 지적(severity 부풀리기) 감시, 이슈 간 모순 검출**
-- 지시: "이전 리뷰어들의 지적을 종합하여 최종 이슈 목록과 verdict를 내려라. 과잉 지적은 severity를 낮추고, 놓친 이슈는 추가하라."
+- 리뷰 관점: **사각지대 발굴, 과잉 지적(severity 부풀리기) 감시, 이슈 간 모순 검출**
+- 지시: "code-reviewer의 지적을 종합 검증하라. 과잉이면 severity를 낮추고, 놓친 이슈는 추가하라. 최종 verdict를 내려라."
 
-critic의 결과가 최종 판정이다.
+병렬 결과를 각각 `R2_ARCH`, `R2_CRITIC`으로 저장.
 
-### Step 5: 판정 및 수정
+### Step 5: 최종 판정 통합
 
-critic의 최종 verdict를 확인:
+critic의 verdict가 최종 판정. 단, architect가 새로 발견한 설계 이슈는 critic verdict에 추가 병합:
 
-- **APPROVE**: 체이닝 종료. 사용자에게 최종 결과 보고.
-- **COMMENT** (LOW/MEDIUM만): MEDIUM 2개 이상이면 수정 후 재체이닝.
-- **REQUEST CHANGES** (CRITICAL/HIGH 있음): 반드시 수정 후 재체이닝.
+- critic이 R1+자기 리뷰 기반으로 verdict 산출
+- architect가 발견한 설계 이슈가 critic 결과에 누락됐으면 합침
+- 충돌 시 critic 우선
+
+### Step 6: 판정 → 수정 → 재체이닝
+
+판정에 따라 분기:
+
+- **APPROVE**: 종료. 사용자에게 최종 결과 보고.
+- **COMMENT (LOW만)**: 종료. 선택적 수정사항만 보고.
+- **REQUEST CHANGES (CRITICAL/HIGH 또는 MEDIUM 2개 이상)**: 수정 후 재체이닝.
 
 수정 원칙:
-- 3명의 리뷰어가 공통으로 지적한 이슈 최우선
 - CRITICAL/HIGH는 반드시 수정
 - MEDIUM은 2명 이상 동의하면 수정
 - 한 명만 지적한 LOW는 선택적
-- 리뷰어 간 의견이 충돌하면 critic의 판정을 따름
+- 충돌 시 critic 판정 우선
 - 수정 후 lint/타입체크/빌드 검증 필수
 
-### Step 6: 재체이닝 (조건부)
+**재체이닝 범위 (부분 재리뷰)**:
+- 수정한 파일 + 그 파일을 import/호출하는 인접 호출처만 대상
+- `git diff --name-only HEAD` + Grep으로 호출처 식별
+- 인접 호출처가 5개를 넘으면 직접 영향만 (2-hop 금지)
+- Step 2부터 다시 시작 (Fast Path → 필요시 Deep Path)
 
-- **APPROVE → 즉시 종료.** 사용자에게 최종 결과 보고.
-- **REQUEST CHANGES → 수정 후 Step 2부터 다시 체이닝.**
-- **최대 5회 캡.** 5회 체이닝 후에도 APPROVE가 안 나오면 현재 상태로 종료하고 미해결 이슈를 보고.
+**최대 3회 캡**. 3회 후에도 APPROVE가 안 나오면 현재 상태로 종료하고 미해결 이슈를 보고.
 
 ## Output Format
 
@@ -110,10 +126,10 @@ critic의 최종 verdict를 확인:
 ## Review Loop 결과
 
 ### 체이닝 요약
-| Chain | code-reviewer | architect | critic (최종) |
-|-------|---------------|-----------|---------------|
-| 1     | REQUEST CHANGES (H:1 M:2) | COMMENT (M:1 추가) | REQUEST CHANGES (H:1 M:2) |
-| 2     | APPROVE | APPROVE | APPROVE |
+| Cycle | Path | code-reviewer | architect | critic (최종) |
+|-------|------|---------------|-----------|---------------|
+| 1     | Deep | REQUEST CHANGES (H:1 M:2) | COMMENT (M:1 추가) | REQUEST CHANGES (H:1 M:2) |
+| 2     | Fast | APPROVE | — | — |
 
 ### 리뷰어 간 상호작용
 - architect가 code-reviewer의 [MEDIUM] DRY 위반 지적에 동의, severity를 HIGH로 상향
@@ -124,14 +140,16 @@ critic의 최종 verdict를 확인:
 - [MEDIUM] {파일}:{라인} — {이슈} → {수정 내용} (critic 추가 발견)
 
 ### 최종 상태
-APPROVE — 3명 리뷰어 전원 동의
+APPROVE — 2 cycle, 1 Deep + 1 Fast
 ```
 
 ## Constraints
 
 - 리뷰어와 수정자는 반드시 별도 에이전트 (자기 코드 자기 리뷰 금지)
-- 체이닝 순서 고정: code-reviewer → architect → critic (순서 변경 금지)
-- 각 리뷰어는 이전 리뷰어의 결과를 반드시 전달받아야 함
+- Fast Path → Deep Path 승급은 일방향 (Deep에서 Fast로 다시 내려가지 않음)
+- Deep Path의 architect + critic은 반드시 한 메시지에서 병렬 호출 (직렬 금지)
+- 재체이닝 시 변경 파일과 인접 호출처만 — 전체 재스캔 금지
 - 수정 후 반드시 lint/타입체크 통과 확인
 - 리뷰어의 지적을 무시하지 않음 — 수정하지 않을 경우 사유를 명시
 - 리뷰어 간 의견 충돌 시 critic의 판정이 최종
+- 최대 3 cycle. 초과 시 미해결 이슈 명시하고 종료.

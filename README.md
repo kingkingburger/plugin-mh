@@ -87,7 +87,7 @@ If `plugin-mh` appears in the list, installation is complete.
 |-------|---------|-------------|
 | [tdd](#tdd) | `tdd`, `테스트 먼저`, `test first` | RED-GREEN-REFACTOR cycle enforcement — no production code without a failing test |
 | [harness](#harness) | `harness`, `하네스`, `하네스 엔지니어링` | OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계 구축 |
-| [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | 3-chain review: code-reviewer → architect → critic |
+| [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | Tiered review: code-reviewer 단독 → 필요 시 architect+critic 병렬 |
 | [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | Execute ouroboros plans with Generator-Evaluator loop |
 
 ### Session & History
@@ -483,15 +483,19 @@ User: "harness - 이 프로젝트에 문서 체계 구축"
 
 ### review-loop
 
-**3단계 체이닝 리뷰로 코드 품질을 검증.**
+**Tiered 리뷰로 코드 품질을 빠르게 검증.**
 
 ```
-code-reviewer → architect → critic
-     ↓ 결과 전달     ↓ 결과 전달     ↓ 최종 판정
-  정확성/품질     설계/구조 검증   사각지대/과잉지적 감시
+[Fast Path]
+code-reviewer ──┐
+                ├─ APPROVE/LOW만 → 종료
+                └─ MEDIUM↑ 발견 → [Deep Path]
+                                      ├─ architect ─┐
+                                      └─ critic ────┴─ 최종 판정
+                                          (병렬)
 ```
 
-각 리뷰어가 이전 리뷰어의 결과를 받아 검증/반박/보완. CRITICAL/HIGH 이슈 시 수정 후 재체이닝. APPROVE 즉시 종료, 최대 5회 캡.
+1차는 code-reviewer 단독으로 빠르게. MEDIUM 이상이 발견될 때만 architect+critic을 병렬 소환해 깊이 본다. 재체이닝은 변경 파일+영향 호출처만, 최대 3 cycle.
 
 **Trigger:** `review-loop`, `리뷰 루프`, `리뷰 돌려`, `코드 리뷰 루프`, `리뷰하고 고쳐`
 
