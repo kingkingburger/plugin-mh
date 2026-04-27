@@ -1,6 +1,6 @@
 # plugin-mh
 
-Claude Code plugin with 19 custom skills for thinking, deciding, and building smarter.
+Claude Code plugin with 20 custom skills for thinking, deciding, and building smarter.
 
 ## Table of Contents
 
@@ -19,6 +19,7 @@ Claude Code plugin with 19 custom skills for thinking, deciding, and building sm
   - [auto-commit](#auto-commit) - 작업 후 자동 커밋 & 푸시
   - [live-verify](#live-verify) - E2E 라이브 검증
   - [session-closing](#session-closing) - 세션 마무리 분석
+  - [closing-lite](#closing-lite) - 세션 마무리 경량 버전 (메모리 누적)
   - [youtube-digest](#youtube-digest) - 유튜브 요약 & 퀴즈
   - [youtube-slides](#youtube-slides) - 유튜브 자막별 프레임 캡쳐
   - [ouroboros](#ouroboros) - 3단계 심층 문서 생산
@@ -95,6 +96,7 @@ If `plugin-mh` appears in the list, installation is complete.
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | [session-closing](#session-closing) | `/closing`, `/wrap` | Multi-agent session wrap-up with learning extraction |
+| [closing-lite](#closing-lite) | `/closing-lite`, `/clite`, `라이트 클로징` | Lightweight closing — extract issues/learnings/prefs into auto-memory in 30s |
 
 ### Content & Social
 
@@ -354,6 +356,34 @@ Phase 2: Validation         ▼
 ```
 
 **Trigger:** `/closing`, `/wrap`, `session closing`
+
+---
+
+### closing-lite
+
+**session-closing의 경량 버전 — 30초 안에 끝내는 메모리 누적 전용.**
+
+session-closing이 5개 에이전트 + 2 phase로 무겁다고 느낄 때 사용. 본질만 남겼다 — **이번 세션에서 기억할 만한 것만 골라 auto-memory에 누적**. 에이전트 호출/문서 갱신/자동화 제안 모두 없음.
+
+```
+1. git status (한 줄)
+2. 인라인 추출 (이슈 / 배운 점 / 기억할 것)
+3. AskUserQuestion 1회 — 어느 항목을 메모리에 남길지
+4. 선택 항목을 memory/{type}_{slug}.md + MEMORY.md에 기록
+```
+
+| 상황 | 적합 |
+|------|------|
+| 짧은 세션이지만 기억할 인사이트가 있음 | ✅ closing-lite |
+| 큰 기능 완성 + 문서/자동화/커밋 종합 검토 | → `/closing` |
+
+**Trigger:** `/closing-lite`, `/clite`, `라이트 클로징`, `간단 마무리`, `메모만`, `세션 메모`
+
+```bash
+# 예시
+User: "/closing-lite"
+User: "라이트 클로징 - 오늘 작업한 거 기억할 것만"
+```
 
 ---
 

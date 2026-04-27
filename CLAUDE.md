@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 19개 스킬 + 1개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 20개 스킬 + 1개 에이전트.
 
 ## 프로젝트 구조
 
@@ -19,7 +19,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 |---------|------|
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
 
-## 스킬 목록 (19개)
+## 스킬 목록 (20개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -35,6 +35,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | auto-commit | 작업 후 자동 커밋 & 푸시 |
 | live-verify | E2E 라이브 검증 |
 | session-closing | 세션 마무리 분석 |
+| closing-lite | 세션 마무리 경량 버전 (이슈·배운 점·선호도만 메모리에 누적) |
 | youtube-digest | 유튜브 요약 & 퀴즈 |
 | youtube-slides | 유튜브 자막별 프레임 캡쳐 |
 | ouroboros | 3단계 심층 문서 생산 (요구사항→설계→검증) |

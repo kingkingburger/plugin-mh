@@ -1,0 +1,112 @@
+---
+name: closing-lite
+description: 세션에서 기억할 만한 이슈·배운 점·선호도만 빠르게 추출해 auto-memory에 누적한다. session-closing의 경량 버전 — 에이전트 호출/문서 갱신/자동화 제안 없이 30초 안에 끝낸다. Trigger on "/closing-lite", "/clite", "lite closing", "라이트 클로징", "간단 마무리", "기억만 남겨", "메모만", "세션 메모".
+version: 1.0.0
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - AskUserQuestion
+---
+
+# closing-lite: Lightweight Session Closing
+
+session-closing이 무겁게 느껴질 때 사용하는 경량 버전. 본질은 단 하나 — **이번 세션에서 기억할 가치가 있는 것만 골라 메모리에 누적**.
+
+## 언제 사용
+
+| 상황 | 적합 |
+|------|------|
+| 세션이 짧거나 변경이 단순한데 기억할 인사이트는 있음 | ✅ closing-lite |
+| 다음 세션을 위해 사용자 선호/프로젝트 결정만 빠르게 남김 | ✅ closing-lite |
+| 큰 기능 완성, 문서/자동화/커밋 종합 검토 필요 | → `/closing` (full) |
+| 그냥 코드만 좀 읽고 끝 | → 스킵 |
+
+## 워크플로
+
+에이전트 호출 없음. Claude가 직접 인라인으로 처리한다.
+
+### Step 1 — Git 상태 확인 (한 줄)
+
+```bash
+git status --short
+```
+
+변경된 파일 개수만 보고하고 넘어간다. diff 분석 X.
+
+### Step 2 — 인라인 추출
+
+이번 세션의 대화 흐름을 직접 훑어 다음 3가지를 골라낸다:
+
+| 카테고리 | 무엇을 | Memory 타입 매핑 |
+|----------|--------|-------------------|
+| **이슈** | 막혔던 지점, 헷갈렸던 부분, 다음에 같은 함정에 빠지지 않게 할 한 줄 | feedback 또는 project |
+| **배운 점** | 새로 알게 된 패턴/명령/규칙 (코드만 보면 알 수 없는 것) | project 또는 reference |
+| **기억할 것** | 사용자가 명시·암시적으로 보인 선호도, 새 프로젝트 컨벤션 | feedback 또는 user |
+
+**저장하지 않는 것** (auto-memory 정책 준수):
+- 코드 패턴/파일 경로/구조 — 코드 읽으면 안다
+- 누가 무엇을 커밋했는지 — `git log`가 권위 있다
+- 디버깅 레시피 — 수정 자체가 코드와 커밋에 남는다
+- 이미 CLAUDE.md에 있는 내용
+
+후보가 0개면 그대로 종료. "남길 것 없음, 끝." 한 줄로 보고.
+
+### Step 3 — 사용자 확인 (1회 질문)
+
+후보가 1개 이상이면:
+
+```
+AskUserQuestion(
+    questions=[{
+        "question": "메모리에 남길 항목을 고르세요",
+        "header": "기억할 것",
+        "multiSelect": true,
+        "options": [
+            {"label": "[이슈] {요약}", "description": "{한 줄 사유}"},
+            {"label": "[배운 점] {요약}", "description": "{한 줄 사유}"},
+            {"label": "[기억] {요약}", "description": "{한 줄 사유}"},
+            {"label": "전부 스킵", "description": "이번엔 남기지 않음"}
+        ]
+    }]
+)
+```
+
+옵션 label은 실제 추출 내용을 그대로 보여준다. 사용자가 "전부 스킵"을 고르면 종료.
+
+### Step 4 — 메모리 저장
+
+선택된 각 항목마다:
+
+1. **타입 결정** — feedback / project / user / reference 중 하나
+2. **기존 파일 검토** — `MEMORY.md`를 읽어 동일 주제의 기존 메모리가 있는지 확인. 있으면 **업데이트**, 없으면 새 파일.
+3. **파일 작성** — `C:\Users\dnjsa\.claude\projects\D--reference2-plugin-mh\memory\{type}_{slug}.md`
+   - frontmatter: name / description / type
+   - feedback/project 타입은 본문에 **Why:** + **How to apply:** 라인 포함
+4. **MEMORY.md 인덱스 갱신** — `- [Title](file.md) — 한 줄 훅` 형식으로 추가
+
+### Step 5 — 보고 (1줄~3줄)
+
+```
+closing-lite 완료.
+- 변경 파일: N개 (커밋은 별도 — 필요하면 /commit)
+- 메모리 추가: M건 ({type} × M)
+```
+
+끝. 커밋 제안 X, 문서 갱신 제안 X, 자동화 제안 X. 그건 `/closing` 영역.
+
+## 안티 패턴
+
+- **에이전트 스폰** — closing-lite는 에이전트 0개 원칙. 4개 분석 에이전트가 필요하면 `/closing` 사용.
+- **모든 변경을 메모리화** — 코드/git에 이미 있는 것은 저장 금지.
+- **새 메모리 파일 남발** — 기존 파일 업데이트가 우선.
+- **인덱스만 쓰고 본문 누락** — `MEMORY.md`는 인덱스, 본문은 별도 파일에. 둘 다 작성.
+
+## 관련 스킬
+
+| 스킬 | 차이 |
+|------|------|
+| `/closing` (session-closing) | 5 에이전트 + 2 phase + 문서/자동화/커밋 종합 — 풀 버전 |
+| `/auto-commit` | 작업 → 커밋 → 푸시. 메모리화 없음 |
+| `/remember` (OMC) | 프로젝트 지식 분류. closing-lite는 "세션 마지막에 한 번" 트리거 |
