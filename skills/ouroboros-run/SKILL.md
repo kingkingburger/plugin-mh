@@ -3,7 +3,7 @@ name: ouroboros-run
 version: 1.0.0
 description: >-
   ouroboros 문서(요구사항/설계/검증)를 입력으로 받아 Generator-Evaluator 루프로 구현하는 실행 스킬.
-  Planner-Generator-Evaluator 3역할 분리 아키텍처. story별 순차 구현→검증, 전체 완료 후 review-loop 체이닝.
+  Planner-Generator-Evaluator 3역할 분리 아키텍처. story별 순차 구현→검증, 전체 완료 후 review-loop 체이닝으로 종료.
   Trigger on "ouroboros-run", "우로보로스 실행", "계획 실행", "문서 기반 구현",
   "ouroboros 실행", "설계 실행", "run the plan", "execute the spec".
   ouroboros로 계획만 세웠으면 ouroboros-run으로 실행.
@@ -20,7 +20,7 @@ allowed-tools:
 
 # Ouroboros Run — 계획을 실행하는 자기참조 루프
 
-ouroboros가 생산한 문서를 입력으로 받아, **Generator-Evaluator 피드백 루프**로 story별 구현→검증을 반복한다. 모든 story가 통과하면 review-loop 체이닝으로 최종 품질을 검증한다.
+ouroboros가 생산한 문서를 입력으로 받아, **Generator-Evaluator 피드백 루프**로 story별 구현→검증을 반복한다. 모든 story가 통과하면 review-loop 체이닝으로 최종 품질을 검증하고 종료한다.
 
 > **핵심 원리**: 만드는 쪽(Generator)과 평가하는 쪽(Evaluator)을 분리하고,
 > 평가자를 깐깐하게 튜닝하는 것이 품질의 핵심 레버. — harness 설계 근거
@@ -40,9 +40,7 @@ Phase 1: Story 루프 (순차)
   │ PASS → story.passes = true → 다음 story       │
   └──────────────────────────────────────────────┘
   ↓
-Phase 2: review-loop 체이닝 (최종 품질 검증)
-  ↓
-Phase 3: 최종 보고
+Phase 2: review-loop 체이닝 (최종 품질 검증) → 종료
 ```
 
 ## 3역할 분리 원칙
@@ -321,7 +319,7 @@ AskUserQuestion:
    }
    ```
 
-4. **Phase 2(review-loop) 스킵**하고 Phase 3 최종 보고로 직행.
+4. **Phase 2(review-loop) 스킵**하고 종료.
 
 ### 1e. 진행 상태 보고
 
@@ -371,44 +369,9 @@ review-loop의 3단 체이닝:
 2. **architect**: 아키텍처 적합성, 의존성, 패턴 일관성
 3. **critic**: 사각지대, 과잉 지적 감시, 최종 판정
 
-CRITICAL/HIGH 이슈 → 수정 후 재체이닝. APPROVE → Phase 3.
+CRITICAL/HIGH 이슈 → 수정 후 재체이닝. APPROVE → 종료.
 
----
-
-## Phase 3: 최종 보고
-
-모든 검증 완료 후 최종 보고서를 생성한다.
-
-저장 위치: stories.json과 같은 디렉토리에 `report.md`.
-
-```markdown
-# Ouroboros Run 최종 보고서
-
-## 소스 문서
-- 요구사항: {01-requirements.md 경로}
-- 설계: {02-design.md 경로}
-- 검증: {03-verification.md 경로}
-
-## Story 실행 요약
-| # | Story | 파일 | 라운드 | 상태 |
-|---|-------|------|--------|------|
-| S-001 | {title} | {files} | {round} | PASS/SKIP |
-
-## 전체 결과
-- 총 story: {total}
-- PASS: {pass_count}
-- SKIP: {skip_count}
-- 총 Generator 호출: {generator_calls}
-- 총 Evaluator 호출: {evaluator_calls}
-
-## Review-Loop 결과
-- 체이닝 횟수: {chain_count}
-- 최종 verdict: APPROVE
-- 주요 수정 사항: {list}
-
-## 생성/수정된 파일
-{전체 파일 목록}
-```
+review-loop이 APPROVE를 내면 ouroboros-run을 즉시 종료한다. 별도 보고서 파일(`report.md`)은 생성하지 않는다. 진행 상태는 `stories.json`에 그대로 남아 있어 사후 확인 가능하다.
 
 ---
 
@@ -423,6 +386,7 @@ CRITICAL/HIGH 이슈 → 수정 후 재체이닝. APPROVE → Phase 3.
 | stories.json 업데이트 누락 | 세션 중단 시 진행 상태 유실 |
 | review-loop 없이 완료 선언 | story별 검증은 로컬 검증. 전체 품질은 review-loop이 담당 |
 | Generator에게 스펙 외 판단 허용 | Planner의 결정을 존중. Generator는 실행만 |
+| 완료 후 별도 report 파일 생성 | stories.json에 이미 진행/결과가 기록됨. 추가 파일은 노이즈 |
 
 ---
 
