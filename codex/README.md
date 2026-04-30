@@ -82,11 +82,14 @@ Codex CLI에서 `/` 입력 시 21개의 plugin-mh 명령어가 보여야 한다.
 
 ```
 codex/
-├── AGENTS.md          ← 카탈로그 + 자연어 트리거 매핑 (Codex가 자동 로드)
-├── README.md          ← 본 파일
-├── install.ps1        ← Windows 설치 스크립트
-├── install.sh         ← macOS/Linux 설치 스크립트
-└── prompts/           ← 21개 슬래시 커맨드 프롬프트
+├── AGENTS.md                ← 21개 명령어 카탈로그 + 자연어 트리거 매핑
+├── README.md                ← 본 파일
+├── install.ps1              ← Windows 설치 스크립트
+├── install.sh               ← macOS/Linux 설치 스크립트
+├── user-global-AGENTS.md    ← 개인 글로벌 가이드 (~/.codex/AGENTS.md 용)
+├── template/
+│   └── AGENTS.md            ← 다른 프로젝트에 배포 가능한 워크플로우 템플릿
+└── prompts/                 ← 21개 슬래시 커맨드 프롬프트
     ├── agent-arena.md
     ├── auto-commit.md
     ├── clarify.md
@@ -108,6 +111,31 @@ codex/
     ├── vague.md
     ├── youtube-digest.md
     └── youtube-slides.md
+```
+
+## 하네스 (AGENTS.md) 활용
+
+plugin-mh는 세 계층의 AGENTS.md를 제공한다 — Codex가 자연어 요청을 해석하고 적절한 슬래시 커맨드로 라우팅하도록 돕는다.
+
+| 파일 | 위치 | 용도 |
+|------|------|------|
+| **저장소 루트** | [`../AGENTS.md`](../AGENTS.md) | plugin-mh 자체를 Codex로 개발할 때의 컨벤션·동기화 규칙·금지 사항 |
+| **카탈로그** | [`./AGENTS.md`](./AGENTS.md) | 21개 슬래시 커맨드 카탈로그 + 자연어 트리거 매핑 |
+| **배포 템플릿** | [`./template/AGENTS.md`](./template/AGENTS.md) | 다른 프로젝트에 가져갈 워크플로우 템플릿 (Spec→Build→Verify→Ship 패턴) |
+| **개인 글로벌** | [`./user-global-AGENTS.md`](./user-global-AGENTS.md) | `~/.codex/AGENTS.md` 로 복사하면 모든 프로젝트에서 자동 활성 |
+
+### 적용 방법
+
+```bash
+# 1. 저장소 루트 AGENTS.md — Codex가 plugin-mh 작업 디렉토리에서 자동 로드 (별도 작업 불필요)
+
+# 2. 다른 프로젝트에 워크플로우 적용
+cp codex/template/AGENTS.md ~/my-project/AGENTS.md
+# 또는 자기 AGENTS.md에 흡수
+
+# 3. 개인 글로벌 가이드 (모든 프로젝트에서 활성화)
+cp codex/user-global-AGENTS.md ~/.codex/AGENTS.md     # macOS / Linux
+Copy-Item codex/user-global-AGENTS.md $env:USERPROFILE\.codex\AGENTS.md   # Windows PowerShell
 ```
 
 ## 변환 규칙 (원본 SKILL.md → Codex 프롬프트)
