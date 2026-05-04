@@ -8,9 +8,11 @@ MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 20개 스킬 + 1
 .claude-plugin/     ← 플러그인 메타데이터 (plugin.json, marketplace.json)
 agents/             ← 에이전트 디렉토리 (각 에이전트 = .md 파일)
 skills/             ← 스킬 디렉토리 (각 스킬 = 하위 폴더)
+codex/              ← Codex CLI 어댑터 (변환본 슬래시 커맨드 + AGENTS.md 템플릿)
 guardrails/         ← 개인 엔지니어링 하네스 규칙 (언어별 선호, TDD, 리뷰, 법칙)
 scripts/            ← 정적 검증 스크립트
 research/           ← 개인 리서치 노트 (youtube-digest 출력 등)
+AGENTS.md           ← Codex/AI 에이전트 작업 지침 (피드백 루프 문서)
 GUIDE.md            ← 새 스킬 작성 가이드
 README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
@@ -50,6 +52,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 
 ### 스킬 추가/삭제 시
 - `marketplace.json`의 스킬 수 설명을 실제 수와 동기화할 것
+- `codex/prompts/<name>.md` 변환본도 함께 추가/삭제 (Codex 사용자가 깨짐)
 - GUIDE.md의 구조 패턴을 따를 것
 - 완료 전 `.\scripts\validate-plugin.ps1` 또는 `bash scripts/validate-plugin.sh` 실행
 

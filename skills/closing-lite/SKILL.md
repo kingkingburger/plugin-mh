@@ -81,7 +81,7 @@ AskUserQuestion(
 
 1. **타입 결정** — feedback / project / user / reference 중 하나
 2. **기존 파일 검토** — `MEMORY.md`를 읽어 동일 주제의 기존 메모리가 있는지 확인. 있으면 **업데이트**, 없으면 새 파일.
-3. **파일 작성** — `C:\Users\dnjsa\.claude\projects\D--reference2-plugin-mh\memory\{type}_{slug}.md`
+3. **파일 작성** — auto-memory 디렉토리(`~/.claude/projects/<project-slug>/memory/`) 안에 `{type}_{slug}.md`
    - frontmatter: name / description / type
    - feedback/project 타입은 본문에 **Why:** + **How to apply:** 라인 포함
 4. **MEMORY.md 인덱스 갱신** — `- [Title](file.md) — 한 줄 훅` 형식으로 추가
@@ -98,7 +98,7 @@ closing-lite 완료.
 
 ## 안티 패턴
 
-- **에이전트 스폰** — closing-lite는 에이전트 0개 원칙. 4개 분석 에이전트가 필요하면 `/closing` 사용.
+- **에이전트 스폰** — closing-lite는 에이전트 0개 원칙. 다중 에이전트 분석이 필요하면 `/closing` 사용.
 - **모든 변경을 메모리화** — 코드/git에 이미 있는 것은 저장 금지.
 - **새 메모리 파일 남발** — 기존 파일 업데이트가 우선.
 - **인덱스만 쓰고 본문 누락** — `MEMORY.md`는 인덱스, 본문은 별도 파일에. 둘 다 작성.
