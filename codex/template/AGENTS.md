@@ -18,6 +18,8 @@ bash ~/repos/plugin-mh/codex/install.sh
 
 설치 후 Codex CLI 재시작 → 21개 슬래시 커맨드 활성화.
 
+선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
+
 ## 표준 워크플로우 (Spec → Build → Verify → Ship)
 
 ```
@@ -30,6 +32,7 @@ bash ~/repos/plugin-mh/codex/install.sh
    ↓ /ouroboros  (요구→설계→검증 깊이 작업)
    ↓ /harness    (프로젝트 문서 체계 부트스트랩)
 [설계 문서]
+   ↓ guardrails/  (언어별 기준 + 법칙 기반 제약 확인)
    ↓ /tdd          (테스트 주도)
    ↓ /ouroboros-run (계획 자동 실행)
 [구현 완료]

@@ -33,7 +33,7 @@ allowed-tools:
 | 기둥 | 역할 | 이 스킬이 생성하는 것 |
 |------|------|---------------------|
 | **Context Engineering** | 에이전트에게 프로젝트 맥락 제공 | AGENTS.md, ARCHITECTURE.md, design-docs/, product-specs/ |
-| **Architectural Constraints** | 의존성 방향, 계층 규칙, 설계 원칙 정의 | ARCHITECTURE.md, DESIGN.md, SECURITY.md |
+| **Architectural Constraints** | 의존성 방향, 계층 규칙, 설계 원칙 정의 | ARCHITECTURE.md, DESIGN.md, SECURITY.md, guardrails/ |
 | **Entropy Management** | 코드베이스 건강성 유지, 기술 부채 추적 | exec-plans/, tech-debt-tracker.md, RELIABILITY.md |
 
 ## 지원 시나리오
@@ -52,6 +52,17 @@ allowed-tools:
 {project-root}/
 ├── AGENTS.md
 ├── ARCHITECTURE.md
+├── guardrails/
+│   ├── README.md
+│   ├── core.md
+│   ├── laws.md
+│   ├── languages/
+│   │   ├── typescript.md
+│   │   ├── rust.md
+│   │   └── python.md
+│   └── workflows/
+│       ├── tdd.md
+│       └── review.md
 └── docs/
     ├── design-docs/
     │   ├── index.md
@@ -129,6 +140,11 @@ AI 에이전트에게 기술 스택 컨텍스트를 제공하기 위한 llms.txt
 
 코드/스키마에서 자동 추출된 문서. DB 스키마, API 문서, 타입 정의, 의존성 그래프 등.
 **수동 편집 금지** — 재생성 시 덮어쓰기됨.
+
+### guardrails/ — 에이전트 행동 제약
+
+프로젝트별 언어 선호, TDD, 리뷰, 소프트웨어 공학 법칙을 실행 가능한 규칙으로 둔다.
+개인 선호와 프로젝트 공통 규칙이 충돌하면 프로젝트 `AGENTS.md`를 우선하되, 검증 우회와 안전 규칙은 약화하지 않는다.
 
 ---
 
@@ -414,6 +430,8 @@ Agent:
 3. `docs/exec-plans/completed/.gitkeep`
 4. `docs/references/.gitkeep`
 5. `docs/generated/.gitkeep`
+6. `guardrails/languages/.gitkeep` (세부 언어 문서를 바로 만들지 않을 때)
+7. `guardrails/workflows/.gitkeep` (세부 워크플로 문서를 바로 만들지 않을 때)
 
 ### Phase 4: 보고
 
@@ -423,7 +441,7 @@ Agent:
 2. **Three Pillars 매핑**:
    ```
    Context Engineering:    AGENTS.md, design-docs/, product-specs/
-   Architectural Constraints: ARCHITECTURE.md, DESIGN.md, SECURITY.md
+   Architectural Constraints: ARCHITECTURE.md, DESIGN.md, SECURITY.md, guardrails/
    Entropy Management:    PLANS.md, exec-plans/, RELIABILITY.md
    ```
 3. **[TBD] 항목 목록** — 사용자가 직접 채워야 할 부분

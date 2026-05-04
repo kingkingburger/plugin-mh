@@ -5,6 +5,7 @@ Claude Code plugin with 20 custom skills for thinking, deciding, and building sm
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Guardrails](#guardrails)
 - [Available Skills](#available-skills)
 - [Skill Details](#skill-details)
   - [clarify](#clarify) - 명확화 라우터 (vague/unknown/metamedium 위임)
@@ -50,6 +51,32 @@ claude plugin list
 
 스킬 목록에 `plugin-mh`가 표시되면 설치 완료입니다.
 If `plugin-mh` appears in the list, installation is complete.
+
+---
+
+## Guardrails
+
+`guardrails/` 는 MH의 개인 엔지니어링 하네스 규칙이다.
+
+| 영역 | 파일 |
+|------|------|
+| 공통 작업 원칙 | [`guardrails/core.md`](guardrails/core.md) |
+| 소프트웨어 공학 법칙 | [`guardrails/laws.md`](guardrails/laws.md) |
+| TypeScript 선호 | [`guardrails/languages/typescript.md`](guardrails/languages/typescript.md) |
+| Rust 선호 | [`guardrails/languages/rust.md`](guardrails/languages/rust.md) |
+| Python 선호 | [`guardrails/languages/python.md`](guardrails/languages/python.md) |
+| TDD 절차 | [`guardrails/workflows/tdd.md`](guardrails/workflows/tdd.md) |
+| 리뷰 절차 | [`guardrails/workflows/review.md`](guardrails/workflows/review.md) |
+
+검증:
+
+```bash
+# Windows PowerShell
+.\scripts\validate-plugin.ps1
+
+# macOS / Linux
+bash scripts/validate-plugin.sh
+```
 
 ---
 
