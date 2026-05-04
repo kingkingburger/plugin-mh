@@ -30,4 +30,4 @@
 - 작업 시작 전 대상 언어 문서를 하나 읽는다.
 - 동작 변경, 버그 수정, 리팩터링은 `workflows/tdd.md`를 따른다.
 - 설계나 리뷰 판단이 필요하면 `laws.md`에서 관련 법칙을 행동 규칙으로 적용한다.
-- 작업 종료 전 `scripts/validate-plugin.ps1` 또는 `scripts/validate-plugin.sh`를 실행해 문서/어댑터 동기화가 깨지지 않았는지 확인한다.
+- 작업 종료 전 PowerShell에서는 `scripts/validate-plugin.ps1`, Git Bash에서는 `scripts/validate-plugin.sh`를 실행해 문서/어댑터 동기화가 깨지지 않았는지 확인한다.

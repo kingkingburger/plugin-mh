@@ -12,7 +12,7 @@
 
 - **이름**: 원민호
 - **역할**: 소프트웨어 엔지니어
-- **환경**: Windows
+- **환경**: Windows, PowerShell, Git Bash
 - **선호 언어**: Python (with `uv`, `ty`), TypeScript (with `bun`)
 - **응답 언어**: 한국어 (기술 용어 / 코드 식별자는 원문 유지)
 
@@ -35,6 +35,12 @@
 - **AskUserQuestion** (Claude 한정) — 질문할 땐 반드시. Codex에서는 자연어 번호 옵션으로 대체.
 - **Tasks / TaskCreate** — 여러 단계 작업 추적
 - **Explore agent** — 정보 파악 / 코드베이스 탐색
+
+## 셸 / 터미널 선호
+
+- Windows에서도 PowerShell과 Git Bash를 모두 자주 사용한다.
+- 검증/설치 스크립트는 가능하면 PowerShell용 `.ps1`과 Git Bash에서 실행 가능한 `.sh` 경로를 함께 유지한다.
+- 셸별 차이가 있는 명령은 한쪽만 검증했다고 단정하지 말고, 실제 사용 셸 기준으로 재확인한다.
 
 ## 언어별 기본 검증
 
