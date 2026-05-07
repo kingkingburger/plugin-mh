@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 20 custom skills + 1 agent for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 20개 스킬 + 1개 에이전트.
+Claude Code plugin with 21 custom skills + 1 agent for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 21개 스킬 + 1개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 21개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+같은 자산을 OpenAI Codex CLI에서도 22개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
 
 ## Table of Contents
 
@@ -93,6 +93,7 @@ bash scripts/validate-plugin.sh
 | [auto-commit](#auto-commit) | `자동 커밋`, `auto commit` | 작업 실행 후 자동 git commit & push |
 | [live-verify](#live-verify) | `라이브 검증`, `live-verify` | Plan/Run 2단계 E2E 검증 (Playwright/Bash/curl) |
 | [skill-manage](#skill-manage) | `스킬 관리`, `skill-add`, `skill-delete` | 스킬 추가/삭제/이름변경 + 메타데이터 4파일 원자적 동기화 |
+| [life-plan](#life-plan) | `인생 계획`, `1년 방향`, `시즌 계획` | 5계층 인생 계획 코칭 — 1년 방향→3개월 챕터→월→주→일 + 인터뷰·자질 검사·회고 |
 
 ### Development Quality
 
@@ -564,6 +565,37 @@ User: "자막 캡쳐 - [URL]"
 
 ```bash
 User: "code-reviewer로 방금 작성한 모듈 검토해줘"
+```
+
+---
+
+### life-plan
+
+**5계층 인생 계획 코칭 — 1년 방향 → 3개월 챕터 → 이번 달 시즌 → 이번 주 작전 → 오늘의 미션.**
+
+mycraft 프로젝트에서 도출한 다층 계획 방법론을 어떤 세션에서도 호출 가능하게 만든 코칭 스킬. 인터뷰 + 자질 검사 + 70-20-10 분배 + 4문항 회고로 시스템적 발전 루프를 설계한다.
+
+| 레이어 | 기간 | 핵심 |
+|--------|------|------|
+| 1년 방향 (North Star) | 6~12mo | pillars 1~3, north_metric, anti_goal |
+| 3개월 챕터 (Quarter Arc) | 3mo | theme(회복/정착/돌파/안정화), 70-20-10 |
+| 이번 달 시즌 | 1mo | win_condition (Almost Daily 원칙) |
+| 이번 주 작전 | 1wk | 핵심 1 + 보조 1 + 버릴 1 + 위험 신호 1 |
+| 오늘의 미션 | 1d | 2~3개, What+When+Where, 1탭 완료 |
+
+**자질 5종:** 눈에 보이는가 / 내 손에 있는가 / 한 문장이 되는가 / 실패가 말이 되는가 / 내가 원해서 나왔는가.
+
+**회고 4문항:** 사실 / 놀람 / 패턴 / 다음 (단 한 가지 강제).
+
+**저장 위치:** 기본값 `secondBrain/12_ai_zone/mycraft/{north-star,arcs,seasons,weekly}/`. 호출 시 다른 경로 원하면 사용자에게 묻기. 외부 폴더 read·write 모두 금지.
+
+**Trigger:** `life-plan`, `인생 계획`, `1년 방향`, `시즌 계획`, `오늘 미션`, `회고 코칭`, `계획 짜자`
+
+```bash
+# 예시
+User: "/life-plan 처음부터"
+User: "이번 분기 다시 짜줘 — 1년 방향은 그대로"
+User: "회고 코칭 이번 주만"
 ```
 
 ---
