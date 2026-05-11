@@ -21,7 +21,7 @@ Phase 1: Story 루프 (순차)
   │ Evaluator 관점 → acceptance criteria 검증     │
   │   ↓                                           │
   │ FAIL → 피드백 → Generator 재시도 (max 3회)    │
-  │ PASS → story.passes = true → 다음 story       │
+  │ PASS → story.status = "PASS" → 다음 story     │
   └──────────────────────────────────────────────┘
   ↓
 Phase 2: review-loop 체이닝 (최종 품질 검증) → 종료
@@ -37,26 +37,59 @@ Phase 2: review-loop 체이닝 (최종 품질 검증) → 종료
 
 ---
 
-## Phase 0: 문서 감지 + Story 분해
+## Phase 0: 실행 전 확인 + 문서 감지 + Story 분해
 
-### 0a. 입력 문서 감지
+### 0a. 실행 전 확인
 
-**우선순위 1 — ouroboros 산출물 자동 감지:**
+문서 실행 전에 아래를 먼저 확인하고 결과를 짧게 보고한다.
+
+1. `git status --short --branch`로 dirty worktree와 현재 브랜치를 확인한다.
+2. 저장소 루트의 `AGENTS.md`, `CLAUDE.md`, 영역별 지침을 읽어 commit, 검증, 금지 파일, 도메인 규칙을 반영한다.
+3. 계획 문서가 권한, DB, 인증, API 응답, 마이그레이션, 보안 경계를 건드리면 관련 설계/보안/신뢰성 문서를 함께 확인한다.
+4. 03-verification.md 또는 프로젝트 지침에서 집중 검증 명령을 추출한다. 없으면 story마다 실행 가능한 최소 검증 명령을 명시한다.
+5. 기존 `stories.json`이나 `manifest.json`이 있으면 재개 여부를 확인한다.
+
+### 0b. 입력 문서 감지
+
+**우선순위 1 — 명시 입력 또는 manifest:**
+
+사용자가 경로를 지정했거나 `docs/ouroboros/{date}-{slug}/manifest.json`이 있으면 이를 우선한다. 자동으로 "가장 최근 문서"를 실행하지 않는다.
+
+권장 manifest:
+
+```json
+{
+  "status": "ready-for-run",
+  "source_docs": {
+    "requirements": "01-requirements.md",
+    "design": "02-design.md",
+    "verification": "03-verification.md"
+  },
+  "stories_path": "stories.json",
+  "owner_scope": ["frontend", "backend"],
+  "verification_commands": [
+    "bun test tests/unit/example.test.ts"
+  ],
+  "review_gates": ["review-loop"]
+}
+```
+
+`manifest.json`이 있으면 `source_docs`, `stories_path`, `verification_commands`, `owner_scope`를 신뢰 가능한 실행 계약으로 사용한다. 값이 빠졌거나 파일이 없으면 실행 전에 사용자에게 확인한다.
+
+**우선순위 2 — ouroboros 산출물 후보 감지:**
 
 ```
 Glob("docs/ouroboros/**/01-requirements.md")
 ```
 
-ouroboros 디렉토리가 여러 개이면 가장 최근(날짜순) 선택. 감지 시 3개 문서를 확인:
+ouroboros 디렉토리가 여러 개이면 후보 목록을 보여주고 사용자가 실행할 디렉토리를 고르게 한다. 감지 시 3개 문서를 확인:
 - `01-requirements.md` — 요구사항
 - `02-design.md` — 설계 (파일별 구현 계획 포함)
 - `03-verification.md` — 검증 시나리오
 
-3개 모두 존재하면 자동 진행. 일부만 있으면 사용자에게 확인:
-1. **계속 진행** — 있는 문서로 진행
-2. **중단** — 문서를 먼저 완성 후 재시도
+3개 모두 존재하더라도 자동 진행하지 말고, 실행할 문서 디렉토리를 확인한다. 일부만 있으면 먼저 문서를 완성하거나 명시적으로 범용 폴백을 선택하게 한다.
 
-**우선순위 2 — 범용 폴백:**
+**우선순위 3 — 범용 폴백:**
 
 ouroboros 문서가 없으면 사용자에게 다음 옵션을 제시하세요:
 
@@ -66,18 +99,21 @@ ouroboros 문서가 없으면 사용자에게 다음 옵션을 제시하세요:
 
 범용 문서인 경우 "파일별 구현 계획" 또는 유사 섹션을 탐색하여 story로 변환한다.
 
-### 0b. Story 분해
+### 0c. Story 분해
 
-02-design.md의 **"파일별 구현 계획"** 섹션을 파싱하여 stories.json을 생성한다.
+`manifest.json`이 `stories_path`를 제공하고 해당 파일이 있으면 기존 story를 사용한다. 없으면 02-design.md의 **"파일별 구현 계획"** 과 03-verification.md의 검증 기준을 함께 읽어 `stories.json`을 생성한다.
 
-각 파일(생성/수정 대상)을 하나의 story로 변환:
+story는 파일 단위가 아니라 **사용자 가치 또는 검증 가능한 행동 단위**로 나눈다. 각 story에는 touched files를 포함한다.
 - **id**: `S-001`, `S-002`, ...
-- **title**: 파일 경로 + 역할 (예: "src/auth/login.ts — 로그인 API 엔드포인트")
-- **files**: 대상 파일 경로 배열
+- **title**: 사용자 가치 또는 검증 가능한 행동 (예: "유효한 로그인 요청에 JWT를 발급한다")
+- **files**: 예상 대상 파일 경로 배열
 - **description**: 해당 파일의 구현 내용 (02-design.md에서 추출)
 - **acceptanceCriteria**: 03-verification.md에서 해당 파일/기능과 매핑되는 검증 기준
-- **passes**: false (초기값)
-- **round**: 0 (시도 횟수)
+- **verificationCommands**: story 통과를 확인할 명령
+- **rollbackNotes**: 실패하거나 되돌릴 때 필요한 주의점
+- **status**: `PENDING` | `PASS` | `FAIL` | `SKIPPED`
+- **round**: 시도 횟수
+- **evaluatorEvidence**: 평가자가 읽은 파일, 실행한 명령, 실패 근거, 남은 리스크
 
 ```json
 {
@@ -85,7 +121,7 @@ ouroboros 문서가 없으면 사용자에게 다음 옵션을 제시하세요:
   "stories": [
     {
       "id": "S-001",
-      "title": "src/auth/login.ts — 로그인 API 엔드포인트",
+      "title": "유효한 로그인 요청에 JWT를 발급한다",
       "files": ["src/auth/login.ts"],
       "description": "이메일+비밀번호 기반 로그인 처리, JWT 토큰 발급",
       "acceptanceCriteria": [
@@ -93,8 +129,11 @@ ouroboros 문서가 없으면 사용자에게 다음 옵션을 제시하세요:
         "잘못된 비밀번호 → 401 반환",
         "존재하지 않는 이메일 → 401 반환 (이메일 존재 여부 노출 금지)"
       ],
-      "passes": false,
-      "round": 0
+      "verificationCommands": ["bun test tests/unit/auth.login.test.ts"],
+      "rollbackNotes": "인증 응답 계약이 바뀌면 프론트 로그인 테스트를 함께 확인한다.",
+      "status": "PENDING",
+      "round": 0,
+      "evaluatorEvidence": []
     }
   ],
   "config": {
@@ -108,7 +147,7 @@ ouroboros 문서가 없으면 사용자에게 다음 옵션을 제시하세요:
 stories.json 저장 위치: ouroboros 문서와 같은 디렉토리 (`docs/ouroboros/{date}-{slug}/stories.json`).
 범용 문서인 경우 프로젝트 루트에 `.ouroboros-run/stories.json`.
 
-### 0c. Story 분해 확인
+### 0d. Story 분해 확인
 
 생성된 stories.json을 사용자에게 보여주고 승인. 사용자에게 다음 옵션을 제시하세요:
 
@@ -195,6 +234,11 @@ stories.json의 story를 **순차적으로** 실행한다. 각 story에 대해 G
 |---|---------------------|------|------|
 | 1 | {criteria} | PASS/FAIL | {코드 라인 또는 테스트 결과} |
 
+### 검증 증거
+- 읽은 파일: {파일 목록}
+- 실행한 명령: {명령과 결과}
+- 참조한 시나리오: {03-verification.md 섹션}
+
 ### 판정: PASS / FAIL
 (모든 criteria PASS → PASS, 하나라도 FAIL → FAIL)
 
@@ -203,6 +247,9 @@ stories.json의 story를 **순차적으로** 실행한다. 각 story에 대해 G
 
 ### 수정 요청 (FAIL인 경우)
 1. {구체적 수정 사항 — 파일, 라인, 변경 내용}
+
+### 남은 리스크
+- {통과 후에도 남은 검증 공백 또는 "없음"}
 ```
 
 ### 1d. 판정 및 반복
@@ -211,7 +258,7 @@ Evaluator 결과에 따라:
 
 | 판정 | 액션 |
 |------|------|
-| **PASS** | story.passes = true, story.round += 1, stories.json 업데이트 → 다음 story |
+| **PASS** | story.status = "PASS", story.round += 1, evaluatorEvidence 기록, stories.json 업데이트 → 다음 story |
 | **FAIL** (round < 3) | Evaluator 피드백을 계약에 추가 → Generator 재수행 → Evaluator 재검증 |
 | **FAIL** (round = 3) | 사용자에게 확인 |
 
