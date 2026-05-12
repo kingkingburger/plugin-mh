@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 21 custom skills + 1 agent for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 21개 스킬 + 1개 에이전트.
+Claude Code plugin with 22 custom skills + 1 agent for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 22개 스킬 + 1개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 22개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+같은 자산을 OpenAI Codex CLI에서도 23개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
 
 ## Table of Contents
 
@@ -102,6 +102,7 @@ bash scripts/validate-plugin.sh
 | [tdd](#tdd) | `tdd`, `테스트 먼저` | RED-GREEN-REFACTOR 강제 — 실패하는 테스트 없이 프로덕션 코드 금지 |
 | [harness](#harness) | `harness`, `하네스` | OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계 부트스트랩 |
 | [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | Tiered 리뷰 — code-reviewer 단독 → 필요 시 architect+critic 병렬 |
+| [ai-slop-cleaner](#ai-slop-cleaner) | `deslop`, `AI 슬롭`, `슬롭 정리` | AI 슬롭 코드 정리 — 회귀 안전, 삭제 우선, 한 종류씩. `--review` 지원 |
 | [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | ouroboros 계획을 Generator-Evaluator 루프로 실행 |
 
 ### Session & History
@@ -404,6 +405,42 @@ code-reviewer ──┐
 ```bash
 User: "리뷰 루프 돌려"
 User: "review-loop - 방금 작성한 코드 검증해줘"
+```
+
+---
+
+### ai-slop-cleaner
+
+**AI가 생성한 슬롭 코드를 회귀 안전 + 삭제 우선 + 한 종류씩 정리하는 워크플로우.**
+
+> 핵심 철학: **삭제 우선, 추가 신중**. 새 기능을 만드는 게 아니라 이미 있는 노이즈를 정리한다.
+
+```
+[1] 동작 보호 (테스트 우선) → [2] 정리 계획 → [3] 슬롭 분류
+   → [4] 한 종류씩 단일 패스 → [5] 품질 게이트 → [6] 증거 밀도 보고
+```
+
+**슬롭 6분류**:
+
+| 종류 | 정의 |
+|------|------|
+| Duplication | 반복 로직, 복붙 분기, 중복 헬퍼 |
+| Dead code | 미사용 코드, 도달 불가 분기, 디버그 잔재 |
+| Needless abstraction | 패스스루 래퍼, 사변적 간접 호출, 1회용 헬퍼 |
+| Boundary violations | 숨겨진 결합, 잘못된 레이어 import/사이드 이펙트 |
+| Missing tests | 락되지 않은 동작, 약한 회귀 커버리지 |
+| UI/design defaults | 제너릭 비주얼 패턴 (AI 블루/퍼플, 균등 그리드 등) |
+
+**단일 패스 편집**: Pass 1 Dead code → Pass 2 중복 → Pass 3 네이밍/에러 → Pass 4 테스트. 무관한 리팩토링 번들링 금지.
+
+**Review Mode (`--review`)**: 편집 금지. 리뷰어 판정 + 후속 조치 항목만 작성. Writer ↔ Reviewer 분리 강제.
+
+**Trigger:** `ai-slop-cleaner`, `deslop`, `anti-slop`, `AI slop`, `AI 슬롭`, `슬롭 정리`, `쓰레기 코드 청소`, `코드 슬롭`
+
+```bash
+User: "deslop this module: 너무 많은 래퍼, 중복 헬퍼, 죽은 코드"
+User: "/ai-slop-cleaner src/auth --review"
+User: "AI 슬롭 정리 — 동작은 그대로 두고 경계만 조이기"
 ```
 
 ---

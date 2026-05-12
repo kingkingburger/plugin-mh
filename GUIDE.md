@@ -110,7 +110,7 @@ mcp-server/
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "21 custom skills + 1 agent: clarify, skill-manage, tech-decision, agent-arena, expert-review, live-verify, auto-commit, ouroboros, ouroboros-run, tdd, harness, review-loop, closing-lite, youtube-slides, life-plan, code-reviewer agent, and more",
+      "description": "22 custom skills + 1 agent: clarify, skill-manage, tech-decision, agent-arena, expert-review, live-verify, auto-commit, ouroboros, ouroboros-run, tdd, harness, review-loop, ai-slop-cleaner, closing-lite, youtube-slides, life-plan, code-reviewer agent, and more",
       "source": "./"
     }
   ]

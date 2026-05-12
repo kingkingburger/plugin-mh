@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 21개 스킬 + 1개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 22개 스킬 + 1개 에이전트.
 
 ## 프로젝트 구조
 
@@ -23,7 +23,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 |---------|------|
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
 
-## 스킬 목록 (21개)
+## 스킬 목록 (22개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -46,6 +46,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | tdd | 테스트 주도 개발 (RED-GREEN-REFACTOR 강제) |
 | harness | 하네스 엔지니어링 — 프로젝트 문서 체계 한번에 구축 (인터뷰→분석→병렬 생성) |
 | review-loop | Tiered 리뷰 루프 (code-reviewer 단독 → 필요 시 architect+critic 병렬, 부분 재리뷰) |
+| ai-slop-cleaner | AI 슬롭 코드 정리 — 회귀 안전, 삭제 우선, 한 종류씩 정리. `--review` 모드 지원 |
 | ouroboros-run | ouroboros 계획을 Generator-Evaluator 루프로 실행 (부분 Ship 옵션 지원) |
 | life-plan | 6계층 인생 계획 코칭 — 평생 가치→1년 방향→3개월 챕터→월→주→일 + 인터뷰·자질 검사·70-20-10·회고. 산출물 응축 (`방향.md` 메인 + `YYYY-MM/M월 N주차.md`) |
 
