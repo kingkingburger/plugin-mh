@@ -54,7 +54,7 @@
 
 ## plugin-mh 슬래시 커맨드 활용
 
-다음 21개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
+다음 24개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
 
 ### 사고 정리 (Clarification)
 - 모호한 요구 → `/vague`
@@ -75,6 +75,7 @@
 - 프로젝트 문서 체계 → `/harness`
 - 자동 커밋 → `/auto-commit`
 - E2E 검증 → `/live-verify`
+- AI 슬롭 코드 정리 → `/ai-slop-cleaner`
 
 ### 스펙 / 실행
 - 깊이 있는 스펙 → `/ouroboros`
@@ -83,6 +84,10 @@
 ### 세션
 - 경량 마무리 → `/closing-lite`
 - 풀 마무리 → `/session-closing`
+- 일일 작업 보고서 → `/daily-report`
+
+### 개인 계획
+- 6계층 인생 계획 → `/life-plan`
 
 ### 콘텐츠
 - YouTube 요약 → `/youtube-digest`
@@ -108,8 +113,11 @@
 | "코드 리뷰", "review my code" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
 | "실제로 동작", "E2E", "브라우저로 테스트" | `/live-verify` |
+| "AI 슬롭", "deslop", "슬롭 정리" | `/ai-slop-cleaner` |
 | "커밋해" 단독 | `/auto-commit` |
 | "정리하고 끝", "wrap up", "세션 마무리" | `/closing-lite` 또는 `/session-closing` |
+| "작업 보고서", "일일 보고서", "오늘 작업 정리" | `/daily-report` |
+| "인생 계획", "1년 방향", "오늘 미션" | `/life-plan` |
 
 ---
 
@@ -123,6 +131,7 @@
 
 ### 세션 종료 시 메모리 누적
 큰 변화 / 새로 알게 된 패턴 / 사용자 선호 발견 → `/closing-lite` 로 메모리에 한 줄 누적.
+하루 작업을 감사 가능한 문서로 남겨야 하면 `/daily-report` 로 별도 Markdown 보고서를 만든다.
 
 ### 한국어 정서법
 모든 한국어 텍스트는 정확한 정서법 준수. 영어 / 식별자는 원문 유지.

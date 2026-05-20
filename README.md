@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 22 custom skills + 1 agent for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 22개 스킬 + 1개 에이전트.
+Claude Code plugin with 23 custom skills + 1 agent for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 23개 스킬 + 1개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 23개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+같은 자산을 OpenAI Codex CLI에서도 24개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
 
 ## Table of Contents
 
@@ -111,6 +111,7 @@ bash scripts/validate-plugin.sh
 |-------|---------|-------------|
 | [session-closing](#session-closing) | `/closing`, `/wrap` | 다중 에이전트 세션 마무리 — 분석/통합/액션 |
 | [closing-lite](#closing-lite) | `/closing-lite`, `라이트 클로징` | 30초 경량 마무리 — 메모리 누적 전용 |
+| [daily-report](#daily-report) | `daily-report`, `작업 보고서` | 로그·git·노트 등 여러 증거 소스를 읽어 감사 가능한 일일 작업 보고서 작성 |
 
 ### Content
 
@@ -548,6 +549,25 @@ session-closing이 5개 에이전트 + 2 phase로 무겁다고 느낄 때 사용
 ```bash
 User: "/closing-lite"
 User: "라이트 클로징 - 오늘 작업한 거 기억할 것만"
+```
+
+---
+
+### daily-report
+
+**도구 비종속 일일 작업 보고서 생성기.**
+
+Codex, Claude, git, 로컬 노트, 터미널 히스토리, 사용자가 지정한 파일을 증거 소스로 읽고 하루 또는 지정 기간의 작업 흐름을 Markdown 보고서로 정리한다. memory/harness에는 기본으로 쓰지 않고, 보고서 끝에 읽은 소스와 읽지 못한 소스를 남긴다.
+
+**Output:** `reports/YYYY-MM-DD-daily-report.md` 또는 사용자가 지정한 Markdown 경로.
+
+**기본 섹션:** Executive Summary, Timeline, Work By Project, Decisions, Problems And Resolutions, Files And Artifacts, Follow-Ups, Evidence Sources.
+
+**Trigger:** `daily-report`, `daily report`, `작업 보고서`, `일일 보고서`, `오늘 대화 요약`, `오늘 작업 정리`, `로그 기반 보고서`, `하루종일 한 일 정리`
+
+```bash
+User: "daily-report - 오늘 00:00부터 지금까지 작업 보고서 작성"
+User: "오늘 Codex랑 Claude 로그 전부 읽고 작업 보고서로 남겨줘. memory에는 쓰지 마"
 ```
 
 ---

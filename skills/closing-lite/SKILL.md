@@ -108,5 +108,6 @@ closing-lite 완료.
 | 스킬 | 차이 |
 |------|------|
 | `/closing` (session-closing) | 5 에이전트 + 2 phase + 문서/자동화/커밋 종합 — 풀 버전 |
+| `/daily-report` | memory가 아니라 감사 가능한 Markdown 작업 보고서 생성 |
 | `/auto-commit` | 작업 → 커밋 → 푸시. 메모리화 없음 |
 | `/remember` (OMC) | 프로젝트 지식 분류. closing-lite는 "세션 마지막에 한 번" 트리거 |

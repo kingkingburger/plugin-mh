@@ -16,7 +16,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 .\repos\plugin-mh\codex\install.ps1
 ```
 
-설치 후 Codex CLI 재시작 → 21개 슬래시 커맨드 활성화.
+설치 후 Codex CLI 재시작 → 24개 슬래시 커맨드 활성화.
 
 선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
 
@@ -44,6 +44,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 [Ship]
    ↓ /closing-lite     (가벼운 메모리 누적)
    ↓ /session-closing  (풀 분석 + 액션)
+   ↓ /daily-report     (증거 기반 작업 보고서)
 ```
 
 ## 의도 → 명령어 라우팅
@@ -73,6 +74,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | 프로젝트 문서 체계 부트스트랩 | `/harness` |
 | 작업 후 자동 커밋·푸시 | `/auto-commit` |
 | 실제 동작 E2E 검증 | `/live-verify` |
+| AI 슬롭 코드 정리 | `/ai-slop-cleaner` |
 
 ### 스펙 / 실행
 | 사용자 의도 | 명령어 |
@@ -85,6 +87,12 @@ bash ~/repos/plugin-mh/codex/install.sh
 |------------|--------|
 | 세션 마무리 — 메모리 누적만 | `/closing-lite` |
 | 세션 마무리 — 풀 분석 + 액션 | `/session-closing` |
+| 하루 작업 보고서 — 로그·git·노트 기반 | `/daily-report` |
+
+### 개인 계획
+| 사용자 의도 | 명령어 |
+|------------|--------|
+| 6계층 인생 계획 / 1년 방향 / 오늘 미션 | `/life-plan` |
 
 ### 콘텐츠
 | 사용자 의도 | 명령어 |
@@ -107,8 +115,11 @@ bash ~/repos/plugin-mh/codex/install.sh
 | "코드 리뷰" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
 | "실제로 동작", "E2E", "검증" | `/live-verify` |
+| "AI 슬롭", "deslop", "슬롭 정리" | `/ai-slop-cleaner` |
 | "커밋해" 단독 | `/auto-commit` |
 | "정리하고 끝", "wrap up" | `/closing-lite` |
+| "작업 보고서", "일일 보고서", "오늘 작업 정리" | `/daily-report` |
+| "인생 계획", "1년 방향", "오늘 미션" | `/life-plan` |
 
 ## 안티패턴
 
@@ -141,6 +152,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 /live-verify       → E2E 검증
 /auto-commit       → 커밋
 /session-closing   → 세션 마무리
+/daily-report      → 일일 작업 보고서
 ```
 
 ### Pattern 3: 새 프로젝트 부트스트랩

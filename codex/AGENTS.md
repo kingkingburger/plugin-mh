@@ -8,7 +8,7 @@
 - `$ARGUMENTS` 위치에 사용자 입력이 주입된다.
 - 자연어로도 호출 가능 — Codex가 본 AGENTS.md의 트리거 키워드 매핑을 보고 적절한 프롬프트를 추천/실행한다.
 
-## 카탈로그 (21개 명령어 = 20 스킬 + 1 에이전트)
+## 카탈로그 (24개 명령어 = 23 스킬 + 1 에이전트)
 
 ### Clarification (생각 정리)
 
@@ -38,6 +38,7 @@
 | `/harness` | 프로젝트 문서 체계 한번에 구축 (AGENTS.md 등) | "harness", "하네스", "문서 체계", "엔지니어링 문서" |
 | `/auto-commit` | 작업 후 자동 git commit & push | "자동 커밋", "auto commit", "실행하고 커밋" |
 | `/live-verify` | E2E 라이브 검증 (Playwright/Bash/curl) | "라이브 검증", "E2E 검증", "실제 검증", "검증 시나리오" |
+| `/ai-slop-cleaner` | AI 슬롭 코드 정리 (삭제 우선, 회귀 안전) | "AI 슬롭", "deslop", "슬롭 정리", "anti-slop" |
 
 ### Spec / Run (스펙·실행)
 
@@ -52,12 +53,14 @@
 |--------|------|--------------|
 | `/session-closing` | 세션 마무리 (5 분석 + 통합 + 액션) | "close session", "session closing", "/closing", "wrap up" |
 | `/closing-lite` | 세션 마무리 경량 (메모리 누적만) | "/closing-lite", "lite closing", "간단 마무리", "기억만 남겨" |
+| `/daily-report` | 로그·git·노트 기반 일일 작업 보고서 | "daily report", "작업 보고서", "오늘 작업 정리", "로그 기반 보고서" |
 
 ### Utility
 
 | 명령어 | 용도 | 자연어 트리거 |
 |--------|------|--------------|
 | `/skill-manage` | plugin-mh 스킬 추가/삭제/이름변경 + 메타데이터 동기화 | "스킬 관리", "스킬 추가", "스킬 삭제", "스킬 이름 변경" |
+| `/life-plan` | 6계층 인생 계획 코칭 | "인생 계획", "1년 방향", "삶의 가치", "오늘 미션" |
 | `/youtube-digest` | YouTube 영상 → 요약/번역/퀴즈 | "유튜브 정리", "영상 요약", "YouTube digest" |
 | `/youtube-slides` | YouTube 영상 → 자막별 프레임 캡쳐 | "유튜브 슬라이드", "영상 캡쳐", "스크린샷 추출" |
 
@@ -71,6 +74,7 @@
 - 문서 생산 깊이: 요구사항만 → `/vague`, 요구사항+설계+검증 메트릭 기반 → `/ouroboros`, 프로젝트 문서 체계 → `/harness`.
 - 실행: 계획만 → `/ouroboros`, 계획 + 구현까지 → `/ouroboros-run`.
 - 세션 종료: 풀 버전 → `/session-closing`, 경량 → `/closing-lite`.
+- 일일 보고서: memory/harness 기록 없이 증거 기반 Markdown 보고서만 필요하면 `/daily-report`.
 
 ## Claude Code 플러그인과의 관계
 
