@@ -20,8 +20,8 @@ plugin-mh는 MH의 커스텀 Claude Code 플러그인이다. 23개 스킬 + 1개
 | 검증 | 명령 / 방법 |
 |------|------------|
 | 전체 정적 검증 | PowerShell: `.\scripts\validate-plugin.ps1`, Git Bash: `bash scripts/validate-plugin.sh` |
-| SKILL.md frontmatter 유효성 | `head -1 skills/*/SKILL.md` 가 모두 `---` 로 시작하는지 확인 |
-| Codex 변환본 무결성 | `grep -rln -E "AskUserQuestion\|subagent_type\|Skill\(skill=" codex/prompts/` 결과가 비어있어야 함 |
+| SKILL.md frontmatter 유효성 | Git Bash: `head -1 skills/*/SKILL.md` / PowerShell: `Get-ChildItem skills/*/SKILL.md \| ForEach-Object { Get-Content $_ -TotalCount 1 }` — 모두 `---` 로 시작해야 함 |
+| Codex 변환본 무결성 | Git Bash: `grep -rln -E "AskUserQuestion|subagent_type|Skill\(skill=" codex/prompts/` 결과가 비어있어야 함 (ERE 모드에서 `|`는 OR — escape 금지, `(`는 literal이라 `\(` 필요) |
 | 메타데이터 동기화 | CLAUDE.md / README.md / marketplace.json / GUIDE.md 의 스킬 개수가 일치하는지 |
 | 설치 동작 | `claude plugin marketplace add kingkingburger/plugin-mh` (Claude), `bash codex/install.sh` (Codex) |
 
