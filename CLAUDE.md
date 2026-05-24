@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 23개 스킬 + 1개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 23개 스킬 + 2개 에이전트.
 
 ## 프로젝트 구조
 
@@ -17,11 +17,12 @@ GUIDE.md            ← 새 스킬 작성 가이드
 README.md           ← 플러그인 소개 및 스킬 상세 설명
 ```
 
-## 에이전트 목록 (1개)
+## 에이전트 목록 (2개)
 
 | 에이전트 | 용도 |
 |---------|------|
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
+| knowledge-curator | 세션의 재사용 가능한 학습·패턴·선호도·후속작업을 추출해 auto-memory에 누적 (노이즈 필터, 옵션 마크다운 보고서) |
 
 ## 스킬 목록 (23개)
 
@@ -58,6 +59,12 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 - `codex/prompts/<name>.md` 변환본도 함께 추가/삭제 (Codex 사용자가 깨짐)
 - GUIDE.md의 구조 패턴을 따를 것
 - 완료 전 `.\scripts\validate-plugin.ps1` 또는 `bash scripts/validate-plugin.sh` 실행
+
+### 에이전트 추가/삭제 시
+- `agents/<name>.md` 추가 — frontmatter(`name`, `description`, `model`, `level`) + `code-reviewer.md`의 `<Agent_Prompt>` XML 구조를 따를 것
+- `codex/prompts/<name>.md` 변환본도 **필수** — `validate`가 `codex/prompts 수 = 스킬 수 + 에이전트 수`를 강제한다. 변환본엔 금지 패턴(`AskUserQuestion`, `subagent_type`, `Skill(skill=`)이 없어야 함
+- 카운트/목록을 9개 파일에서 동기화: `README.md`(영문·국문 카운트 + codex 커맨드 수 + Agents 섹션), `CLAUDE.md`(에이전트 목록 테이블), `AGENTS.md`, `GUIDE.md`(marketplace 예시), `.claude-plugin/marketplace.json`, `codex/README.md`(카운트 6곳 + 커맨드/프롬프트 목록), `codex/AGENTS.md`(카탈로그 + 라우팅), `codex/user-global-AGENTS.md`, `codex/template/AGENTS.md`
+- 완료 전 `.\scripts\validate-plugin.ps1` 실행 (`Agents: N` 출력 확인)
 
 ### 하네스 / 가드레일 수정 시
 - 공통 원칙은 `guardrails/core.md`, 법칙 기반 판단은 `guardrails/laws.md`에 둔다

@@ -16,7 +16,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 .\repos\plugin-mh\codex\install.ps1
 ```
 
-설치 후 Codex CLI 재시작 → 24개 슬래시 커맨드 활성화.
+설치 후 Codex CLI 재시작 → 25개 슬래시 커맨드 활성화.
 
 선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
 

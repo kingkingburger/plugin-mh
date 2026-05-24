@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 23 custom skills + 1 agent for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 23개 스킬 + 1개 에이전트.
+Claude Code plugin with 23 custom skills + 2 agents for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 23개 스킬 + 2개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 24개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+같은 자산을 OpenAI Codex CLI에서도 25개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@ Claude Code plugin with 23 custom skills + 1 agent for thinking, deciding, and b
 - [Guardrails](#guardrails)
 - [Available Skills](#available-skills)
 - [Skill Details](#skill-details)
-- [Agent](#agent)
+- [Agents](#agents)
 - [Writing Your Own Skill](#writing-your-own-skill)
 - [License](#license)
 
@@ -647,7 +647,7 @@ User: "자막 캡쳐 - [URL]"
 
 ---
 
-## Agent
+## Agents
 
 ### code-reviewer
 
@@ -657,6 +657,16 @@ User: "자막 캡쳐 - [URL]"
 
 ```bash
 User: "code-reviewer로 방금 작성한 모듈 검토해줘"
+```
+
+### knowledge-curator
+
+**지식 큐레이션 에이전트.** 세션에서 재사용 가능한 학습·패턴·선호도·후속작업만 추출해 auto-memory에 누적한다. 노이즈를 걸러 영속 가치만 남기며(KEEP/DROP 게이트), 보고서 경로가 주어지면 마크다운 다이제스트도 남긴다.
+
+호출 시 **세션 맥락 + 메모리 디렉토리 경로**를 인자로 전달한다(서브에이전트는 부모 대화를 보지 못하므로 필수). `session-closing`·`closing-lite`가 위임할 워커로 설계됐다.
+
+```bash
+User: "knowledge-curator로 이번 세션에서 배운 것 메모리에 정리해줘"
 ```
 
 ---

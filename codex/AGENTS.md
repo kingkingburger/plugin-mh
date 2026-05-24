@@ -8,7 +8,7 @@
 - `$ARGUMENTS` 위치에 사용자 입력이 주입된다.
 - 자연어로도 호출 가능 — Codex가 본 AGENTS.md의 트리거 키워드 매핑을 보고 적절한 프롬프트를 추천/실행한다.
 
-## 카탈로그 (24개 명령어 = 23 스킬 + 1 에이전트)
+## 카탈로그 (25개 명령어 = 23 스킬 + 2 에이전트)
 
 ### Clarification (생각 정리)
 
@@ -54,6 +54,7 @@
 | `/session-closing` | 세션 마무리 (5 분석 + 통합 + 액션) | "close session", "session closing", "/closing", "wrap up" |
 | `/closing-lite` | 세션 마무리 경량 (메모리 누적만) | "/closing-lite", "lite closing", "간단 마무리", "기억만 남겨" |
 | `/daily-report` | 로그·git·노트 기반 일일 작업 보고서 | "daily report", "작업 보고서", "오늘 작업 정리", "로그 기반 보고서" |
+| `/knowledge-curator` | 세션의 재사용 가능한 학습·패턴·선호도만 추출해 메모리에 누적 (노이즈 필터) | "지식 큐레이션", "배운 것 메모리에", "메모리 정리", "knowledge curator" |
 
 ### Life Coaching (인생 코칭)
 
@@ -80,6 +81,7 @@
 - 실행: 계획만 → `/ouroboros`, 계획 + 구현까지 → `/ouroboros-run`.
 - 세션 종료: 풀 버전 → `/session-closing`, 경량 → `/closing-lite`.
 - 일일 보고서: memory/harness 기록 없이 증거 기반 Markdown 보고서만 필요하면 `/daily-report`.
+- 지식 큐레이션: 세션에서 재사용 가능한 학습·선호도만 골라 메모리에 영속 누적하려면 `/knowledge-curator` (보고서가 목적이면 `/daily-report`, 풀 마무리면 `/session-closing`).
 
 ## Claude Code 플러그인과의 관계
 

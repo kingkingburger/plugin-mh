@@ -54,7 +54,7 @@
 
 ## plugin-mh 슬래시 커맨드 활용
 
-다음 24개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
+다음 25개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
 
 ### 사고 정리 (Clarification)
 - 모호한 요구 → `/vague`
@@ -85,6 +85,7 @@
 - 경량 마무리 → `/closing-lite`
 - 풀 마무리 → `/session-closing`
 - 일일 작업 보고서 → `/daily-report`
+- 지식 큐레이션(메모리 누적) → `/knowledge-curator`
 
 ### 개인 계획
 - 6계층 인생 계획 → `/life-plan`
