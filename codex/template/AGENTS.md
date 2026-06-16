@@ -16,7 +16,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 .\repos\plugin-mh\codex\install.ps1
 ```
 
-설치 후 Codex CLI 재시작 → 25개 슬래시 커맨드 활성화.
+설치 후 Codex CLI 재시작 → 26개 슬래시 커맨드 활성화.
 
 선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
 
@@ -57,6 +57,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | 같은 방식이 안 먹혀 / 관점 전환 | `/metamedium` |
 | 어떤 명확화가 필요한지 모르겠음 | `/clarify` |
 | 목표가 너무 보수적 | `/moonshot` |
+| 장기 목표를 여러 경쟁 팀으로 심사 | `/deep-goal-council` |
 
 ### 의사결정 / 리뷰
 | 사용자 의도 | 명령어 |
@@ -111,6 +112,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | "blind spot", "사각지대", "가정" | `/unknown` |
 | "다른 방법", "관점 전환" | `/metamedium` |
 | "10x", "더 큰 목표" | `/moonshot` |
+| "목표가 작", "단기적", "여러 경쟁 팀", "Judge Packet" | `/deep-goal-council` |
 | "테스트 먼저", "TDD" | `/tdd` |
 | "코드 리뷰" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
@@ -168,6 +170,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 /unknown           → 4분면 분석으로 사각지대 발견
 /agent-arena       → 다관점 토론으로 결론 검증
 /moonshot          → (필요 시) 목표 상향
+/deep-goal-council → 경쟁 팀으로 장기 방향/Judge Packet 생성
 ```
 
 ## 통합 방법

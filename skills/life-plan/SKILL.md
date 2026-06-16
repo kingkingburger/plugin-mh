@@ -1,6 +1,6 @@
 ---
 name: life-plan
-description: This skill should be used when the user wants to design or revise a multi-tier life plan with seasonal coaching across 6 layers — 평생 가치(Life Values, lifelong) → 1년 방향(North Star) → 3개월 챕터(Quarter Arc) → 이번 달 시즌(Season) → 이번 주 작전(Episode) → 오늘의 미션(Mission). Trigger on "/life-plan", "life-plan", "인생 계획", "장기 설계", "북스타", "north star", "1년 방향", "분기 계획", "시즌 계획", "시즌별 계획", "오늘 미션", "회고 코칭", "계획 짜자", "발전 루프", "삶의 가치", "잃기 싫은 것", "전날 밤 계획", "내일 계획". Runs interview-driven coaching — 1-question life-values interview, 5-question North Star interview, 5-quality goal check applied per-layer (eg. life values + 1-year only need "내가 원해서 나왔는가"), 70-20-10 pillar split, 4-question retrospective (사실/놀람/패턴/다음), and a 5-step nightly self-planning checklist for daily missions. Saves outputs in compact form to `secondBrain/12_ai_zone/mycraft/` — `방향.md` at root + monthly folder `YYYY-MM/` containing `M월 N주차.md` files. Asks the user for an alternate path if they prefer. For ambiguous requirements use vague; for blind-spot analysis use unknown; for goal upgrade use moonshot; for deep three-stage docs use ouroboros.
+description: This skill should be used when the user wants to design or revise a multi-tier life plan with seasonal coaching across 6 layers — 평생 가치(Life Values, lifelong) → 1년 방향(North Star) → 3개월 챕터(Quarter Arc) → 이번 달 시즌(Season) → 이번 주 작전(Episode) → 오늘의 미션(Mission). Trigger on "/life-plan", "life-plan", "인생 계획", "장기 설계", "북스타", "north star", "1년 방향", "분기 계획", "시즌 계획", "시즌별 계획", "오늘 미션", "회고 코칭", "계획 짜자", "발전 루프", "삶의 가치", "잃기 싫은 것", "전날 밤 계획", "내일 계획". Runs interview-driven coaching — 1-question life-values interview, 5-question North Star interview, 5-quality goal check applied per-layer (eg. life values + 1-year only need "내가 원해서 나왔는가"), 70-20-10 pillar split, 4-question retrospective (사실/놀람/패턴/다음), and a 5-step nightly self-planning checklist for daily missions. Saves outputs in compact form to `secondBrain/12_ai_zone/mycraft/` — `방향.md` at root + monthly folder `YYYY-MM/` containing `M월 N주차.md` files. Asks the user for an alternate path if they prefer. For ambiguous requirements use vague; for blind-spot analysis use unknown; for single goal upgrade use moonshot; for competitive long-term Judge Packet planning use deep-goal-council; for deep three-stage docs use ouroboros.
 version: 1.2.0
 ---
 
@@ -313,6 +313,7 @@ WOOP·OKR·Implementation Intention 등 외부 프레임 사용자 노출 금지
 | 요구가 모호 | `vague` → 명확해지면 `life-plan` |
 | 1년 방향 사각지대 점검 | `unknown` |
 | 1년 방향 너무 작음 | `moonshot` |
+| 여러 팀이 장기 방향을 경쟁 제안 | `deep-goal-council` |
 | 3단계(요구→설계→검증) 깊이 문서 | `ouroboros` |
 | 회고 후 큰 결정 | `agent-arena` 또는 `expert-review` |
 

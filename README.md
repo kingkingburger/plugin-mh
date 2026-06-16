@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 23 custom skills + 2 agents for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 23개 스킬 + 2개 에이전트.
+Claude Code plugin with 24 custom skills + 2 agents for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 24개 스킬 + 2개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 25개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+같은 자산을 OpenAI Codex CLI에서도 26개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
 
 ## Table of Contents
 
@@ -76,6 +76,7 @@ bash scripts/validate-plugin.sh
 | [unknown](#unknown) | `blind spots`, `4분면 분석` | Known/Unknown 4분면으로 전략 사각지대 발견 |
 | [metamedium](#metamedium) | `content vs form`, `관점 전환` | Content(무엇)과 Form(어떻게)을 구분해 레버리지 포인트 발견 |
 | [moonshot](#moonshot) | `moonshot`, `10x`, `더 높은 목표` | 목표 성격에 맞는 프레임워크로 상향 목표 제안 |
+| [deep-goal-council](#deep-goal-council) | `$deep-goal-council`, `목표가 작다`, `여러 경쟁 팀` | 경쟁형 장기 목표 하네스 — 1년/12주/7일 목표와 Judge Packet 생성 |
 | [ouroboros](#ouroboros) | `ouroboros`, `심층 문서`, `deep spec` | 요구사항→설계→검증 3단계 심층 문서 생산 (모호성 메트릭 게이트) |
 
 ### Decision & Research
@@ -210,6 +211,21 @@ User: "moonshot - DAU 목표를 상향해줘"
 
 ---
 
+### deep-goal-council
+
+**여러 경쟁 팀이 장기 목표를 제안하고 사용자가 심사할 Judge Packet을 만든다.**
+
+작고 단기적인 목표로 수렴하는 패턴을 보정하기 위해 `moonshot-team`, `compound-team`, `constraint-breaker-team`, `craft-team`, `operator-team`이 같은 입력을 서로 다른 철학으로 해석한다. 각 팀은 1년 북극성 목표, 12주 캠페인, 7일 첫 증거, Sentinel 비판, 실패 시 회수 전략을 제안한다.
+
+**Trigger:** `$deep-goal-council`, `/deep-goal-council`, `목표가 작다`, `단기 목표로 축소된다`, `깊은 목표`, `여러 경쟁 팀`, `Judge Packet`
+
+```bash
+User: "$deep-goal-council AI 하네스 운영 역량을 1년 대표작으로 만들고 싶어"
+User: "소설가가 되기 위한 1년짜리 장기 계획을 여러 팀이 경쟁해서 제안해줘"
+```
+
+---
+
 ### tech-decision
 
 **기술 의사결정을 4개 병렬 에이전트로 체계적으로 분석.**
@@ -285,9 +301,10 @@ User: "전문가 리뷰 부탁 - README.md"
 
 ### auto-commit
 
-**지시한 작업을 수행한 후 자동으로 git commit & push.**
+**지시한 작업을 수행한 후 근거 있는 커밋 메시지로 git commit & push.**
 
-작업 → 커밋 → 푸시를 하나의 흐름으로 자동화한다.
+작업 → 검증 → 커밋 메시지 작성 → 커밋 → 푸시를 하나의 흐름으로 자동화한다.
+커밋 본문에 무엇을 바꿨는지, 왜 바꿨는지, 어떻게 검증했는지, 남은 위험을 남긴다.
 
 ```bash
 User: "자동 커밋 - README 오타 수정해줘"

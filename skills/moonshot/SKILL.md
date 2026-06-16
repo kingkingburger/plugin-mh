@@ -1,6 +1,6 @@
 ---
 name: moonshot
-description: This skill should be used when the user wants to set higher goals or get ambitious target suggestions. Trigger on "목표 상향", "더 높은 목표", "moonshot", "stretch goal", "10x", "BHAG", "목표 재설정", "한계를 넘어", "더 크게 생각", "야심찬 목표", "goal uplift", "think bigger", "목표가 너무 낮아", "상향 조정". Applies goal-setting frameworks to propose the highest achievable target. For requirement clarification use vague; for strategy blind spots use unknown; for content-vs-form reframing use metamedium.
+description: This skill should be used when the user wants to set higher goals or get ambitious target suggestions. Trigger on "목표 상향", "더 높은 목표", "moonshot", "stretch goal", "10x", "BHAG", "목표 재설정", "한계를 넘어", "더 크게 생각", "야심찬 목표", "goal uplift", "think bigger", "목표가 너무 낮아", "상향 조정". Applies goal-setting frameworks to propose the highest achievable target. For requirement clarification use vague; for strategy blind spots use unknown; for content-vs-form reframing use metamedium; for competitive long-term 1-year/12-week/7-day planning with a Judge Packet use deep-goal-council.
 version: 1.0.0
 ---
 

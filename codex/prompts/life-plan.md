@@ -188,6 +188,7 @@ secondBrain/12_ai_zone/mycraft/
 | 요구 모호 | /vague |
 | 사각지대 | /unknown |
 | 목표 작음 | /moonshot |
+| 여러 팀이 장기 방향을 경쟁 제안 | /deep-goal-council |
 | 3단계 깊이 문서 | /ouroboros |
 | 다관점 결정 | /agent-arena 또는 /expert-review |
 

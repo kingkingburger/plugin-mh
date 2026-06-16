@@ -8,7 +8,7 @@
 - `$ARGUMENTS` 위치에 사용자 입력이 주입된다.
 - 자연어로도 호출 가능 — Codex가 본 AGENTS.md의 트리거 키워드 매핑을 보고 적절한 프롬프트를 추천/실행한다.
 
-## 카탈로그 (25개 명령어 = 23 스킬 + 2 에이전트)
+## 카탈로그 (26개 명령어 = 24 스킬 + 2 에이전트)
 
 ### Clarification (생각 정리)
 
@@ -19,6 +19,7 @@
 | `/unknown` | 전략 사각지대 (Known/Unknown 4분면) | "blind spots", "4분면 분석", "가정 점검", "전략 점검", "what am I missing" |
 | `/metamedium` | Content vs Form 관점 전환 (Alan Kay) | "내용 vs 형식", "관점 전환", "형식을 바꿔볼까", "다른 방법 없을까" |
 | `/moonshot` | 목표 상향 프레임워크 (10x, BHAG, Backcasting 등) | "목표 상향", "더 높은 목표", "stretch goal", "10x", "야심찬 목표" |
+| `/deep-goal-council` | 경쟁형 장기 목표 하네스 — 여러 팀이 1년/12주/7일 목표와 Judge Packet 제안 | "$deep-goal-council", "목표가 작다", "단기 목표로 축소된다", "깊은 목표", "여러 경쟁 팀", "AI 하네스 역량", "12주 커리큘럼", "소설가 1년 계획", "Judge Packet" |
 
 ### Decision & Review (의사결정·리뷰)
 
@@ -78,6 +79,7 @@
 - 리뷰 관련: 단독 빠른 리뷰는 `/code-review`, 체이닝 리뷰는 `/review-loop`, 다관점 페르소나 리뷰는 `/expert-review`.
 - 의사결정: 기술 선택은 `/tech-decision`, 다관점 토론은 `/agent-arena`.
 - 문서 생산 깊이: 요구사항만 → `/vague`, 요구사항+설계+검증 메트릭 기반 → `/ouroboros`, 프로젝트 문서 체계 → `/harness`.
+- 목표 방향: 단일 목표 상향 → `/moonshot`, 여러 경쟁 팀의 장기 방향/Judge Packet → `/deep-goal-council`, 6계층 개인 계획 → `/life-plan`.
 - 실행: 계획만 → `/ouroboros`, 계획 + 구현까지 → `/ouroboros-run`.
 - 세션 종료: 풀 버전 → `/session-closing`, 경량 → `/closing-lite`.
 - 일일 보고서: memory/harness 기록 없이 증거 기반 Markdown 보고서만 필요하면 `/daily-report`.

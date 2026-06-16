@@ -1,6 +1,6 @@
 # plugin-mh
 
-MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 23개 스킬 + 2개 에이전트.
+MH의 커스텀 Claude Code 스킬 + 에이전트 플러그인. 24개 스킬 + 2개 에이전트.
 
 ## 프로젝트 구조
 
@@ -24,7 +24,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | code-reviewer | Severity 기반 코드 리뷰 (CRITICAL/HIGH/MEDIUM/LOW), 로직 결함·보안·SOLID·성능 검사 |
 | knowledge-curator | 세션의 재사용 가능한 학습·패턴·선호도·후속작업을 추출해 auto-memory에 누적 (노이즈 필터, 옵션 마크다운 보고서) |
 
-## 스킬 목록 (23개)
+## 스킬 목록 (24개)
 
 | 스킬 | 용도 |
 |------|------|
@@ -34,6 +34,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | unknown | 전략 사각지대 분석 (Known/Unknown 4분면) |
 | metamedium | Content vs Form 관점 전환 |
 | moonshot | 목표 상향 프레임워크 |
+| deep-goal-council | 경쟁형 장기 목표 하네스 — 여러 팀이 1년/12주/7일 목표 제안 + Judge Packet |
 | tech-decision | 기술 의사결정 심층 분석 |
 | agent-arena | 다관점 에이전트 토론 |
 | expert-review | 전문가 페르소나 병렬 리뷰 |

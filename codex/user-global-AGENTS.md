@@ -54,7 +54,7 @@
 
 ## plugin-mh 슬래시 커맨드 활용
 
-다음 25개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
+다음 26개 명령어가 `~/.codex/prompts/` 에 설치되어 있다면 사용자 자연어 의도에 맞춰 자동 활용:
 
 ### 사고 정리 (Clarification)
 - 모호한 요구 → `/vague`
@@ -62,6 +62,7 @@
 - 관점 전환 → `/metamedium`
 - 어떤 것일지 모르겠음 → `/clarify`
 - 목표 상향 → `/moonshot`
+- 경쟁형 장기 목표 / Judge Packet → `/deep-goal-council`
 
 ### 의사결정 / 리뷰
 - 기술 선택 (A vs B) → `/tech-decision`
@@ -110,6 +111,7 @@
 | "blind spot", "사각지대", "가정 점검" | `/unknown` |
 | "다른 방법", "관점 전환", "diminishing returns" | `/metamedium` |
 | "10x", "더 큰 목표", "stretch" | `/moonshot` |
+| "목표가 작", "단기적", "여러 경쟁 팀", "Judge Packet" | `/deep-goal-council` |
 | "테스트 먼저", "TDD", "RED GREEN" | `/tdd` |
 | "코드 리뷰", "review my code" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
