@@ -1,0 +1,10 @@
+# upstream=https://github.com/revfactory/harness
+# commit=cceac68ea1d0ad198ef4b7b906cd238375836387
+# generated=2026-06-16
+sha256	file
+6a9f2a8e5c466b27af1568d29930feda2b731c6cb0665fe48754cb63353dd318	agent-design-patterns.md
+847a3677fd7ae191c7d63501c60f0e16e7f36504169677c8a234090d48fa4e4c	orchestrator-template.md
+5ccfbc46afc83e0eabe0a25398bf9fcda9d3bf61c57d03df3ae4f8406790706a	qa-agent-guide.md
+94f8d7648a1bb5eae811630ffb76f7effa6dc92969fc789b8d08d50d1afe15b4	skill-testing-guide.md
+1d01c19655d8bc1ae0e6e30afcb0b61d43ea359c435032aa54d98868fd9f4441	skill-writing-guide.md
+d94cd213a28b21088823e3c07fda1a36c149fa0e85b9a51322249aa4c9ffc668	team-examples.md

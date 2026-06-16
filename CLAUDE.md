@@ -46,7 +46,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | youtube-slides | 유튜브 자막별 프레임 캡쳐 |
 | ouroboros | 3단계 심층 문서 생산 (요구사항→설계→검증) |
 | tdd | 테스트 주도 개발 (RED-GREEN-REFACTOR 강제) |
-| harness | 하네스 엔지니어링 — 프로젝트 문서 체계 한번에 구축 (인터뷰→분석→병렬 생성) |
+| harness | 하네스 엔지니어링 — 기획·문서작업·디자인·리서치·운영·개발 작업 표면별 하네스 + 에이전트 팀/오케스트레이터 구축·점검 |
 | review-loop | Tiered 리뷰 루프 (code-reviewer 단독 → 필요 시 architect+critic 병렬, 부분 재리뷰) |
 | ai-slop-cleaner | AI 슬롭 코드 정리 — 회귀 안전, 삭제 우선, 한 종류씩 정리. `--review` 모드 지원 |
 | ouroboros-run | ouroboros 계획을 Generator-Evaluator 루프로 실행 (부분 Ship 옵션 지원) |

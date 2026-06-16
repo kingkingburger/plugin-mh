@@ -100,7 +100,7 @@ bash scripts/validate-plugin.sh
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | [tdd](#tdd) | `tdd`, `테스트 먼저` | RED-GREEN-REFACTOR 강제 — 실패하는 테스트 없이 프로덕션 코드 금지 |
-| [harness](#harness) | `harness`, `하네스` | OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계 부트스트랩 |
+| [harness](#harness) | `harness`, `하네스`, `기획`, `문서작업`, `디자인`, `에이전트 팀` | 기획·문서작업·디자인·리서치·운영·개발 작업 표면별 하네스 + 에이전트 팀/오케스트레이터 부트스트랩 |
 | [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | Tiered 리뷰 — code-reviewer 단독 → 필요 시 architect+critic 병렬 |
 | [ai-slop-cleaner](#ai-slop-cleaner) | `deslop`, `AI 슬롭`, `슬롭 정리` | AI 슬롭 코드 정리 — 회귀 안전, 삭제 우선, 한 종류씩. `--review` 지원 |
 | [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | ouroboros 계획을 Generator-Evaluator 루프로 실행 |
@@ -399,7 +399,7 @@ User: "테스트 먼저 - 결제 모듈 버그 수정"
 
 ### harness
 
-**OpenAI 하네스 엔지니어링 기반 프로젝트 문서 체계를 한번에 구축.**
+**OpenAI 하네스 엔지니어링 기반으로 기획·문서작업·디자인·리서치·운영·개발 작업 표면별 하네스와 에이전트 팀/오케스트레이터를 한번에 구축.**
 
 > 에이전트가 접근할 수 없는 것은 존재하지 않는 것. 구조화된 문서 체계가 에이전트 생산성을 결정한다. — OpenAI
 
@@ -409,13 +409,19 @@ User: "테스트 먼저 - 결제 모듈 버그 수정"
 2. **Architectural Constraints** — ARCHITECTURE.md, DESIGN.md, SECURITY.md로 의존성/설계 규칙 정의
 3. **Entropy Management** — exec-plans/, tech-debt-tracker.md, RELIABILITY.md로 코드베이스 건강성 유지
 
-인터뷰 → 코드 분석 → 에이전트 병렬 생성(opus + sonnet 3그룹)으로 AGENTS.md, ARCHITECTURE.md, docs/ 전체 구조를 생성한다. 새 프로젝트 부트스트랩, 기존 코드 분석 기반 생성, 기존 문서 보완 모두 지원.
+인터뷰 → 작업 표면 분석 → 팀 아키텍처 설계 → 문서/에이전트/스킬/오케스트레이터 생성으로 목적, 입력, 산출물, 역할, 검증 기준, 운영 리듬을 구성한다. 기획, 문서작업, 디자인, 리서치, 운영, 개발 모두 지원하며 새 작업 부트스트랩, 기존 자료 보완, 에이전트 팀 신규 구축, 기존 하네스 점검/확장을 처리한다.
 
-**Trigger:** `harness`, `하네스`, `하네스 엔지니어링`, `문서 체계`
+revfactory/harness의 팀 아키텍처 구성을 반영해 파이프라인, 팬아웃/팬인, 전문가 풀, 생성-검증, 감독자, 계층적 위임 패턴을 선택하고, 필요 시 오케스트레이터에 데이터 흐름·에러 핸들링·검증 시나리오를 포함한다. 코드가 없는 작업도 `work surface` 기준으로 기획/문서/디자인/리서치/운영 산출물을 만든다.
+
+**Trigger:** `harness`, `하네스`, `하네스 엔지니어링`, `문서 체계`, `기획`, `문서작업`, `디자인`, `리서치`, `운영`, `에이전트 팀`, `오케스트레이터`, `하네스 구성`, `하네스 점검`, `에이전트/스킬 동기화`
 
 ```bash
 User: "하네스 엔지니어링 세팅해줘"
 User: "harness - 이 프로젝트에 문서 체계 구축"
+User: "기획 하네스 만들어줘"
+User: "디자인 작업용 오케스트레이터 구성해줘"
+User: "에이전트 팀 하네스 구성해줘"
+User: "오케스트레이터랑 스킬 동기화 점검해줘"
 ```
 
 ---
