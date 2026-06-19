@@ -16,7 +16,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 .\repos\plugin-mh\codex\install.ps1
 ```
 
-설치 후 Codex CLI 재시작 → 26개 슬래시 커맨드 활성화.
+설치 후 Codex CLI 재시작 → 27개 슬래시 커맨드 활성화.
 
 선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
 
@@ -31,6 +31,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 [설계 결정 완료]
    ↓ /ouroboros  (요구→설계→검증 깊이 작업)
    ↓ /harness    (프로젝트 문서 체계 부트스트랩)
+   ↓ /find-pulp  (기존 하네스 충돌·과도한 탐색 감사)
 [설계 문서]
    ↓ guardrails/  (언어별 기준 + 법칙 기반 제약 확인)
    ↓ /tdd          (테스트 주도)
@@ -73,6 +74,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 |------------|--------|
 | 기능 구현 (TDD) | `/tdd` |
 | 프로젝트 문서 체계 부트스트랩 | `/harness` |
+| 하네스/스킬 꼬임·과도한 탐색 감사 | `/find-pulp` |
 | 작업 후 자동 커밋·푸시 | `/auto-commit` |
 | 실제 동작 E2E 검증 | `/live-verify` |
 | AI 슬롭 코드 정리 | `/ai-slop-cleaner` |
@@ -114,6 +116,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | "10x", "더 큰 목표" | `/moonshot` |
 | "목표가 작", "단기적", "여러 경쟁 팀", "Judge Packet" | `/deep-goal-council` |
 | "테스트 먼저", "TDD" | `/tdd` |
+| "하네스 꼬임", "스킬 꼬임", "규칙 충돌", "과도한 탐색" | `/find-pulp` |
 | "코드 리뷰" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
 | "실제로 동작", "E2E", "검증" | `/live-verify` |
@@ -160,6 +163,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 ### Pattern 3: 새 프로젝트 부트스트랩
 ```
 /harness           → AGENTS.md, ARCHITECTURE.md, docs/ 자동 생성
+/find-pulp         → 기존 하네스의 충돌·과도한 탐색·원본/파생본 drift 감사
 /clarify           → 첫 기능 요구사항 정리
 /tech-decision     → 핵심 스택 결정
 ... (이후 Pattern 1 또는 2)

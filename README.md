@@ -1,9 +1,9 @@
 # plugin-mh
 
-Claude Code plugin with 24 custom skills + 2 agents for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code 플러그인 — 24개 스킬 + 2개 에이전트.
+Multi-runtime skill and harness collection for Claude Code and OpenAI Codex, with 25 custom skills + 2 agents for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code / OpenAI Codex 호환 스킬 하네스 — 25개 스킬 + 2개 에이전트.
 
-같은 자산을 OpenAI Codex CLI에서도 26개 슬래시 커맨드로 쓸 수 있다 ([codex/](codex/) 어댑터 참고).
+목표는 특정 런타임 하나에 갇힌 명령 모음이 아니라, 같은 스킬 원본과 작업 철학을 Claude Code와 Codex 양쪽에서 범용적으로 재사용하는 것이다. Claude Code에서는 플러그인 스킬/에이전트로, Codex에서는 27개 슬래시 커맨드와 AGENTS.md 라우팅 하네스로 동작한다 ([codex/](codex/) 참고).
 
 ## Table of Contents
 
@@ -18,6 +18,10 @@ Claude Code plugin with 24 custom skills + 2 agents for thinking, deciding, and 
 ---
 
 ## Quick Start
+
+Claude Code 사용자는 플러그인으로 설치하고, Codex 사용자는 `codex/` 어댑터를 `~/.codex/prompts/`에 연결한다. 두 경로는 같은 스킬 카탈로그를 바라보며, 스킬 로직을 바꿀 때는 원본과 Codex 변환본을 함께 동기화한다.
+
+### Claude Code
 
 ```bash
 # 마켓플레이스에서 플러그인 추가
@@ -35,7 +39,9 @@ claude plugin list
 
 목록에 `plugin-mh`가 보이면 완료.
 
-Codex CLI에서도 쓰려면 [codex/README.md](codex/README.md)를 따라 어댑터를 설치한다.
+### OpenAI Codex
+
+Codex CLI에서도 같은 스킬 흐름을 쓰려면 [codex/README.md](codex/README.md)를 따라 어댑터를 설치한다.
 
 ---
 
@@ -102,6 +108,7 @@ bash scripts/validate-plugin.sh
 |-------|---------|-------------|
 | [tdd](#tdd) | `tdd`, `테스트 먼저` | RED-GREEN-REFACTOR 강제 — 실패하는 테스트 없이 프로덕션 코드 금지 |
 | [harness](#harness) | `harness`, `하네스`, `기획`, `문서작업`, `디자인`, `에이전트 팀` | 기획·문서작업·디자인·리서치·운영·개발 작업 표면별 하네스 + 에이전트 팀/오케스트레이터 부트스트랩 |
+| [find-pulp](#find-pulp) | `find-pulp`, `하네스 꼬임`, `규칙 충돌`, `과도한 탐색` | 스킬·하네스·AGENTS·Codex 프롬프트·메모리의 충돌, 과도한 탐색, 원본/파생본 drift 감사 및 저위험 개선 |
 | [review-loop](#review-loop) | `리뷰 루프`, `review-loop` | Tiered 리뷰 — code-reviewer 단독 → 필요 시 architect+critic 병렬 |
 | [ai-slop-cleaner](#ai-slop-cleaner) | `deslop`, `AI 슬롭`, `슬롭 정리` | AI 슬롭 코드 정리 — 회귀 안전, 삭제 우선, 한 종류씩. `--review` 지원 |
 | [ouroboros-run](#ouroboros-run) | `ouroboros-run`, `계획 실행` | ouroboros 계획을 Generator-Evaluator 루프로 실행 |
@@ -439,6 +446,24 @@ User: "기획 하네스 만들어줘"
 User: "디자인 작업용 오케스트레이터 구성해줘"
 User: "에이전트 팀 하네스 구성해줘"
 User: "오케스트레이터랑 스킬 동기화 점검해줘"
+```
+
+---
+
+### find-pulp
+
+**스킬, 하네스, AGENTS.md, CLAUDE.md, Codex 프롬프트, 메모리, 프로젝트 문서가 너무 많이 쌓여 서로 충돌하거나 과도한 탐색을 유발하는지 감사하고, 근거 기반으로 개선점을 제안하거나 안전한 범위에서 직접 정리.**
+
+하네스를 더 키우기 전에 먼저 펄프를 찾는다. 같은 상황에서 반대 행동을 요구하는 규칙, 원본과 파생본의 카운트/트리거 drift, 여러 스킬이 동시에 강하게 반응하는 라우팅 충돌, 작업 전 필수 읽기 문서가 과도한 over-read loop, 실제 셸/OS와 맞지 않는 검증 명령, 개인 메모리와 팀 문서의 경계 누수를 증거 기반으로 분류한다.
+
+핵심 원칙은 더하기 전에 빼기, 원본 우선, 가장 좁은 권위 문서 우선, 탐색 예산 명시, 저위험 수정만 즉시 적용이다. 분석만 요청하면 보고서로 멈추고, 개선까지 요청하면 카운트·링크·카탈로그·프롬프트 수·stale 문구처럼 검증 가능한 drift를 좁게 고친다.
+
+**Trigger:** `find-pulp`, `하네스 꼬임`, `스킬 꼬임`, `규칙 충돌`, `지시사항 충돌`, `과도한 탐색`, `탐색 과잉`, `컨텍스트 과잉`, `하네스 감사`, `스킬 감사`, `source-of-truth drift`, `원본/배포본 드리프트`, `메모리/AGENTS/스킬 동기화`, `규칙이 너무 많아`, `에이전트가 헤매`
+
+```bash
+User: "find-pulp - 내 전역 AGENTS, 메모리, plugin-mh 스킬이 서로 꼬이는지 봐줘"
+User: "하네스 꼬임 검사하고 명백한 카운트/프롬프트 drift는 고쳐줘"
+User: "스킬들이 너무 많이 트리거되는 것 같은데 과도한 탐색 줄이는 방향으로 개선해줘"
 ```
 
 ---

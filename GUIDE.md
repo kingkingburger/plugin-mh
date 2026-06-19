@@ -1,5 +1,9 @@
 # plugin-mh 스킬 작성 가이드
 
+이 가이드는 Claude Code 전용 스킬만 만드는 문서가 아니라, **Claude Code와 OpenAI Codex 양쪽에서 같은 작업 흐름을 재사용할 수 있는 범용 스킬 자산**을 작성하기 위한 기준이다. 원본은 `skills/<name>/SKILL.md`에 두되, 워크플로우·프로토콜·출력 형식·안티패턴은 Codex 프롬프트로도 자연스럽게 변환될 수 있게 쓴다.
+
+핵심 목표는 특정 에이전트 런타임에 갇힌 명령을 늘리는 것이 아니라, Claude에서는 플러그인 스킬로, Codex에서는 슬래시 커맨드와 AGENTS.md 라우팅으로 작동하는 **동일한 하네스 언어**를 유지하는 것이다. 따라서 새 스킬을 만들 때는 Claude frontmatter와 도구 제약을 정확히 쓰면서도, 본문은 Codex가 그대로 읽어도 실행 가능한 자연어 절차로 작성한다.
+
 ## 새 스킬 만드는 법
 
 ### 1. 디렉토리 생성
@@ -48,7 +52,7 @@ skills/my-new-skill/
 ## SKILL.md 핵심 포인트
 
 ### description 필드가 가장 중요
-- Claude가 이 필드를 보고 스킬 사용 여부를 결정
+- Claude Code가 이 필드를 보고 스킬 사용 여부를 결정하고, Codex 쪽 카탈로그/프롬프트도 같은 트리거 의미를 따라간다
 - 트리거 조건을 명확히 포함해야 함
 - 영어/한국어 트리거 모두 나열 가능
 
@@ -63,8 +67,19 @@ skills/my-new-skill/
 - 다른 스킬에서만 내부적으로 호출되는 스킬은 `false`로 설정
 
 ### Workflow 섹션
-- Claude가 따라야 할 단계를 명확히 기술
+- Claude Code와 Codex가 모두 따라갈 수 있도록 단계를 명확히 기술
+- Claude 전용 도구 호출이 필요하더라도, Codex 변환본에서 자연어 절차로 바꿀 수 있게 의도와 입력/출력 조건을 함께 쓴다
 - 멀티 에이전트가 필요하면 Agent 도구 사용 명시
+
+## Claude / Codex 호환 작성 원칙
+
+| 원칙 | 작성 방식 |
+|------|-----------|
+| 원본은 하나 | `skills/<name>/SKILL.md`를 원본으로 두고 `codex/prompts/<name>.md`는 동기화된 변환본으로 유지 |
+| 본문은 범용 자연어 | 특정 런타임 도구 이름만 나열하지 말고 목적, 입력, 출력, 검증 기준을 함께 설명 |
+| 트리거는 공유 | Claude description, README 카탈로그, Codex AGENTS 라우팅에서 같은 자연어 트리거를 사용 |
+| 도구 차이는 변환 | `AskUserQuestion`, `Agent`, `Skill(...)` 같은 Claude 전용 표현은 Codex 프롬프트에서 번호 옵션, 역할 사고, 슬래시 커맨드로 변환 |
+| 검증은 양쪽 기준 | 새 스킬 추가 후 Claude plugin 메타데이터와 Codex prompt count가 모두 맞는지 검증 |
 
 ## 플러그인 타입별 추가 파일
 
@@ -106,11 +121,11 @@ mcp-server/
     "name": "MH",
     "url": "https://github.com/kingkingburger"
   },
-  "description": "Claude Code plugins for thinking, deciding, and building smarter by MH",
+  "description": "Multi-runtime Claude Code and Codex skills for thinking, deciding, and building smarter by MH",
   "plugins": [
     {
       "name": "plugin-mh",
-      "description": "24 custom skills + 2 agents: clarify, skill-manage, deep-goal-council, tech-decision, agent-arena, expert-review, daily-report, live-verify, auto-commit, ouroboros, ouroboros-run, tdd, harness, review-loop, ai-slop-cleaner, closing-lite, youtube-slides, life-plan, code-reviewer + knowledge-curator agents, and more",
+      "description": "25 custom skills + 2 agents: clarify, skill-manage, deep-goal-council, tech-decision, agent-arena, expert-review, daily-report, live-verify, auto-commit, ouroboros, ouroboros-run, tdd, harness, find-pulp, review-loop, ai-slop-cleaner, closing-lite, youtube-slides, life-plan, code-reviewer + knowledge-curator agents, and more",
       "source": "./"
     }
   ]

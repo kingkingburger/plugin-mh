@@ -8,7 +8,7 @@
 - `$ARGUMENTS` 위치에 사용자 입력이 주입된다.
 - 자연어로도 호출 가능 — Codex가 본 AGENTS.md의 트리거 키워드 매핑을 보고 적절한 프롬프트를 추천/실행한다.
 
-## 카탈로그 (26개 명령어 = 24 스킬 + 2 에이전트)
+## 카탈로그 (27개 명령어 = 25 스킬 + 2 에이전트)
 
 ### Clarification (생각 정리)
 
@@ -37,6 +37,7 @@
 |--------|------|--------------|
 | `/tdd` | RED-GREEN-REFACTOR 강제 | "tdd", "테스트 주도", "테스트 먼저", "test first" |
 | `/harness` | 기획·문서작업·디자인·리서치·운영·개발 작업 표면별 하네스 + 에이전트 팀/오케스트레이터 구축·점검 | "harness", "하네스", "문서 체계", "엔지니어링 문서", "기획", "문서작업", "디자인", "리서치", "운영", "에이전트 팀", "오케스트레이터", "하네스 구성", "하네스 점검", "에이전트/스킬 동기화" |
+| `/find-pulp` | 스킬·하네스·AGENTS·Codex 프롬프트·메모리의 충돌, 과도한 탐색, 원본/파생본 drift 감사 및 저위험 개선 | "find-pulp", "하네스 꼬임", "스킬 꼬임", "규칙 충돌", "지시사항 충돌", "과도한 탐색", "탐색 과잉", "컨텍스트 과잉", "하네스 감사", "스킬 감사", "source-of-truth drift", "원본/배포본 드리프트", "메모리/AGENTS/스킬 동기화", "규칙이 너무 많아", "에이전트가 헤매" |
 | `/auto-commit` | 작업 후 자동 git commit & push | "자동 커밋", "auto commit", "실행하고 커밋" |
 | `/live-verify` | E2E 라이브 검증 (Playwright/Bash/curl) | "라이브 검증", "E2E 검증", "실제 검증", "검증 시나리오" |
 | `/ai-slop-cleaner` | AI 슬롭 코드 정리 (삭제 우선, 회귀 안전) | "AI 슬롭", "deslop", "슬롭 정리", "anti-slop", "쓰레기 코드 청소", "코드 슬롭", "정리 패스" |
@@ -78,7 +79,7 @@
 - 명확화 라우터(`/clarify`) 와 specialist (`/vague`, `/unknown`, `/metamedium`) 사이에서 모드-specific 키워드가 있으면 specialist 직접 호출.
 - 리뷰 관련: 단독 빠른 리뷰는 `/code-review`, 체이닝 리뷰는 `/review-loop`, 다관점 페르소나 리뷰는 `/expert-review`.
 - 의사결정: 기술 선택은 `/tech-decision`, 다관점 토론은 `/agent-arena`.
-- 문서 생산 깊이: 요구사항만 → `/vague`, 요구사항+설계+검증 메트릭 기반 → `/ouroboros`, 프로젝트 문서 체계 → `/harness`.
+- 문서 생산 깊이: 요구사항만 → `/vague`, 요구사항+설계+검증 메트릭 기반 → `/ouroboros`, 프로젝트 문서 체계 구축 → `/harness`, 기존 하네스의 충돌/과잉 탐색 감사와 정리 → `/find-pulp`.
 - 목표 방향: 단일 목표 상향 → `/moonshot`, 여러 경쟁 팀의 장기 방향/Judge Packet → `/deep-goal-council`, 6계층 개인 계획 → `/life-plan`.
 - 실행: 계획만 → `/ouroboros`, 계획 + 구현까지 → `/ouroboros-run`.
 - 세션 종료: 풀 버전 → `/session-closing`, 경량 → `/closing-lite`.
