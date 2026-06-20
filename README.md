@@ -19,7 +19,7 @@ Multi-runtime skill and harness collection for Claude Code and OpenAI Codex, wit
 
 ## Quick Start
 
-Claude Code 사용자는 플러그인으로 설치하고, Codex 사용자는 `codex/` 어댑터를 `~/.codex/prompts/`에 연결한다. 두 경로는 같은 스킬 카탈로그를 바라보며, 스킬 로직을 바꿀 때는 원본과 Codex 변환본을 함께 동기화한다.
+Claude Code 사용자는 플러그인으로 설치하고, Codex 사용자는 `codex/` 어댑터를 `~/.codex/prompts/`와 `~/.codex/skills/`에 연결한다. 두 경로는 같은 스킬 카탈로그를 바라보며, 스킬 로직을 바꿀 때는 원본과 Codex 변환본을 함께 동기화한다.
 
 ### Claude Code
 
@@ -37,7 +37,7 @@ claude plugin install plugin-mh
 claude plugin list
 ```
 
-목록에 `plugin-mh`가 보이면 완료.
+목록에 `plugin-mh`가 보이면 완료. 설치된 Claude plugin cache가 현재 repo의 skill/agent 표면과 같은지도 `validate-plugin -ClaudeInstalled`로 확인한다.
 
 ### OpenAI Codex
 
@@ -67,6 +67,16 @@ Codex CLI에서도 같은 스킬 흐름을 쓰려면 [codex/README.md](codex/REA
 
 # macOS / Linux / Git Bash
 bash scripts/validate-plugin.sh
+```
+
+설치된 Claude/Codex 표면까지 확인하려면:
+
+```bash
+# Windows PowerShell
+.\scripts\validate-plugin.ps1 -Installed
+
+# macOS / Linux / Git Bash
+bash scripts/validate-plugin.sh --installed
 ```
 
 ---

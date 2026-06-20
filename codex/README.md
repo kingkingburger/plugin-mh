@@ -73,7 +73,7 @@ Codex CLI에서 `/` 입력 시 27개의 plugin-mh 명령어가 보여야 한다.
 /youtube-slides
 ```
 
-설치 표면까지 검증하려면 다음을 실행한다.
+Claude와 Codex 설치 표면까지 함께 검증하려면 다음을 실행한다. Codex만 확인하려면 `-CodexInstalled` / `--codex-installed`, Claude만 확인하려면 `-ClaudeInstalled` / `--claude-installed`를 쓴다.
 
 ```powershell
 .\scripts\validate-plugin.ps1 -Installed

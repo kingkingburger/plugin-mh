@@ -79,7 +79,7 @@ skills/my-new-skill/
 | 본문은 범용 자연어 | 특정 런타임 도구 이름만 나열하지 말고 목적, 입력, 출력, 검증 기준을 함께 설명 |
 | 트리거는 공유 | Claude description, README 카탈로그, Codex AGENTS 라우팅에서 같은 자연어 트리거를 사용 |
 | 도구 차이는 변환 | `AskUserQuestion`, `Agent`, `Skill(...)` 같은 Claude 전용 표현은 Codex 프롬프트에서 번호 옵션, 역할 사고, 슬래시 커맨드로 변환 |
-| 검증은 양쪽 기준 | 새 스킬 추가 후 Claude plugin 메타데이터와 Codex prompt count가 모두 맞는지 검증 |
+| 검증은 양쪽 기준 | 새 스킬 추가 후 Claude plugin 설치/cache 표면과 Codex prompts+skills 설치 표면이 source와 맞는지 `validate-plugin --installed`로 확인 |
 
 ## 플러그인 타입별 추가 파일
 

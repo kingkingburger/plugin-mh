@@ -8,7 +8,9 @@
 
 [CmdletBinding()]
 param(
-    [switch]$Installed
+    [switch]$Installed,
+    [switch]$CodexInstalled,
+    [switch]$ClaudeInstalled
 )
 
 $ErrorActionPreference = 'Stop'
@@ -35,8 +37,16 @@ function Test-TextContains {
 }
 
 function Test-InstalledCodexSurface {
-    $skillsDst = Join-Path $env:USERPROFILE '.codex\skills'
-    $promptsDst = Join-Path $env:USERPROFILE '.codex\prompts'
+    $skillsDst = if ($env:CODEX_SKILLS_DIR) {
+        $env:CODEX_SKILLS_DIR
+    } else {
+        Join-Path $env:USERPROFILE '.codex\skills'
+    }
+    $promptsDst = if ($env:CODEX_PROMPTS_DIR) {
+        $env:CODEX_PROMPTS_DIR
+    } else {
+        Join-Path $env:USERPROFILE '.codex\prompts'
+    }
 
     if (-not (Test-Path -LiteralPath $skillsDst)) {
         Add-ValidationError "Installed Codex skills dir not found: $skillsDst"
@@ -68,9 +78,116 @@ function Test-InstalledCodexSurface {
     }
 }
 
+function Resolve-ClaudePluginPath {
+    if ($env:CLAUDE_PLUGIN_DIR) {
+        return $env:CLAUDE_PLUGIN_DIR
+    }
+
+    $cacheRoot = if ($env:CLAUDE_PLUGIN_CACHE_DIR) {
+        $env:CLAUDE_PLUGIN_CACHE_DIR
+    } else {
+        Join-Path $env:USERPROFILE '.claude\plugins\cache\plugin-mh\plugin-mh'
+    }
+
+    if (Test-Path -LiteralPath $cacheRoot) {
+        $versionSort = @{
+            Expression = {
+                try { [version]$_.Name } catch { [version]'0.0.0' }
+            }
+        }
+        $inUse = Get-ChildItem -LiteralPath $cacheRoot -Directory |
+            Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName '.in_use') } |
+            Sort-Object $versionSort |
+            Select-Object -Last 1
+        if ($inUse) {
+            return $inUse.FullName
+        }
+
+        $latest = Get-ChildItem -LiteralPath $cacheRoot -Directory |
+            Sort-Object $versionSort |
+            Select-Object -Last 1
+        if ($latest) {
+            return $latest.FullName
+        }
+    }
+
+    if ($env:CLAUDE_MARKETPLACE_DIR) {
+        return $env:CLAUDE_MARKETPLACE_DIR
+    }
+
+    return Join-Path $env:USERPROFILE '.claude\plugins\marketplaces\plugin-mh'
+}
+
+function Get-JsonFile {
+    param([string]$Path)
+
+    Get-Content -Encoding UTF8 -Raw -Path $Path | ConvertFrom-Json
+}
+
+function Test-InstalledClaudeSurface {
+    $pluginRoot = Resolve-ClaudePluginPath
+    $manifestPath = Join-Path $pluginRoot '.claude-plugin\plugin.json'
+    $skillsDst = Join-Path $pluginRoot 'skills'
+    $agentsDst = Join-Path $pluginRoot 'agents'
+
+    if (-not (Test-Path -LiteralPath $pluginRoot)) {
+        Add-ValidationError "Installed Claude plugin dir not found: $pluginRoot"
+        $installedSkillNames = @()
+        $installedAgentNames = @()
+    } else {
+        if (-not (Test-Path -LiteralPath $manifestPath)) {
+            Add-ValidationError "Installed Claude plugin manifest missing: $manifestPath"
+        } else {
+            $installedManifest = Get-JsonFile -Path $manifestPath
+            if ($installedManifest.version -ne $sourcePluginManifest.version) {
+                Add-ValidationError "Installed Claude plugin version mismatch: expected $($sourcePluginManifest.version), got $($installedManifest.version)"
+            }
+        }
+
+        if (-not (Test-Path -LiteralPath $skillsDst)) {
+            Add-ValidationError "Installed Claude skills dir not found: $skillsDst"
+            $installedSkillNames = @()
+        } else {
+            $installedSkillNames = Get-ChildItem -LiteralPath $skillsDst -Directory |
+                Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'SKILL.md') } |
+                Select-Object -ExpandProperty Name
+        }
+
+        if (-not (Test-Path -LiteralPath $agentsDst)) {
+            Add-ValidationError "Installed Claude agents dir not found: $agentsDst"
+            $installedAgentNames = @()
+        } else {
+            $installedAgentNames = Get-ChildItem -LiteralPath $agentsDst -Filter '*.md' -File |
+                Select-Object -ExpandProperty Name
+        }
+    }
+
+    foreach ($skill in $skillDirs) {
+        if ($installedSkillNames -notcontains $skill.Name) {
+            Add-ValidationError "Installed Claude skill missing: $($skill.Name)"
+        }
+    }
+
+    foreach ($agent in $agentFiles) {
+        if ($installedAgentNames -notcontains $agent.Name) {
+            Add-ValidationError "Installed Claude agent missing: $($agent.Name)"
+        }
+    }
+}
+
 $skillDirs = Get-ChildItem -Path (Join-Path $root 'skills') -Directory | Sort-Object Name
 $agentFiles = Get-ChildItem -Path (Join-Path $root 'agents') -Filter '*.md' -File -ErrorAction SilentlyContinue
 $promptFiles = Get-ChildItem -Path (Join-Path $root 'codex/prompts') -Filter '*.md' -File | Sort-Object Name
+$sourcePluginManifestPath = Join-Path $root '.claude-plugin/plugin.json'
+if (-not (Test-Path -LiteralPath $sourcePluginManifestPath)) {
+    Add-ValidationError 'Missing Claude plugin manifest: .claude-plugin/plugin.json'
+    $sourcePluginManifest = [pscustomobject]@{ version = $null }
+} else {
+    $sourcePluginManifest = Get-JsonFile -Path $sourcePluginManifestPath
+    if (-not $sourcePluginManifest.version) {
+        Add-ValidationError 'Claude plugin manifest has no version: .claude-plugin/plugin.json'
+    }
+}
 
 foreach ($skill in $skillDirs) {
     $skillPath = Join-Path $skill.FullName 'SKILL.md'
@@ -139,7 +256,16 @@ foreach ($skill in $skillDirs) {
 }
 
 if ($Installed) {
+    $CodexInstalled = $true
+    $ClaudeInstalled = $true
+}
+
+if ($CodexInstalled) {
     Test-InstalledCodexSurface
+}
+
+if ($ClaudeInstalled) {
+    Test-InstalledClaudeSurface
 }
 
 if ($errors.Count -gt 0) {
@@ -152,6 +278,9 @@ if ($errors.Count -gt 0) {
 
 Write-Host "plugin-mh validation passed." -ForegroundColor Green
 Write-Host "Skills: $($skillDirs.Count) | Agents: $($agentFiles.Count) | Codex prompts: $($promptFiles.Count) | Guardrails: $($guardrailFiles.Count)"
-if ($Installed) {
+if ($CodexInstalled) {
     Write-Host "Installed Codex surface: skills $($skillDirs.Count) | prompts $($promptFiles.Count)"
+}
+if ($ClaudeInstalled) {
+    Write-Host "Installed Claude surface: skills $($skillDirs.Count) | agents $($agentFiles.Count) | version $($sourcePluginManifest.version)"
 }

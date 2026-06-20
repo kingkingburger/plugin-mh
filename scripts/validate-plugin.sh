@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
-# Validate plugin-mh metadata, Codex adapter prompts, and guardrail docs.
-
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CHECK_INSTALLED=false
+CHECK_CODEX_INSTALLED=false
+CHECK_CLAUDE_INSTALLED=false
 errors=()
 
 for arg in "$@"; do
     case "$arg" in
-        --installed) CHECK_INSTALLED=true ;;
+        --installed)
+            CHECK_CODEX_INSTALLED=true
+            CHECK_CLAUDE_INSTALLED=true
+            ;;
+        --codex-installed) CHECK_CODEX_INSTALLED=true ;;
+        --claude-installed) CHECK_CLAUDE_INSTALLED=true ;;
         -h|--help)
             cat <<EOF
-Usage: $(basename "$0") [--installed]
+Usage: $(basename "$0") [--installed] [--codex-installed] [--claude-installed]
 
-  --installed  Also verify ~/.codex/prompts and ~/.codex/skills contain plugin-mh entries.
+  --installed         Verify both installed Claude and Codex runtime surfaces.
+  --codex-installed   Verify ~/.codex/prompts and ~/.codex/skills.
+  --claude-installed  Verify the installed Claude plugin cache surface.
 EOF
             exit 0
             ;;
@@ -68,9 +74,59 @@ collect_installed_names() {
     fi
 }
 
+read_json_string() {
+    local path="$1"
+    local key="$2"
+
+    sed -nE "s/^[[:space:]]*\"$key\"[[:space:]]*:[[:space:]]*\"([^\"]*)\".*/\1/p" "$path" | head -n 1
+}
+
+resolve_claude_plugin_dir() {
+    if [[ -n "${CLAUDE_PLUGIN_DIR:-}" ]]; then
+        printf '%s\n' "$CLAUDE_PLUGIN_DIR"
+        return
+    fi
+
+    local cache_root="${CLAUDE_PLUGIN_CACHE_DIR:-$HOME/.claude/plugins/cache/plugin-mh/plugin-mh}"
+    if [[ -d "$cache_root" ]]; then
+        local in_use_dirs=()
+        local candidate
+        for candidate in "$cache_root"/*; do
+            if [[ -d "$candidate" && -f "$candidate/.in_use" ]]; then
+                in_use_dirs+=("$candidate")
+            fi
+        done
+
+        if [[ "${#in_use_dirs[@]}" -gt 0 ]]; then
+            printf '%s\n' "${in_use_dirs[@]}" | sort -V | tail -n 1
+            return
+        fi
+
+        local latest_dir
+        latest_dir="$(find "$cache_root" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+        if [[ -n "$latest_dir" ]]; then
+            printf '%s\n' "$latest_dir"
+            return
+        fi
+    fi
+
+    printf '%s\n' "${CLAUDE_MARKETPLACE_DIR:-$HOME/.claude/plugins/marketplaces/plugin-mh}"
+}
+
 mapfile -t skill_dirs < <(find "$ROOT/skills" -mindepth 1 -maxdepth 1 -type d | sort)
 mapfile -t agent_files < <(find "$ROOT/agents" -maxdepth 1 -type f -name '*.md' 2>/dev/null | sort)
 mapfile -t prompt_files < <(find "$ROOT/codex/prompts" -maxdepth 1 -type f -name '*.md' | sort)
+
+source_plugin_manifest="$ROOT/.claude-plugin/plugin.json"
+source_plugin_version=""
+if [[ ! -f "$source_plugin_manifest" ]]; then
+    add_error "Missing Claude plugin manifest: .claude-plugin/plugin.json"
+else
+    source_plugin_version="$(read_json_string "$source_plugin_manifest" version)"
+    if [[ -z "$source_plugin_version" ]]; then
+        add_error "Claude plugin manifest has no version: .claude-plugin/plugin.json"
+    fi
+fi
 
 for skill in "${skill_dirs[@]}"; do
     skill_name="$(basename "$skill")"
@@ -135,7 +191,7 @@ for skill in "${skill_dirs[@]}"; do
     fi
 done
 
-if [[ "$CHECK_INSTALLED" == true ]]; then
+if [[ "$CHECK_CODEX_INSTALLED" == true ]]; then
     codex_skills_dir="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
     codex_prompts_dir="${CODEX_PROMPTS_DIR:-$HOME/.codex/prompts}"
 
@@ -168,6 +224,56 @@ if [[ "$CHECK_INSTALLED" == true ]]; then
     done
 fi
 
+if [[ "$CHECK_CLAUDE_INSTALLED" == true ]]; then
+    claude_plugin_dir="$(resolve_claude_plugin_dir)"
+    claude_manifest="$claude_plugin_dir/.claude-plugin/plugin.json"
+    claude_skills_dir="$claude_plugin_dir/skills"
+    claude_agents_dir="$claude_plugin_dir/agents"
+
+    if [[ ! -d "$claude_plugin_dir" ]]; then
+        add_error "Installed Claude plugin dir not found: $claude_plugin_dir"
+        installed_claude_skill_names=()
+        installed_claude_agent_names=()
+    else
+        if [[ ! -f "$claude_manifest" ]]; then
+            add_error "Installed Claude plugin manifest missing: $claude_manifest"
+        else
+            installed_claude_version="$(read_json_string "$claude_manifest" version)"
+            if [[ -n "$source_plugin_version" && "$installed_claude_version" != "$source_plugin_version" ]]; then
+                add_error "Installed Claude plugin version mismatch: expected $source_plugin_version, got ${installed_claude_version:-unknown}"
+            fi
+        fi
+
+        if [[ ! -d "$claude_skills_dir" ]]; then
+            add_error "Installed Claude skills dir not found: $claude_skills_dir"
+            installed_claude_skill_names=()
+        else
+            mapfile -t installed_claude_skill_names < <(collect_installed_names "$claude_skills_dir" skill)
+        fi
+
+        if [[ ! -d "$claude_agents_dir" ]]; then
+            add_error "Installed Claude agents dir not found: $claude_agents_dir"
+            installed_claude_agent_names=()
+        else
+            mapfile -t installed_claude_agent_names < <(collect_installed_names "$claude_agents_dir" prompt)
+        fi
+    fi
+
+    for skill in "${skill_dirs[@]}"; do
+        skill_name="$(basename "$skill")"
+        if ! has_line "$skill_name" "${installed_claude_skill_names[@]}"; then
+            add_error "Installed Claude skill missing: $skill_name"
+        fi
+    done
+
+    for agent in "${agent_files[@]}"; do
+        agent_name="$(basename "$agent")"
+        if ! has_line "$agent_name" "${installed_claude_agent_names[@]}"; then
+            add_error "Installed Claude agent missing: $agent_name"
+        fi
+    done
+fi
+
 if [[ "${#errors[@]}" -gt 0 ]]; then
     echo "plugin-mh validation failed:" >&2
     for error in "${errors[@]}"; do
@@ -178,6 +284,9 @@ fi
 
 echo "plugin-mh validation passed."
 echo "Skills: ${#skill_dirs[@]} | Agents: ${#agent_files[@]} | Codex prompts: ${#prompt_files[@]} | Guardrails: ${#guardrail_files[@]}"
-if [[ "$CHECK_INSTALLED" == true ]]; then
+if [[ "$CHECK_CODEX_INSTALLED" == true ]]; then
     echo "Installed Codex surface: skills ${#skill_dirs[@]} | prompts ${#prompt_files[@]}"
+fi
+if [[ "$CHECK_CLAUDE_INSTALLED" == true ]]; then
+    echo "Installed Claude surface: skills ${#skill_dirs[@]} | agents ${#agent_files[@]} | version $source_plugin_version"
 fi
