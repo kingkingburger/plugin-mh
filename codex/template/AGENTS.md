@@ -119,7 +119,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | "하네스 꼬임", "스킬 꼬임", "규칙 충돌", "과도한 탐색" | `/find-pulp` |
 | "코드 리뷰" | `/code-review` |
 | "리뷰 루프", "고치고 다시" | `/review-loop` |
-| "실제로 동작", "E2E", "검증" | `/live-verify` |
+| "실제로 동작", "E2E", "브라우저로 테스트" | `/live-verify` |
 | "AI 슬롭", "deslop", "슬롭 정리" | `/ai-slop-cleaner` |
 | "커밋해" 단독 | `/auto-commit` |
 | "정리하고 끝", "wrap up" | `/closing-lite` |

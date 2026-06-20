@@ -119,6 +119,8 @@ check_reference_manifest() {
     local sha file path actual allowed
 
     while IFS=$'\t' read -r sha file; do
+        sha="${sha%$'\r'}"
+        file="${file%$'\r'}"
         [[ -z "${sha:-}" || "$sha" == \#* || "$sha" == "sha256" ]] && continue
 
         allowed=0

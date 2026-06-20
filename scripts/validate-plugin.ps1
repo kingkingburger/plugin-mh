@@ -7,7 +7,9 @@
 #>
 
 [CmdletBinding()]
-param()
+param(
+    [switch]$Installed
+)
 
 $ErrorActionPreference = 'Stop'
 
@@ -29,6 +31,40 @@ function Test-TextContains {
     $text = Get-Content -Encoding UTF8 -Raw -Path (Join-Path $root $Path)
     if ($text -notmatch $Pattern) {
         Add-ValidationError $Message
+    }
+}
+
+function Test-InstalledCodexSurface {
+    $skillsDst = Join-Path $env:USERPROFILE '.codex\skills'
+    $promptsDst = Join-Path $env:USERPROFILE '.codex\prompts'
+
+    if (-not (Test-Path -LiteralPath $skillsDst)) {
+        Add-ValidationError "Installed Codex skills dir not found: $skillsDst"
+        $installedSkillNames = @()
+    } else {
+        $installedSkillNames = Get-ChildItem -LiteralPath $skillsDst -Directory |
+            Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'SKILL.md') } |
+            Select-Object -ExpandProperty Name
+    }
+
+    if (-not (Test-Path -LiteralPath $promptsDst)) {
+        Add-ValidationError "Installed Codex prompts dir not found: $promptsDst"
+        $installedPromptNames = @()
+    } else {
+        $installedPromptNames = Get-ChildItem -LiteralPath $promptsDst -Filter '*.md' -File |
+            Select-Object -ExpandProperty Name
+    }
+
+    foreach ($skill in $skillDirs) {
+        if ($installedSkillNames -notcontains $skill.Name) {
+            Add-ValidationError "Installed Codex skill missing: $($skill.Name)"
+        }
+    }
+
+    foreach ($prompt in $promptFiles) {
+        if ($installedPromptNames -notcontains $prompt.Name) {
+            Add-ValidationError "Installed Codex prompt missing: $($prompt.Name)"
+        }
     }
 }
 
@@ -102,6 +138,10 @@ foreach ($skill in $skillDirs) {
     }
 }
 
+if ($Installed) {
+    Test-InstalledCodexSurface
+}
+
 if ($errors.Count -gt 0) {
     Write-Host "plugin-mh validation failed:" -ForegroundColor Red
     foreach ($errorMessage in $errors) {
@@ -112,3 +152,6 @@ if ($errors.Count -gt 0) {
 
 Write-Host "plugin-mh validation passed." -ForegroundColor Green
 Write-Host "Skills: $($skillDirs.Count) | Agents: $($agentFiles.Count) | Codex prompts: $($promptFiles.Count) | Guardrails: $($guardrailFiles.Count)"
+if ($Installed) {
+    Write-Host "Installed Codex surface: skills $($skillDirs.Count) | prompts $($promptFiles.Count)"
+}
