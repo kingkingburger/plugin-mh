@@ -107,7 +107,7 @@ bash scripts/validate-plugin.sh --installed
 
 | Skill | Trigger | Description |
 |-------|---------|-------------|
-| [auto-commit](#auto-commit) | `자동 커밋`, `auto commit` | 작업 실행 후 자동 git commit & push |
+| [auto-commit](#auto-commit) | `자동 커밋`, `auto commit` | 작업 실행 후 변경 성격별 git commit & push |
 | [live-verify](#live-verify) | `라이브 검증`, `live-verify` | Plan/Run 2단계 E2E 검증 (Playwright/Bash/curl) |
 | [skill-manage](#skill-manage) | `스킬 관리`, `skill-add`, `skill-delete` | 스킬 추가/삭제/이름변경 + 메타데이터 4파일 원자적 동기화 |
 | [life-plan](#life-plan) | `인생 계획`, `1년 방향`, `삶의 가치` | 6계층 인생 계획 코칭 — 평생 가치→1년 방향→3개월 챕터→월→주→일. 산출물 응축 (폴더 0 + 파일 2) |
@@ -318,10 +318,10 @@ User: "전문가 리뷰 부탁 - README.md"
 
 ### auto-commit
 
-**지시한 작업을 수행한 후 근거 있는 커밋 메시지로 git commit & push.**
+**지시한 작업을 수행한 후 변경 성격별로 묶어 근거 있는 git commit & push.**
 
-작업 → 검증 → 커밋 메시지 작성 → 커밋 → 푸시를 하나의 흐름으로 자동화한다.
-커밋 본문에 무엇을 바꿨는지, 왜 바꿨는지, 어떻게 검증했는지, 남은 위험을 남긴다.
+작업 → 검증 → 커밋 단위 설계 → 커밋 메시지 작성 → 커밋 → 푸시를 하나의 흐름으로 자동화한다.
+큰 diff는 코드 성격, 변경 의도, runtime boundary를 기준으로 여러 커밋으로 나누고, 커밋 본문에는 무엇을 바꿨는지, 왜 바꿨는지, 제외한 범위를 남긴다. 검증 결과는 커밋 메시지가 아니라 최종 응답에 보고한다.
 
 ```bash
 User: "자동 커밋 - README 오타 수정해줘"
