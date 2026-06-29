@@ -1,6 +1,6 @@
 ---
 name: auto-commit
-description: 사용자가 지시한 작업을 실행한 후 변경 범위를 검증하고, 연관성 있는 변경을 성격별로 나눠 근거가 충분한 한국어 커밋 메시지로 git commit & push. "자동 커밋", "auto commit", "실행하고 커밋", "커밋해" 요청에 사용.
+description: 사용자가 지시한 작업을 실행한 후 변경 범위를 검증하고, 연관성 있는 변경을 성격별로 나눠 영어 Conventional Commits 타입을 쓰는 커밋 메시지로 git commit & push. "자동 커밋", "auto commit", "실행하고 커밋", "커밋해" 요청에 사용.
 version: 1.2.0
 ---
 
@@ -95,7 +95,9 @@ Commit 2: {의도}
 2. 저장소의 `AGENTS.md`, `CLAUDE.md`, README, 커밋 가이드
 3. 이 스킬의 기본 규칙
 
-저장소 규칙이 있으면 그 형식을 따른다. 형식이 없으면 기본값은 `{type}({scope}): {설명}`이다. `type`은 `feat`, `fix`, `docs`, `refactor`, `test`, `chore` 중 하나를 쓴다.
+저장소 규칙이 있으면 그 형식을 따르되, 제목 접두사는 항상 영어 Conventional Commits 타입으로 쓴다. 형식이 없으면 기본값은 `{type}({topic}): {설명}`이다. `type`은 `feat`, `fix`, `docs`, `refactor`, `test`, `chore` 중 하나를 쓴다.
+타입 뒤 괄호에는 변경 주제를 반드시 적는다. 예: `docs(agents):`, `feat(skill):`, `fix(auth):`
+`추가:`, `수정:`, `삭제:`, `개선:` 같은 한글 접두사는 사용하지 않는다.
 
 **메시지 품질 기준**:
 
@@ -114,7 +116,7 @@ Commit 2: {의도}
 **본문 템플릿**:
 
 ```text
-{type}({scope}): {변경 의도와 효과}
+{type}({topic}): {변경 의도와 효과}
 
 {무엇을 바꿨는지 1-2문장}
 {왜 바꿨는지 1-2문장}

@@ -1,6 +1,6 @@
 {
   "name": "plugin-mh",
-  "version": "1.24.5",
+  "version": "1.24.6",
   "description": "MH의 커스텀 Claude Code 스킬 + 에이전트 모음",
   "author": {
     "name": "MH"

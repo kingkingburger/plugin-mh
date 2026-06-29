@@ -79,5 +79,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 - 캐시 정리 시 `project-memory.json`은 유지
 
 ### 커밋 메시지 컨벤션
-- 한국어 사용
-- 접두사: `추가:`, `수정:`, `삭제:`, `개선:`
+- 본문과 설명은 한국어 사용
+- 제목 접두사는 영어 Conventional Commits 타입 사용: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+- 타입 뒤 괄호에는 변경 주제를 반드시 적는다. 예: `docs(agents):`, `feat(skill):`, `fix(auth):`
+- `추가:`, `수정:`, `삭제:`, `개선:` 같은 한글 접두사 금지

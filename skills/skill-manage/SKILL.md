@@ -183,11 +183,11 @@ grep -rn "{old-name}" skills/ CLAUDE.md README.md GUIDE.md .claude-plugin/
 
 이 스킬이 끝나면 자동 커밋을 제안한다:
 
-| 모드 | 커밋 접두사 | 예시 |
-|------|-------------|------|
-| delete | `삭제:` | `삭제: X 스킬 제거 — {이유}` |
-| add | `추가:` | `추가: X 스킬 신규 — {목적}` |
-| rename | `수정:` | `수정: X → Y 스킬 이름 변경` |
+| 모드 | 커밋 타입 | 예시 |
+|------|-----------|------|
+| delete | `chore(skill):` | `chore(skill): X 스킬 제거 - {이유}` |
+| add | `feat(skill):` | `feat(skill): X 스킬 추가 - {목적}` |
+| rename | `refactor(skill):` | `refactor(skill): X에서 Y로 스킬 이름 변경` |
 
 ## Anti-Patterns
 

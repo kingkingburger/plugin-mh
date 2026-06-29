@@ -91,7 +91,9 @@ Commit 2: {의도}
 2. 저장소의 `AGENTS.md`, `CLAUDE.md`, README, 커밋 가이드
 3. 이 스킬의 기본 규칙
 
-저장소 규칙이 있으면 그 형식을 따른다. 형식이 없으면 기본값은 `{type}({scope}): {설명}`이다. `type`은 `feat`, `fix`, `docs`, `refactor`, `test`, `chore` 중 하나를 쓴다.
+저장소 규칙이 있으면 그 형식을 따르되, 제목 접두사는 항상 영어 Conventional Commits 타입으로 쓴다. 형식이 없으면 기본값은 `{type}({topic}): {설명}`이다. `type`은 `feat`, `fix`, `docs`, `refactor`, `test`, `chore` 중 하나를 쓴다.
+타입 뒤 괄호에는 변경 주제를 반드시 적는다. 예: `docs(agents):`, `feat(skill):`, `fix(auth):`
+`추가:`, `수정:`, `삭제:`, `개선:` 같은 한글 접두사는 사용하지 않는다.
 
 **메시지 품질 기준**:
 
@@ -111,7 +113,7 @@ Commit 2: {의도}
 **본문 템플릿**:
 
 ```text
-{type}({scope}): {변경 의도와 효과}
+{type}({topic}): {변경 의도와 효과}
 
 {무엇을 바꿨는지 1-2문장}
 {왜 바꿨는지 1-2문장}
