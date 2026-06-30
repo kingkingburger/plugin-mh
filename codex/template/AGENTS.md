@@ -16,7 +16,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 .\repos\plugin-mh\codex\install.ps1
 ```
 
-설치 후 Codex CLI 재시작 → 27개 슬래시 커맨드 활성화.
+설치 후 Codex CLI 재시작 → 29개 슬래시 커맨드 활성화.
 
 선호와 품질 기준은 plugin-mh의 `guardrails/` 를 함께 참고한다.
 
@@ -25,6 +25,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 ```
 [모호한 아이디어]
    ↓ /clarify  (또는 /vague /unknown /metamedium)
+   ↓ /grill-me 또는 /grill-with-docs  (계획 압박 질문 / 문서 기준 점검)
 [명확한 요구사항]
    ↓ /tech-decision  (기술 선택 시)
    ↓ /agent-arena    (다관점 토론 시)
@@ -54,6 +55,8 @@ bash ~/repos/plugin-mh/codex/install.sh
 | 사용자 의도 | 명령어 |
 |------------|--------|
 | 모호한 요청 / 스코프 정리 | `/vague` |
+| 계획/설계를 까다롭게 질문받기 | `/grill-me` |
+| 도메인 문서·ADR 기준으로 계획 점검 | `/grill-with-docs` |
 | 전략 사각지대 / 가정 점검 | `/unknown` |
 | 같은 방식이 안 먹혀 / 관점 전환 | `/metamedium` |
 | 어떤 명확화가 필요한지 모르겠음 | `/clarify` |
@@ -111,6 +114,8 @@ bash ~/repos/plugin-mh/codex/install.sh
 |----------|-------------|
 | "어떻게", "고민" + 비교 대상 2개+ | `/tech-decision` |
 | "모호", "막연", "뭘 원하는지" | `/vague` 또는 `/clarify` |
+| "grill me", "압박 질문", "계획을 까다롭게" | `/grill-me` |
+| "grill with docs", "문서랑 맞춰", "ADR까지" | `/grill-with-docs` |
 | "blind spot", "사각지대", "가정" | `/unknown` |
 | "다른 방법", "관점 전환" | `/metamedium` |
 | "10x", "더 큰 목표" | `/moonshot` |
@@ -130,7 +135,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 
 | 하지 말 것 | 왜 |
 |-----------|-----|
-| 모호한 요구를 받자마자 코드 작성 시작 | `/clarify` 또는 `/vague` 먼저 — 요구가 굳어진 뒤 작성 |
+| 모호한 요구를 받자마자 코드 작성 시작 | `/clarify`, `/vague`, `/grill-me` 먼저 — 요구가 굳어진 뒤 작성 |
 | 기술 선택을 직감만으로 결정 | `/tech-decision` 으로 다관점 비교 |
 | 테스트 없이 코드 작성 | `/tdd` — RED-GREEN-REFACTOR 강제 |
 | 리뷰 없이 커밋 | `/code-review` (단독) 또는 `/review-loop` (체이닝) |
@@ -143,6 +148,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 ### Pattern 1: 새 기능 구현 (작은~중간 규모)
 ```
 /clarify           → 요구사항 정리
+/grill-me          → 계획 압박 질문
 /tech-decision     → (필요 시) 기술 선택
 /tdd               → 테스트 우선 구현
 /code-review       → 빠른 단독 리뷰

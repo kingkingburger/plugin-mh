@@ -8,13 +8,15 @@
 - `$ARGUMENTS` 위치에 사용자 입력이 주입된다.
 - 자연어로도 호출 가능 — Codex가 본 AGENTS.md의 트리거 키워드 매핑을 보고 적절한 프롬프트를 추천/실행한다.
 
-## 카탈로그 (27개 명령어 = 25 스킬 + 2 에이전트)
+## 카탈로그 (29개 명령어 = 27 스킬 + 2 에이전트)
 
 ### Clarification (생각 정리)
 
 | 명령어 | 용도 | 자연어 트리거 |
 |--------|------|--------------|
 | `/clarify` | 명확화 라우터 — vague/unknown/metamedium 중 분기 | "/clarify", "명확히", "어떤 clarify가 필요할지 모르겠어" |
+| `/grill-me` | 계획/설계를 구현 전에 집요한 질문으로 stress-test | "grill me", "grill-me", "계획을 까다롭게 질문해줘", "설계 압박 질문", "stress-test my plan" |
+| `/grill-with-docs` | 도메인 문서·ADR·코드 기준으로 계획 검증 + glossary/ADR 정리 | "grill with docs", "grill-with-docs", "도메인 문서 기준으로 점검", "문서랑 맞춰 질문", "ADR까지 정리" |
 | `/vague` | 모호한 요구사항 → 구체적 스펙 | "요구사항 정리", "뭘 원하는 건지", "spec this out", "scope this" |
 | `/unknown` | 전략 사각지대 (Known/Unknown 4분면) | "blind spots", "4분면 분석", "가정 점검", "전략 점검", "what am I missing" |
 | `/metamedium` | Content vs Form 관점 전환 (Alan Kay) | "내용 vs 형식", "관점 전환", "형식을 바꿔볼까", "다른 방법 없을까" |
@@ -77,6 +79,7 @@
 사용자 자연어 입력에 트리거 키워드가 포함되면 해당 명령어를 우선 실행한다.
 
 - 명확화 라우터(`/clarify`) 와 specialist (`/vague`, `/unknown`, `/metamedium`) 사이에서 모드-specific 키워드가 있으면 specialist 직접 호출.
+- 압박형 계획 인터뷰: 가볍게 질문만 받으려면 `/grill-me`, 기존 도메인 문서와 ADR까지 맞추려면 `/grill-with-docs`.
 - 리뷰 관련: 단독 빠른 리뷰는 `/code-review`, 체이닝 리뷰는 `/review-loop`, 다관점 페르소나 리뷰는 `/expert-review`.
 - 의사결정: 기술 선택은 `/tech-decision`, 다관점 토론은 `/agent-arena`.
 - 문서 생산 깊이: 요구사항만 → `/vague`, 요구사항+설계+검증 메트릭 기반 → `/ouroboros`, 프로젝트 문서 체계 구축 → `/harness`, 기존 하네스의 충돌/과잉 탐색 감사와 정리 → `/find-pulp`.

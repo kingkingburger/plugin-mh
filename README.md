@@ -1,9 +1,9 @@
 # plugin-mh
 
-Multi-runtime skill and harness collection for Claude Code and OpenAI Codex, with 25 custom skills + 2 agents for thinking, deciding, and building smarter.
-생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code / OpenAI Codex 호환 스킬 하네스 — 25개 스킬 + 2개 에이전트.
+Multi-runtime skill and harness collection for Claude Code and OpenAI Codex, with 27 custom skills + 2 agents for thinking, deciding, and building smarter.
+생각하고, 결정하고, 더 나은 결과로 빌드하기 위한 Claude Code / OpenAI Codex 호환 스킬 하네스 — 27개 스킬 + 2개 에이전트.
 
-목표는 특정 런타임 하나에 갇힌 명령 모음이 아니라, 같은 스킬 원본과 작업 철학을 Claude Code와 Codex 양쪽에서 범용적으로 재사용하는 것이다. Claude Code에서는 플러그인 스킬/에이전트로, Codex에서는 27개 슬래시 커맨드와 AGENTS.md 라우팅 하네스로 동작한다 ([codex/](codex/) 참고).
+목표는 특정 런타임 하나에 갇힌 명령 모음이 아니라, 같은 스킬 원본과 작업 철학을 Claude Code와 Codex 양쪽에서 범용적으로 재사용하는 것이다. Claude Code에서는 플러그인 스킬/에이전트로, Codex에서는 29개 슬래시 커맨드와 AGENTS.md 라우팅 하네스로 동작한다 ([codex/](codex/) 참고).
 
 ## Table of Contents
 
@@ -88,6 +88,8 @@ bash scripts/validate-plugin.sh --installed
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | [clarify](#clarify) | `/clarify`, `명확히` | 명확화 라우터 — vague/unknown/metamedium 중 적절한 스킬로 위임 |
+| [grill-me](#grill-me) | `grill me`, `설계 압박 질문` | 구현 전에 계획/설계를 집요한 질문으로 stress-test |
+| [grill-with-docs](#grill-with-docs) | `grill with docs`, `문서랑 맞춰 질문` | 도메인 문서·ADR·코드 기준으로 계획을 검증하고 glossary/ADR 정리 |
 | [vague](#vague) | `요구사항 정리`, `spec this out` | 모호한 요구사항을 가설 기반 질문으로 구체적 스펙으로 변환 |
 | [unknown](#unknown) | `blind spots`, `4분면 분석` | Known/Unknown 4분면으로 전략 사각지대 발견 |
 | [metamedium](#metamedium) | `content vs form`, `관점 전환` | Content(무엇)과 Form(어떻게)을 구분해 레버리지 포인트 발견 |
@@ -157,6 +159,36 @@ bash scripts/validate-plugin.sh --installed
 ```bash
 User: "/clarify - 뭘 원하는지 잘 모르겠어"   → AskUserQuestion → 모드 선택 → 위임
 User: "blind spots 점검"                      → /unknown 직접 호출 (router 우회)
+```
+
+---
+
+### grill-me
+
+**계획/설계를 구현 전에 집요한 질문으로 stress-test.**
+
+한 번에 1-3개 질문만 던지고, 각 질문에 추천 답변을 붙여 사용자가 빠르게 수락·수정·거절할 수 있게 한다. 코드베이스에서 답을 찾을 수 있는 내용은 먼저 탐색하고, 확인된 사실과 계획이 충돌하면 그 충돌을 질문의 출발점으로 삼는다.
+
+**Trigger:** `grill-me`, `grill me`, `계획을 까다롭게 질문해줘`, `설계 압박 질문`, `stress-test my plan`
+
+```bash
+User: "grill me - 이 결제 리팩터링 계획 괜찮은지 압박 질문해줘"
+User: "/grill-me 새 권한 모델 설계"
+```
+
+---
+
+### grill-with-docs
+
+**도메인 문서·ADR·코드 기준으로 계획을 검증하고 glossary/ADR을 정리.**
+
+`CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/`, 관련 코드를 먼저 확인한 뒤 질문한다. 용어가 확정되면 `CONTEXT.md`에 구현 세부 없이 glossary로 반영하고, 되돌리기 어렵고 맥락 없이 놀라운 trade-off가 확정될 때만 ADR 작성을 제안한다.
+
+**Trigger:** `grill-with-docs`, `grill with docs`, `도메인 문서 기준으로 점검`, `문서랑 맞춰 질문`, `ADR까지 정리`
+
+```bash
+User: "grill-with-docs - 주문 취소 정책을 도메인 문서 기준으로 검토해줘"
+User: "문서랑 맞춰 질문하면서 새 billing 컨텍스트 용어 정리해줘"
 ```
 
 ---

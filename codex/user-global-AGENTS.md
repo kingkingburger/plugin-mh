@@ -74,6 +74,8 @@
 ### 사고 정리
 
 - 모호한 요구 → `/vague` 또는 `/clarify`
+- 계획 / 설계 압박 질문 → `/grill-me`
+- 도메인 문서·ADR 기준 계획 점검 → `/grill-with-docs`
 - 전략 사각지대, 가정 점검 → `/unknown`
 - 관점 전환, 다른 방법, diminishing returns → `/metamedium`
 - 목표 상향, 10x, stretch → `/moonshot`
