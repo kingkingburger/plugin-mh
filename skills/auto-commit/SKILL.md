@@ -1,16 +1,16 @@
 ---
 name: auto-commit
-description: 사용자가 지시한 작업을 실행한 후 변경 범위를 검증하고, 연관성 있는 변경을 성격별로 나눠 영어 Conventional Commits 타입을 쓰는 커밋 메시지로 git commit & push. "자동 커밋", "auto commit", "실행하고 커밋", "커밋해" 요청에 사용.
-version: 1.2.0
+description: 사용자가 지시한 작업을 실행한 후 변경 범위를 검증하고, 연관성 있는 변경을 성격별로 나눠 영어 Conventional Commits 타입을 쓰는 커밋 메시지로 git commit한다. push는 사용자가 명시적으로 요청한 경우에만 수행한다. "자동 커밋", "auto commit", "실행하고 커밋", "커밋해" 요청에 사용.
+version: 1.2.1
 ---
 
 # Auto Commit
 
-사용자의 지시를 실행한 후 변경사항을 검증하고, 변경 성격별로 커밋을 나눈 뒤 나중에 읽어도 의도와 안전성이 보이는 메시지로 커밋하고 푸시한다.
+사용자의 지시를 실행한 후 변경사항을 검증하고, 변경 성격별로 커밋을 나눈 뒤 나중에 읽어도 의도와 안전성이 보이는 메시지로 커밋한다. push는 사용자가 같은 요청에서 명시적으로 지시한 경우에만 수행한다.
 
 ## 목적
 
-작업 → 검증 → 커밋 단위 설계 → 좋은 커밋 메시지 작성 → 커밋 → 푸시를 하나의 흐름으로 자동화한다.
+작업 → 검증 → 커밋 단위 설계 → 좋은 커밋 메시지 작성 → 커밋까지를 하나의 흐름으로 자동화한다.
 
 커밋 메시지는 단순 로그가 아니라 미래의 나와 동료가 변경 의도, 판단 근거, 검증 범위를 이해하는 감사 기록이다.
 
@@ -138,13 +138,13 @@ auto-commit이 한 줄 요약 위주로 커밋하던 흐름을 근거 중심 메
 - 민감 파일과 unrelated 변경을 커밋 전에 분리하도록 가드 추가
 ```
 
-### 5단계: 커밋 & 푸시
+### 5단계: 커밋
 
 ```bash
 git add <해당 커밋의 파일 또는 hunk>
 git commit -F <message-file>
 # 필요한 만큼 위 stage/commit 반복
-git push
+# 사용자가 명시적으로 요청한 경우에만 git push
 ```
 
 **주의사항**:
@@ -152,9 +152,10 @@ git push
 - `.env`, credentials 등 민감한 파일은 제외
 - 커밋 본문이 필요한 변경은 `git commit -m "제목"` 한 줄 커밋을 사용하지 않는다.
 - staged diff 기준으로 다시 검증한 뒤 커밋한다.
-- 여러 커밋이 필요한 작업은 각 커밋마다 stage 범위를 다시 확인하고, 마지막에 한 번 push한다.
+- 여러 커밋이 필요한 작업은 각 커밋마다 stage 범위를 다시 확인한다.
 - 중간 커밋 후 남은 diff가 의도한 다음 커밋 계획과 맞는지 `git status`와 `git diff --stat`으로 확인한다.
-- 푸시 실패 시 원인을 알리고 사용자에게 확인
+- `git push`는 사용자가 `푸시`, `push`, `커밋푸시`, `push까지`처럼 push 의도를 명시한 경우에만 실행한다.
+- push 요청이 없으면 절대 임의로 push하지 않고, 결과 보고에 push 미수행을 명시한다.
 
 ### 6단계: 결과 보고
 
@@ -162,7 +163,7 @@ git push
 - 커밋 해시와 제목 목록
 - 핵심 변경 범위
 - 검증 결과
-- 푸시 상태
+- push 수행 여부
 
 ## 출력 형식
 
@@ -177,7 +178,7 @@ git push
 **핵심 변경**: [무엇을 바꿨는지]
 **검증**: [실행한 결과]
 
-**푸시**: origin/master ✓
+**Push**: [명시 요청 없음 — 수행하지 않음 / origin/<branch> 완료]
 ```
 
 ## 오류 처리
@@ -186,7 +187,7 @@ git push
 |------|------|
 | 변경사항 없음 | 작업 완료만 알림, 커밋 생략 |
 | 커밋 실패 | 에러 원인 분석 후 재시도 |
-| 푸시 실패 | 원인 알림, 사용자 확인 요청 |
+| push 명시 요청 | 커밋 완료 후 push 실행, 실패 시 원인을 알리고 사용자 확인 요청 |
 | 민감 파일 감지 | 해당 파일 제외 후 경고 |
 | 분리 가능한 큰 diff | 커밋 계획을 세우고 성격별로 여러 커밋 생성 |
 | 분리 불가능한 큰 diff | 단일 커밋 사유를 본문과 결과 보고에 명시 |
@@ -200,12 +201,21 @@ User: "auto-commit 스킬 만들어줘"
 → 스킬 파일 생성
 → git add skills/auto-commit/SKILL.md codex/prompts/auto-commit.md
 → git commit -F <message-file>
-→ git push
+→ push 요청이 없으면 push하지 않음을 보고
 ```
 
 **코드 수정**:
 ```
 User: "GUIDE.md에 설치 방법 추가해줘"
+→ GUIDE.md 수정
+→ git add GUIDE.md
+→ git commit -F <message-file>
+→ push 요청이 없으면 push하지 않음을 보고
+```
+
+**커밋과 푸시 명시 요청**:
+```
+User: "GUIDE.md에 설치 방법 추가하고 커밋푸시해줘"
 → GUIDE.md 수정
 → git add GUIDE.md
 → git commit -F <message-file>
@@ -219,5 +229,5 @@ User: "자동 커밋 - 권한 요청 기능 마무리해줘"
 → Commit 1: 권한 요청 domain/model 변경
 → Commit 2: API surface와 transaction flow 연결
 → Commit 3: E2E/unit test와 문서 보강
-→ 최종 검증 후 git push
+→ 최종 검증 후 커밋하고, push 요청이 없으면 push하지 않음을 보고
 ```

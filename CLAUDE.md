@@ -38,7 +38,7 @@ README.md           ← 플러그인 소개 및 스킬 상세 설명
 | tech-decision | 기술 의사결정 심층 분석 |
 | agent-arena | 다관점 에이전트 토론 |
 | expert-review | 전문가 페르소나 병렬 리뷰 |
-| auto-commit | 작업 후 변경 성격별 자동 커밋 & 푸시 |
+| auto-commit | 작업 후 변경 성격별 자동 커밋, 명시 요청 시 push |
 | live-verify | E2E 라이브 검증 |
 | session-closing | 세션 마무리 분석 |
 | closing-lite | 세션 마무리 경량 버전 (이슈·배운 점·선호도만 메모리에 누적) |

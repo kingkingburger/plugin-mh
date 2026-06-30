@@ -75,7 +75,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 | 기능 구현 (TDD) | `/tdd` |
 | 프로젝트 문서 체계 부트스트랩 | `/harness` |
 | 하네스/스킬 꼬임·과도한 탐색 감사 | `/find-pulp` |
-| 작업 후 자동 커밋·푸시 | `/auto-commit` |
+| 작업 후 자동 커밋, 명시 요청 시 push | `/auto-commit` |
 | 실제 동작 E2E 검증 | `/live-verify` |
 | AI 슬롭 코드 정리 | `/ai-slop-cleaner` |
 
@@ -146,7 +146,7 @@ bash ~/repos/plugin-mh/codex/install.sh
 /tech-decision     → (필요 시) 기술 선택
 /tdd               → 테스트 우선 구현
 /code-review       → 빠른 단독 리뷰
-/auto-commit       → 커밋·푸시
+/auto-commit       → 커밋
 ```
 
 ### Pattern 2: 큰 기능 구현 (스펙부터 검증까지)
